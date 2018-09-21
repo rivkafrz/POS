@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\User;
-use App\Employee;
-
+use App\Models\User;
+use App\Models\Employee;
+use App\Models\Work_time;
+use App\Models\Assign_location;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -22,10 +23,20 @@ class DatabaseSeeder extends Seeder
             'address' => 'Tangerang'
         ]);
 
+        $a = Assign_location:: create([
+            'assign_location' => 'terminal 1A'
+        ]);
+
+        $w =Work_time:: create([
+            'Work_time' => 'Shift 1',
+            'assign_location_id' =>  $a->id 
+        ]);
+
+
         User:: create([
         	'name'=> 'admin',
         	'email'=> 'admin@gmail.com',
-            'password'=>bcrypt ('secret'),
+            'password'=> 'secret',
         	'employee_id'=> $rivka->id
         ]);
 
