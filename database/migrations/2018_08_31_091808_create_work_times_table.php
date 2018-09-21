@@ -16,9 +16,12 @@ class CreateWorkTimesTable extends Migration
         Schema::create('work_times', function (Blueprint $table) {
             $table->increments('id');
             $table->string('work_time');
+            $table->timestamps();
+        });
+
+        Schema::table('work_times', function (Blueprint $table) {
             $table->unsignedInteger('assign_location_id');
             $table->foreign('assign_location_id')->references('id')->on('assign_locations');
-            $table->timestamps();
         });
 
         Schema::table('users', function (Blueprint $table) {

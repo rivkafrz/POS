@@ -10,7 +10,7 @@ class User extends Model
     use CrudTrait;
 
     protected $table = 'users';
-    protected $fillable = ['name','email','password','work_time_id'];
+    protected $fillable = ['name','email','password','work_time_id', 'employee_id'];
     protected $hidden = ['password'];
 
     public function workTime()
@@ -26,5 +26,10 @@ class User extends Model
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt ($value);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 }

@@ -23,7 +23,11 @@ class CreateEmployeesTable extends Migration
             $table->string('address');
             $table->timestamps();
         });
-    
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedInteger('employee_id');
+            $table->foreign('employee_id')->references('id')->on('employees');
+        });
     }
      
 

@@ -19,6 +19,16 @@ class UserCrudController extends CrudController
 
         $this->crud->removeFields(['section', 'work_time_id']);
         $this->crud->removeColumns(['section','location', 'shift']);
+
+        $this->crud->addField(
+        [
+            'label' => "Employee Name",
+            'type' => 'select2',
+            'name' => 'employee_id', // field
+            'entity' => 'employee', // fungsi model
+            'attribute' => 'employee_name',
+            'model' => "App\Models\Employee"
+        ]);
     }
 
     public function store(StoreRequest $request)
