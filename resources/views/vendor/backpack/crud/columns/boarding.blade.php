@@ -1,0 +1,1 @@
+{{ substr($entry->boarding_time, -8, 5) }}
