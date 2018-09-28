@@ -8,6 +8,15 @@
                     <div class="box-title">{{ trans('backpack::base.login') }}</div>
                 </div>
                 <div class="box-body">
+                    <div class="row">
+                    <div class="col-md-offset-5 col-md-1" style="margin-bottom: 40px"></div>
+                    <img src="{{ url ('logo.jpg') }}"><br>
+                    <div class="col-md-offset-5 col-md-offset-5">
+                           <p> <b><h4><span style="color:red"><i> PT PRIMAJASA PERDANARAYAUTAMA
+                            </i></h4></b></span></p></br>
+                            </span>
+                        </div>
+                    </div>
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
                         {!! csrf_field() !!}
 
