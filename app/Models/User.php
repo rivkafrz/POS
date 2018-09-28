@@ -10,7 +10,7 @@ class User extends Model
     use CrudTrait;
 
     protected $table = 'users';
-    protected $fillable = ['name','email','password','work_time_id', 'employee_id'];
+    protected $fillable = ['email','password','work_time_id', 'employee_id'];
     protected $hidden = ['password'];
 
     public function workTime()

@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
 
 
         User:: create([
-        	'name'=> 'admin',
         	'email'=> 'admin@gmail.com',
             'password'=> 'secret',
         	'employee_id'=> $rivka->id
