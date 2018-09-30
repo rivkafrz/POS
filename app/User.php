@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Models\Employee::class);
+    }
+
+    public function workTime()
+    {
+        return $this->belongsTo(Models\Work_time::class);
+    }
 }

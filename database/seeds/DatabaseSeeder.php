@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $a = Assign_location:: create([
-            'assign_location' => 'terminal 1A'
+            'assign_location' => 'Terminal 1 A'
         ]);
 
         $w =Work_time:: create([
