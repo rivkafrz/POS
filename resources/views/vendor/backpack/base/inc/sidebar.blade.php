@@ -21,18 +21,16 @@
             <li><a href="{{ backpack_url('employee') }}"><i class="fa fa-address-book"></i> <span>{{ trans('Employee') }}</span></a></li>
             <li><a href="{{ backpack_url('departure_time') }}"><i class="fa fa-bus"></i> <span>{{ trans('Departure Time') }}</span></a></li>
             <li><a href="{{ backpack_url('destination') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Destination') }}</span></a></li>
-            <li><a href="{{ backpack_url('work_time') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Work Time') }}</span></a></li>
-            <li><a href="{{ backpack_url('assign_location') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Assign Location') }}</span></a></li>
+            <li><a href="{{ backpack_url('work_time') }}"><i class="fa fa-clock-o"></i> <span>{{ trans('Work Time') }}</span></a></li>
+            <li><a href="{{ backpack_url('assign_location') }}"><i class="fa fa-location-arrow"></i> <span>{{ trans('Assign Location') }}</span></a></li>
           </ul>
           </li>
-
-             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Baggage') }}</span></a></li>
-             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Payment') }}</span></a></li>
-             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Assign Location') }}</span></a></li>
-             <li><a href="{{ backpack_url('order') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Order') }}</span></a></li>
-             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('EOD') }}</span></a></li>
-             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Manifest') }}</span></a></li>
+             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Order') }}</span></a></li>
+             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
+             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-book"></i> <span>{{ trans('Manifest') }}</span></a></li>
+            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-bell"></i> <span>{{ trans('Approve EOD') }}</span></a></li>
              <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Report ') }}</span></a></li>
+             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-bar-chart"></i> <span>{{ trans('View Board ') }}</span></a></li>
 
           <!-- ======================================= -->
           {{-- <li class="header">Other menus</li> --}}

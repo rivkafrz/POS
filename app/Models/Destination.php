@@ -19,7 +19,7 @@ class Destination extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['from','to'];
+    protected $fillable = ['from','to','price'];
     // protected $hidden = [];
     // protected $dates = [];
 

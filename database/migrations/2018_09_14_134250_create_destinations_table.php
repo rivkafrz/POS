@@ -17,6 +17,7 @@ class CreateDestinationsTable extends Migration
             $table->increments('id');
             $table->string('from');
             $table->string('to');
+            $table->integer('price');
             $table->timestamps();
         });
     }
