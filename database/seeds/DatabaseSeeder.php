@@ -20,6 +20,24 @@ class DatabaseSeeder extends Seeder
             'gender' => 'female',
             'job_section' => 'Admin',
             'phone' => '081233455',
+            'address' => 'Tangerang'  
+        ]);
+
+        $rivka = Employee:: create([
+            'nip' => 321,
+            'employee_name' => 'faris',
+            'gender' => 'male',
+            'job_section' => 'ticketing',
+            'phone' => '0817457565576',
+            'address' => 'Tangerang'
+        ]);
+
+        $rivka = Employee:: create([
+            'nip' => 456,
+            'employee_name' => 'melan',
+            'gender' => 'female',
+            'job_section' => 'leader',
+            'phone' => '0812798989787',
             'address' => 'Tangerang'
         ]);
 
@@ -33,11 +51,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        User:: create([
-        	'email'=> 'admin@gmail.com',
-            'password'=> 'secret',
-        	'employee_id'=> $rivka->id
-        ]);
+        
+
+        $this -> call (App\UsersTableSeeder::class);
 
     }
 }
