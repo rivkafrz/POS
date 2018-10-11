@@ -18,3 +18,4 @@ class Assign_location extends Model
     }
     
 }
+ 
