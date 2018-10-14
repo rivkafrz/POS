@@ -23,6 +23,11 @@ class Destination extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    public function seat()
+    {
+        return $this->hasMany(Seat::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
