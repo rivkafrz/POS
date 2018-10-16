@@ -18,9 +18,9 @@ class CreateEmployeesTable extends Migration
             $table->string('nip');
             $table->string ('employee_name');
             $table->enum('gender',['male','female']);
-            $table->string('job_section');
-            $table->string('phone');
-            $table->string('address');
+            $table->string('job_section',50);
+            $table->string('phone',13);
+            $table->string('address',100);
             $table->timestamps();
         });
 

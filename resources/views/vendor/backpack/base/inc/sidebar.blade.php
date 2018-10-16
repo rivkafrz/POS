@@ -26,11 +26,16 @@
                 <li><a href="{{ backpack_url('assign_location') }}"><i class="fa fa-location-arrow"></i> <span>{{ trans('Assign Location') }}</span></a></li>
               </ul>
             </li>
-              <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Order') }}</span></a></li>
-              <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
+             
+          @endif
+          @if (Auth::user()->hasRole('ticketing'))
+          <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
+           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Order') }}</span></a></li>
+            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
           @endif
 
           @if (Auth::user()->hasRole('leader'))
+          <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-book"></i> <span>{{ trans('Manifest') }}</span></a></li>
           @endif
           
