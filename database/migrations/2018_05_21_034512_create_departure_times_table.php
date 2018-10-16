@@ -13,7 +13,7 @@ class CreateDepartureTimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Departure_times', function (Blueprint $table) {
+        Schema::create('departure_times', function (Blueprint $table) {
             $table->increments('id');
             $table->datetime('boarding_time');
             $table->timestamps();

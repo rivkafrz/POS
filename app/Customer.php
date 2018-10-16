@@ -9,7 +9,7 @@ class Customer extends Model
     //
        protected $fillable = ['name','phone'];
 
-       public function seat()
+       public function seats()
     {
         return $this->hasMany(Seat::class);
     }
