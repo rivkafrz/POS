@@ -15,7 +15,8 @@ class CreateAssignLocationsTable extends Migration
     {
         Schema::create('assign_locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('assign_location', 12);
+            $table->string('assign_location', 25);
+            $table->string('code_location',10)->unique();
             $table->timestamps();
         });
     }

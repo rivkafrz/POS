@@ -10,7 +10,7 @@ class Assign_location extends Model
     use CrudTrait;
 
     protected $table = 'assign_locations';
-    protected $fillable = ["assign_location"];
+    protected $fillable = ['assign_location','code_location'];
 
     public function workTimes()
     {

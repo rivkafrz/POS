@@ -78,12 +78,15 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $terminal1 = AssignLocation:: create([
-            'assign_location' => 'Terminal 1 A'
+            'assign_location' => 'Terminal 1 A',
+            'code_location' => 'BSH01'
+
         ]);
 
         $shift1 = WorkTime:: create([
             'Work_time' => 'Shift 1',
-            'assign_location_id' =>  $terminal1->id 
+            'assign_location_id' =>  $terminal1->id
+
         ]);
 
         //membuat sample admin
