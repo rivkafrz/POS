@@ -7,6 +7,9 @@ use App\Employee;
 use App\WorkTime;
 use App\AssignLocation;
 use App\DepartureTime;
+use App\Customer;
+use App\Destination;
+use App\Seat;
 
 class UsersTableSeeder extends Seeder
 {
@@ -90,8 +93,32 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $tujuan = DepartureTime:: create([
+        $jam = DepartureTime:: create([
             'boarding_time' => '2018-10-31 07:00:00',
+           
+
+        ]);
+        
+        $customer = Customer:: create([
+            'name' => 'Melan',
+            'phone' => '0817777772347'
+           
+
+        ]);
+
+         $jurusan = Destination:: create([
+            'to' => 'Batununggal(BDG)',
+            'price' => '115000',
+            'code'=> '01'
+           
+
+        ]);
+
+        $seat = Seat:: create([
+            'seat_number' => '2',
+            'customer_id' => $customer->id,
+            'departure_time_id'=>$jam->id,
+            'destination_id'=>$jurusan->id
            
 
         ]);
