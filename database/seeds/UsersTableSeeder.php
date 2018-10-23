@@ -6,6 +6,7 @@ use App\User;
 use App\Employee;
 use App\WorkTime;
 use App\AssignLocation;
+use App\DepartureTime;
 
 class UsersTableSeeder extends Seeder
 {
@@ -88,6 +89,13 @@ class UsersTableSeeder extends Seeder
             'assign_location_id' =>  $terminal1->id
 
         ]);
+
+        $tujuan = DepartureTime:: create([
+            'boarding_time' => '2018-10-31 07:00:00',
+           
+
+        ]);
+
 
         //membuat sample admin
         $admin = new User();
