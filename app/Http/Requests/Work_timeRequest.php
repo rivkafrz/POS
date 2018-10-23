@@ -26,7 +26,8 @@ class Work_timeRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'work_time' => 'required | max:7 | min:4'
+            // 'field' => 'rule'
         ];
     }
 
