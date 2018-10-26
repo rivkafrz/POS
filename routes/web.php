@@ -2,6 +2,7 @@
 
 Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 {
+	Route::get('boarding/create', 'Admin\BoardingController@create')->name('boarding.create');
 	CRUD::resource('user','Admin\UserCrudController');
 	CRUD::resource('departure_time','Admin\Departure_timeCrudController');
 	CRUD::resource('order','Admin\OrderCrudController');
