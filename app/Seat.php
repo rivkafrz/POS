@@ -35,9 +35,9 @@ class Seat extends Model
         'destination_id'
     ];
 
-    public function customer()
+    public function ticket()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Ticket::class);
 	}
 
 	public function departureTime()

@@ -72,7 +72,7 @@
                             $field = 'name';
                         @endphp
                         <label class="required">{{ $label }}</label>
-                        <input required class="form-control" type="text" name="{{ $field }}" value="{{ old($field) ? old($field) : $user[$field] }} ">
+                        <input required class="form-control" type="text" name="{{ $field }}" value="{{ old($field) ? old($field) : Auth::user()->employee->employee_name }} ">
                     </div>
 
                     <div class="form-group">

@@ -12,7 +12,6 @@ class Work_timeCrudController extends CrudController
 {
     public function setup()
     {
-
         $this->crud->setModel('App\Models\Work_time');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/work_time');
         $this->crud->setEntityNameStrings('work_time', 'work_times');

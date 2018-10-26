@@ -19,11 +19,6 @@ class CreateSeatsTable extends Migration
             $table->timestamps();
         });
 
-         Schema::table('seats', function (Blueprint $table) {
-            $table->unsignedInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
-        });
-
         Schema::table('seats', function (Blueprint $table) {
              $table->unsignedInteger('departure_time_id');
              $table->foreign('departure_time_id')->references('id')->on('departure_times');
