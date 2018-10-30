@@ -15,7 +15,19 @@
         <div class="col-md-8">
             <div class="box box-default">
                 <div class="box-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi vero nostrum ex optio. Voluptatem amet quaerat, quod explicabo repellendus at quisquam sed inventore. Velit adipisci, saepe sunt ipsum odit ab?</p>
+                  <div class="row">
+                        <div class="col-xs-offset-3 col-md-offset-5">
+                            <img src="{{ url ('logo.jpg') }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center text-danger" style="padding-top: 20px">
+                            <p><strong><em> PT PRIMAJASA PERDANARAYAUTAMA</em></strong></p>
+                        </div>
+                    </div>
+                    
+                  <p><justify>PT Primajasa Perdanarayautama didirikan pada tanggal 6 September 1991, dipimpin oleh H. Amir Mahpud, SE. sebagai Direktur Utama. PT Primajasa Perdanarayautama menyelenggarakan kegiatan pokok perusahaan yaitu dalam bidang Angkutan Umum (Public Transportation) yang meliputi Angkutan Kota Antar Propinsi (AKAP), Angkutan Kota Dalam Propinsi 
+                  (AKDP), Taksi, Pariwisata dan Angkutan Karyawan.PT Primajasa Perdanarayautama berafiliasi dengan perusahaan besar yaitu Group Mayasari Bhakti Utama sebagai salah satu pelopor perusahaan Angkutan Umum Bus Kota di Jakarta sejak tahun 1967 dan yang terbesar sampai dengan sekarang, dipimpin oleh H. Mahpud sebagai Presiden Direktur.</justify> </p>
                 </div>
             </div>
         </div>
