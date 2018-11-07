@@ -16,12 +16,28 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->string('note', 255);
             $table->timestamps();
         });
 
         Schema::table('tickets', function (Blueprint $table) {
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
+        });
+
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->unsignedInteger('departure_time_id');
+            $table->foreign('departure_time_id')->references('id')->on('departure_times');
+        });
+        
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->unsignedInteger('destination_id');
+            $table->foreign('destination_id')->references('id')->on('destinations');
+        });
+        
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->unsignedInteger('assign_location_id');
+            $table->foreign('assign_location_id')->references('id')->on('assign_locations');
         });
 
         Schema::table('seats', function (Blueprint $table) {
