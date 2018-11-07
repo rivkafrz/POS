@@ -26,7 +26,8 @@ class DestinationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'to' => 'required|max:25',
+            'code' => 'required|numeric|max:10'
         ];
     }
 

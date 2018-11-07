@@ -26,7 +26,8 @@ class Assign_locationRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'assign_location' => 'required|max:25',
+            'code_location' => 'required|max:10|min:5'
         ];
     }
 
