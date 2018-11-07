@@ -36,6 +36,11 @@ class Ticket extends Model
         return $this->belongsTo(AssignLocation::class);
     }
     
+    public function baggages()
+    {
+        return $this->hasMany(Baggage::class);
+    }
+    
     // Alias
 
     public function from()
