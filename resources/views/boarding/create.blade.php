@@ -156,8 +156,18 @@
         }
 
         function appendTabTwoInfo(data){
-            for (let i = 0; i < data.seats.length; i++) {
-                $('#seat-number-' + data.seats[i].seat_number).addClass('seat-selected');
+            selectedSeat(data.seats);
+        }
+
+        function selectedSeat(data){
+            for (let i = 0; i < data.length; i++) {
+                $('#seat-number-' + data[i].seat_number).addClass('seat-selected');
+            }
+        }
+
+        function occupySeat(data){
+            for (let i = 0; i < data.length; i++) {
+                $('#seat-number-' + data[i].seat_number).addClass('seat-occupied');
             }
         }
 
@@ -172,6 +182,20 @@
             $('#noted').html(data.note);
             $('#date_input').val(data.created_at.substr(0, 10));
             $('#transaction_code').val(data.code);
+        }
+
+        function checkForSeat(){
+            $.ajax({
+                url: "{{ url('/') }}" 
+                    + '/api/seats/' 
+                    + "{{ Auth::user()->workTime->assignLocation->id }}" + '/'
+                    + $('#destination_to').val() + '/'
+                    + $('#departure_time').val() + '/',
+                success: function (data) {
+                    console.log(data);
+                    occupySeat(data);
+                }
+            })
         }
     </script>
 @endsection

@@ -48,7 +48,7 @@
         <label for="departure_time" class="col-md-6">Departure Time</label>
         <div class="col-sm-12">
             @if ($departures->count() !== 0)
-                <select name="departureTime" class="form-control" id="departure_time">
+                <select name="departureTime" class="form-control" id="departure_time" onchange="checkForSeat()">
                   <option value="0">{{ "-- Boarding --" }}</option>
                     @foreach ($departures as $departure)
                       <option value="{{ $departure->id }}" data-boarding-time={{ $departure->boarding_time }}>{{ substr($departure->boarding_time, -8, 5) }}</option>
