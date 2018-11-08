@@ -1,8 +1,8 @@
 <div class="col-md-2">
     <div class="form-group row">
         <label for="find" class="col-md-6">Find Transaction</label>
-        <div class="col-sm-12">
-            <input name="find" type="text" class="form-control">
+        <div class="col-sm-12" id="find-input">
+            <input name="find" type="text" class="form-control" onchange="findTicket()" id="find">
         </div>
     </div>
     <hr>
@@ -48,7 +48,7 @@
         <label for="departure_time" class="col-md-6">Departure Time</label>
         <div class="col-sm-12">
             @if ($departures->count() !== 0)
-                <select name="departureTime" class="form-control" id="destination_to">
+                <select name="departureTime" class="form-control" id="departure_time">
                   <option value="0">{{ "-- Boarding --" }}</option>
                     @foreach ($departures as $departure)
                       <option value="{{ $departure->id }}" data-boarding-time={{ $departure->boarding_time }}>{{ substr($departure->boarding_time, -8, 5) }}</option>

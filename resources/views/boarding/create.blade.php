@@ -11,13 +11,14 @@
                                 <div class="form-group col-md-6">
                                     <label for="date" class="col-md-2 control-label">Date</label>
                                     <div class="col-md-10">
-                                        <input name="date" type="date" class="form-control">
+                                        <input name="date" type="date" class="form-control" id="date_input">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="date" class="col-md-3 control-label">Transaction</label>
                                     <div class="col-md-9">
-                                        <input name="code" type="text" disabled="" class="form-control" id="transaction_code">
+                                        <input type="text" disabled="" class="form-control" id="transaction_code">
+                                        <input type="hidden" name="code" id="code">
                                     </div>
                                 </div>
                             </div>
@@ -41,23 +42,30 @@
         console.log("Script enable");
 
         function selectSeat(seat_id) {
-            console.log("Selected " + seat_id);
             var current = '#' + seat_id;
             if ($(current).hasClass('seat-occupied')) {
                 alert('Cannot select occupied seat');
             } else {
                 if ($(current).hasClass('seat-selected')) {
                     $(current).removeClass('seat-selected');
+                    $('#' + seat_id.substr(4)).remove();
+                    console.log($('#seats_commit').val());
+                    console.log("Un-Selected " + seat_id);
                 } else {
                     $(current).addClass('seat-selected');
+                    console.log("Selected " + seat_id);
+                    $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
+                    console.log($('#seats_commit').val());
                 }
             }
-            $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '">');
-            console.log($('#seats_commit').val());
         }
 
-        function addBaggage() {
-            $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control">')
+        function addBaggage(value = null) {
+            if (value == null) {
+                $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control">')
+            } else {
+                $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control" value="' + value + '">')
+            }
             console.log('Add Baggage');
         }
 
@@ -80,19 +88,31 @@
             var tickets = $('#tickets').val();
             var phone = $('#phone').val();
             $('#transaction_code').val(destination+to+phone+tickets);
+            $('#code').val(destination+to+phone+tickets);
         }
 
         function ajaxCallCustomer() {
             var phone = $('#phone').val();
             $.ajax({
-                url: 'http://localhost:3000/api/tickets/' + phone,
+                url: "{{ url('/') }}" + '/api/tickets/' + phone,
                 success: function (data) {
-                    if (data.tickets < 1) {
+                    console.log(data);
+                    if (data.tickets == 0) {
                         $('#tickets').val(1);
                     } else {
-                        $('#tickets').val(data.tickets);
+                        $('#tickets').val(data.tickets + 1);
                     }
                     rebuildCodeTransaction();
+                }
+            });
+            $.ajax({
+                url: "{{ url('/') }}" + '/api/customer/' + phone,
+                success: function (data) {
+                    if (data.name != null) {
+                        $('#name').val(data.name)
+                    } else {
+                        $('#name').val('')
+                    }
                 }
             })
         }
@@ -103,5 +123,55 @@
             $('#price').val(priceFormat(price));
             rebuildCodeTransaction();
         });
+
+        function findTicket() {
+            var current = $('#find');
+            $.ajax({
+                url: "{{ url('/') }}" + "/api/ticket/" + current.val(),
+                success: function (data) {
+                    if (data.id == null) {
+                        alert('Ticket not exist');
+                    } else {
+                        console.log(data);
+                        showClearButton();
+                        appendTabOneInfo(data);
+                        appendTabTwoInfo(data);
+                        appendThreeOneInfo(data);
+                    }
+                }
+            });
+        }
+
+        function showClearButton(){
+            $('#find-input').append('<a onclick="location.reload()" class="btn btn-success btn-block" style="margin-top: 5px">Clear</a>');
+        }
+
+        function appendTabOneInfo(data){
+            $('#destination_to').val(data.to.id);
+            $('#price').val(data.to.price);
+            $('#departure_time').val(data.departure_time.id);
+            $('#submit').html('Refund');
+            $('#submit').removeClass('btn-success');
+            $('#submit').addClass('btn-danger');
+        }
+
+        function appendTabTwoInfo(data){
+            for (let i = 0; i < data.seats.length; i++) {
+                $('#seat-number-' + data.seats[i].seat_number).addClass('seat-selected');
+            }
+        }
+
+        function appendThreeOneInfo(data){
+            $('#phone').val(data.customer.phone);
+            $('#name').val(data.customer.name);
+            $('#baggages').html(null);
+            for (let i = 0; i < data.baggages.length; i++) {
+                $('#baggages').append(addBaggage(data.baggages[i].amount));
+            }
+            // TODO : Add fee belum
+            $('#noted').html(data.note);
+            $('#date_input').val(data.created_at.substr(0, 10));
+            $('#transaction_code').val(data.code);
+        }
     </script>
 @endsection

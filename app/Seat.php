@@ -31,7 +31,7 @@ class Seat extends Model
     */
     protected $fillable = [
         'seat_number',
-        'customer_id',
+        'ticket_id',
         'departure_time_id',
         'destination_id',
         'assign_location_id'

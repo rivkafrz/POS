@@ -40,6 +40,11 @@ class Ticket extends Model
     {
         return $this->hasMany(Baggage::class);
     }
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
     
     // Alias
 

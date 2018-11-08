@@ -17,5 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 Route::group(['middleware' => 'api'], function() {
-    Route::get('tickets/{phone}', 'Admin\BoardingController@tickets')->name('tickets.customer');
+    Route::get('tickets/{code}', 'Admin\BoardingController@tickets')->name('tickets.customer');
+    Route::get('customer/{phone}', 'Admin\BoardingController@customer')->name('customer.customer');
+    Route::get('ticket/{code}', 'Admin\BoardingController@show')->name('ticket.show');
 });
