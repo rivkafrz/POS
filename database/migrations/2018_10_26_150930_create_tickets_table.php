@@ -16,6 +16,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->boolean('refund')->default(0);
             $table->timestamps();
         });
 
@@ -34,10 +35,6 @@ class CreateTicketsTable extends Migration
             $table->foreign('destination_id')->references('id')->on('destinations');
         });
         
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->unsignedInteger('assign_location_id');
-            $table->foreign('assign_location_id')->references('id')->on('assign_locations');
-        });
 
         Schema::table('seats', function (Blueprint $table) {
             $table->unsignedInteger('ticket_id');

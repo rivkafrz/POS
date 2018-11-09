@@ -96,13 +96,12 @@ class BoardingController extends Controller
             return response()->json(null);
         }
 
-        return response()->json($ticket->load(['customer', 'baggages', 'departureTime', 'from', 'to', 'seats']));
+        return response()->json($ticket->load(['customer', 'baggages', 'departureTime', 'to', 'seats']));
     }
 
-    public function seats($from, $to, $time)
+    public function seats($to, $time)
     {
-        $seat = Seat::where('assign_location_id', $from)
-                    ->where('destination_id', $to)
+        $seat = Seat::where('destination_id', $to)
                     ->where('departure_time_id', $time);
 
         return response()->json($seat->get());

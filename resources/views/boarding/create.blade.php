@@ -207,7 +207,6 @@
             $.ajax({
                 url: "{{ url('/') }}" 
                     + '/api/seats/' 
-                    + "{{ Auth::user()->workTime->assignLocation->id }}" + '/'
                     + $('#destination_to').val() + '/'
                     + $('#departure_time').val() + '/',
                 success: function (data) {

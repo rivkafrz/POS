@@ -20,7 +20,6 @@ class TicketsTableSeeder extends Seeder
             'code'                  => 'kmzwa8awaa',
             'departure_time_id'     => DepartureTime::first()->id,
             'destination_id'        => Destination::first()->id,
-            'assign_location_id'    => AssignLocation::first()->id,
             'customer_id'           => Customer::first()->id
         ]);
     }
