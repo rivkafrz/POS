@@ -56,6 +56,23 @@ class BoardingController extends Controller
         };
     }
 
+    public function update($id, Request $form)
+    {
+        $ticket = Ticket::find($id);
+        foreach ($ticket->seats as $seat) {
+            Seat::find($seat->id)->delete();
+        }
+
+        foreach ($form->selectedSeat as $seat) {
+            $ticket->seats()->create([
+                'seat_number'          => $seat,
+                'departure_time_id'    => $form->departureTime,
+                'destination_id'       => $form->destination,
+                'assign_location_id'   => Auth::user()->workTime->assignLocation->id
+            ]);
+        }
+    }
+
     public function tickets($phone)
     {
     	$customer = Customer::where('phone', $phone)->first();
