@@ -151,6 +151,7 @@
             $('#price').val(data.to.price);
             $('#departure_time').val(data.departure_time.id);
             $('#submit').html('Refund');
+            $('#button-group').prepend('<a href="" class="btn btn-warning col-md-4 col-md-offset-1">Change</a>');
             $('#submit').removeClass('btn-success');
             $('#submit').addClass('btn-danger');
         }

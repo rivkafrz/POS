@@ -9,7 +9,6 @@ class Ticket extends Model
 
     protected $fillable = [
         'code',
-        'note',
         'departure_time_id',
         'destination_id',
         'assign_location_id',

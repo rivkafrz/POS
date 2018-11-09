@@ -15,8 +15,6 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->unique();
-            $table->string('note', 255)->nullable();
             $table->timestamps();
         });
 
