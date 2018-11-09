@@ -53,12 +53,24 @@
                     $('#' + seat_id.substr(4)).remove();
                     console.log($('#seats_commit').val());
                     console.log("Un-Selected " + seat_id);
+
+                    var init = parseInt($('#price_init').val());
+                    $('#price_val').val(parseInt($('#price_val').val()) - init);
+                    $('#price').val(parseInt($('#price').val()) - init);
+                    
                 } else {
                     $(current).addClass('seat-selected');
                     $(current).removeClass('seat-last');
                     console.log("Selected " + seat_id);
                     $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
                     console.log($('#seats_commit').val());
+                    if ($('#price_comparator').val() == 0) {
+                        console.log($('#price_comparator').val(parseInt($('#price_comparator').val()) + 1));
+                    } else {
+                        var init = parseInt($('#price_init').val());
+                        $('#price_val').val(parseInt($('#price_val').val()) + init);
+                        $('#price').val(parseInt($('#price').val()) + init);
+                    }   
                 }
             }
         }
@@ -122,8 +134,9 @@
 
         $('#destination_to').change(function(){ 
             var price = $(this).find(':selected').data('price');
-            $('#price_val').val(priceFormat(price));
-            $('#price').val(priceFormat(price));
+            $('#price_val').val(0);
+            $('#price').val(0);
+            $('#price_init').val(price);
             rebuildCodeTransaction();
         });
 

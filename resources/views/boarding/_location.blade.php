@@ -42,6 +42,7 @@
         <div class="col-sm-12">
             <input type="text" class="form-control" disabled="" id="price">
             <input name="price" type="hidden" class="form-control" id="price_val">
+            <input type="hidden" class="form-control" id="price_init">
         </div>
     </div>
     <div class="form-group row">
