@@ -11,4 +11,9 @@ class Cash extends Model
         'change',
         
     ];
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
 }

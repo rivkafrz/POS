@@ -15,10 +15,15 @@ class CreateNonCashesTable extends Migration
     {
         Schema::create('non_cashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('card_type');
-            $table->string('bank');
-            $table->int('no_card');
+            $table->string('card_type',7);
+            $table->string('bank',20);
+            $table->string('no_card',16);
             $table->timestamps();
+        });
+
+        Schema::table('non_cashes', function (Blueprint $table) {
+            $table->unsignedInteger('ticket_id');
+            $table->foreign('ticket_id')->references('id')->on('tickets');
         });
     }
 

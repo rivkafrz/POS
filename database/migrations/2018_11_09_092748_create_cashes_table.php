@@ -15,10 +15,16 @@ class CreateCashesTable extends Migration
     {
         Schema::create('cashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->int('amount');
-            $table->int('change');
+            $table->integer('amount');
+            $table->integer('change');
             $table->timestamps();
         });
+
+         Schema::table('cashes', function (Blueprint $table) {
+            $table->unsignedInteger('ticket_id');
+            $table->foreign('ticket_id')->references('id')->on('tickets');
+        });
+
     }
 
     /**
@@ -26,6 +32,9 @@ class CreateCashesTable extends Migration
      *
      * @return void
      */
+
+    
+
     public function down()
     {
         Schema::dropIfExists('cashes');

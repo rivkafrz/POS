@@ -40,6 +40,8 @@ class CreateTicketsTable extends Migration
             $table->unsignedInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets');
         });
+
+        
     }
 
     /**
