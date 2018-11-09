@@ -9,10 +9,8 @@ class Ticket extends Model
 
     protected $fillable = [
         'code',
-        'note',
         'departure_time_id',
         'destination_id',
-        'assign_location_id',
         'customer_id'
     ];
 
@@ -31,11 +29,6 @@ class Ticket extends Model
         return $this->belongsTo(Destination::class);
     }
     
-    public function assignLocation()
-    {
-        return $this->belongsTo(AssignLocation::class);
-    }
-    
     public function baggages()
     {
         return $this->hasMany(Baggage::class);
@@ -47,11 +40,6 @@ class Ticket extends Model
     }
     
     // Alias
-
-    public function from()
-    {
-        return $this->assignLocation();
-    }
 
     public function to()
     {

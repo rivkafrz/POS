@@ -11,6 +11,9 @@
 .seat-selected{
     background-color: yellow;
 }
+.seat-last{
+    background-color: green;
+}
 .seat-info-occupied{
     background-color: red;
 }

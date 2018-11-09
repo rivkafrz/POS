@@ -18,10 +18,8 @@ class TicketsTableSeeder extends Seeder
     {
         Ticket::create([
             'code'                  => 'kmzwa8awaa',
-            'note'                  => 'Dummy ticket',
             'departure_time_id'     => DepartureTime::first()->id,
             'destination_id'        => Destination::first()->id,
-            'assign_location_id'    => AssignLocation::first()->id,
             'customer_id'           => Customer::first()->id
         ]);
     }

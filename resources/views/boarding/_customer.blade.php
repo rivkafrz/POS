@@ -22,19 +22,7 @@
             <a onclick="addBaggage()" class="btn btn-primary pull-right" style="border-radius: 100px; margin-top: 10pt"><i class="fa fa-plus"></i></a>
         </div>
     </div>
-    <div class="form-group row">
-        <label for="add_fee" class="col-sm-2 control-label">Add Fee</label>
-        <div class="col-sm-10">
-            <input name="add_fee" type="text" class="form-control" id="add_fee_input">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="note" class="col-sm-2 control-label">Note</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" rows="5" name="note" id="noted"></textarea>
-        </div>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-success col-md-4 col-md-offset-7" id="submit">Ok</button>
+    <div class="form-group" id="button-group">
+        <a data-toggle="modal" data-target="#myModal" class="btn btn-success col-md-4 col-md-offset-1" id="submit">Ok</a>
     </div>
 </div>

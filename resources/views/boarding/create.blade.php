@@ -5,7 +5,7 @@
             <div class="box box-default">
                 <div class="box-body">
                     <div class="row">
-                        <form action="{{ route('boarding.store') }}" class="form-horizontal" method="POST">
+                        <form action="{{ route('boarding.store') }}" class="form-horizontal" method="POST" id="ticket_form">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -26,6 +26,7 @@
                             @include('boarding._location')
                             @include('boarding._seats')
                             @include('boarding._info-seat')
+                            @include('boarding._modal')
                             @include('boarding._customer')
                         </form>
                     </div>
@@ -48,11 +49,13 @@
             } else {
                 if ($(current).hasClass('seat-selected')) {
                     $(current).removeClass('seat-selected');
+                    $(current).removeClass('seat-last');
                     $('#' + seat_id.substr(4)).remove();
                     console.log($('#seats_commit').val());
                     console.log("Un-Selected " + seat_id);
                 } else {
                     $(current).addClass('seat-selected');
+                    $(current).removeClass('seat-last');
                     console.log("Selected " + seat_id);
                     $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
                     console.log($('#seats_commit').val());
@@ -132,14 +135,20 @@
                     if (data.id == null) {
                         alert('Ticket not exist');
                     } else {
-                        console.log(data);
+                        prependPatch(data);
                         showClearButton();
                         appendTabOneInfo(data);
+                        checkForSeat();
                         appendTabTwoInfo(data);
                         appendThreeOneInfo(data);
                     }
                 }
             });
+        }
+
+        function prependPatch(data) {
+            $('#ticket_form').prepend('<input type="hidden" name="_method" value="PATCH">');
+            $('#ticket_form').attr('action', "{{ url('/') }}" + '/app/boarding/' + data.id);
         }
 
         function showClearButton(){
@@ -150,13 +159,20 @@
             $('#destination_to').val(data.to.id);
             $('#price').val(data.to.price);
             $('#departure_time').val(data.departure_time.id);
-            $('#submit').html('Refund');
+            $('#submit').html('Change');
             $('#submit').removeClass('btn-success');
-            $('#submit').addClass('btn-danger');
+            $('#submit').addClass('btn-warning');
         }
 
         function appendTabTwoInfo(data){
-            selectedSeat(data.seats);
+            selectedCurrentSeat(data.seats);
+        }
+
+        function selectedCurrentSeat(data){
+            checkForSeat();
+            for (let i = 0; i < data.length; i++) {
+                $('#seat-number-' + data[i].seat_number).addClass('seat-last');
+            }
         }
 
         function selectedSeat(data){
@@ -167,7 +183,11 @@
 
         function occupySeat(data){
             for (let i = 0; i < data.length; i++) {
-                $('#seat-number-' + data[i].seat_number).addClass('seat-occupied');
+                if ($('#seat-number-' + data[i].seat_number).hasClass('seat-last')) {
+                    $('#seat-number-' + data[i].seat_number).removeClass('seat-occupied');
+                } else {
+                    $('#seat-number-' + data[i].seat_number).addClass('seat-occupied');
+                }
             }
         }
 
@@ -188,7 +208,6 @@
             $.ajax({
                 url: "{{ url('/') }}" 
                     + '/api/seats/' 
-                    + "{{ Auth::user()->workTime->assignLocation->id }}" + '/'
                     + $('#destination_to').val() + '/'
                     + $('#departure_time').val() + '/',
                 success: function (data) {
@@ -197,5 +216,6 @@
                 }
             })
         }
+
     </script>
 @endsection
