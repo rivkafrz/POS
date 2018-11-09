@@ -26,6 +26,7 @@
                             @include('boarding._location')
                             @include('boarding._seats')
                             @include('boarding._info-seat')
+                            @include('boarding._modal')
                             @include('boarding._customer')
                         </form>
                     </div>
