@@ -114,15 +114,6 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $seat = Seat:: create([
-            'seat_number' => '2',
-            'customer_id' => $customer->id,
-            'departure_time_id'=>$jam->id,
-            'destination_id'=>$jurusan->id
-           
-
-        ]);
-
 
         //membuat sample admin
         $admin = new User();

@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    //
-       protected $fillable = ['name','phone'];
+   	protected $fillable = ['name','phone'];
 
-       public function seats()
+	public function tickets()
     {
-        return $this->hasMany(Seat::class);
+        return $this->hasMany(Ticket::class);
     }
 }

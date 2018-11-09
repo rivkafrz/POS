@@ -2,9 +2,10 @@
 
 Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 {
+	Route::resource('boarding', 'Admin\BoardingController');
 	CRUD::resource('user','Admin\UserCrudController');
 	CRUD::resource('departure_time','Admin\Departure_timeCrudController');
-	CRUD::resource('order','Admin\OrderCrudController');
+	// CRUD::resource('order','Admin\OrderCrudController');
 	CRUD::resource('assign_location','Admin\Assign_locationCrudController');
 	CRUD::resource('work_time','Admin\Work_timeCrudController');
 	CRUD::resource('destination','Admin\DestinationCrudController');

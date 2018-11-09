@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Seat extends Model
 {
@@ -30,14 +31,15 @@ class Seat extends Model
     */
     protected $fillable = [
         'seat_number',
-        'customer_id',
+        'ticket_id',
         'departure_time_id',
-        'destination_id'
+        'destination_id',
+        'assign_location_id'
     ];
 
-    public function customer()
+    public function ticket()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Ticket::class);
 	}
 
 	public function departureTime()
@@ -48,6 +50,16 @@ class Seat extends Model
 	public function destination()
     {
         return $this->belongsTo(Destination::class);
-	}
+    }
+    
+    public static function seats(AssignLocation $from, Destination $to, DepartureTime $departure)
+    {
+        $time = Carbon::now()->toDateString();
+
+        return Seat::where('assign_location_id', $from->id)
+                    ->where('destination_id', $to->id)
+                    ->where('departure_time_id', $departure->id)
+                    ->where('created_at', 'like', $time . '%');
+    }
 
 }

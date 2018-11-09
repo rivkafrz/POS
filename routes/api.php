@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::group(['middleware' => 'api'], function() {
+    Route::get('tickets/{code}', 'Admin\BoardingController@tickets')->name('tickets.customer');
+    Route::get('customer/{phone}', 'Admin\BoardingController@customer')->name('customer.customer');
+    Route::get('ticket/{code}', 'Admin\BoardingController@show')->name('ticket.show');
+    Route::get('seats/{from}/{to}/{time}', 'Admin\BoardingController@seats')->name('seats.show');
 });
