@@ -29,6 +29,10 @@ class Departure_time extends Model
         return $this->hasMany(Seat::class);
     }
 
+    public function manifest()
+    {
+        return $this->belongsTo(Manifest::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
