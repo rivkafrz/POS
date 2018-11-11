@@ -41,12 +41,12 @@ class Ticket extends Model
 
     public function cash()
     {
-        return $this->hasMany(Cash::class);
+        return $this->hasOne(Cash::class);
     }
 
     public function nonCash()
     {
-        return $this->hasMany(NonCash::class);
+        return $this->hasOne(NonCash::class);
     }
     
     // Alias
