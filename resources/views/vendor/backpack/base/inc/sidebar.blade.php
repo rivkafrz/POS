@@ -15,7 +15,7 @@
           @if (Auth::user()->hasRole('admin'))
             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
             <li><a href="{{ backpack_url ('user') }}"><i class="fa fa-users"></i> <span>{{ trans('Manage Account') }}</span></a></li>
-            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
+
 
             <li class="treeview">
             <a href="#"><i class="fa-fa-archieve"></i>Master Data<i class="fa fa-angle-left pull-right"></i></a>
@@ -31,7 +31,7 @@
           @endif
           @if (Auth::user()->hasRole('ticketing'))
           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
-           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Order') }}</span></a></li>
+            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
           @endif
 

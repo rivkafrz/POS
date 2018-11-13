@@ -38,6 +38,16 @@ class Ticket extends Model
     {
         return $this->hasMany(Seat::class);
     }
+
+    public function cash()
+    {
+        return $this->hasOne(Cash::class);
+    }
+
+    public function nonCash()
+    {
+        return $this->hasOne(NonCash::class);
+    }
     
     // Alias
 
@@ -45,4 +55,6 @@ class Ticket extends Model
     {
         return $this->destination();
     }
+
+
 }
