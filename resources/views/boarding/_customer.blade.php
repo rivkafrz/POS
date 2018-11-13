@@ -29,6 +29,6 @@
         </div>
     </div>
     <div class="form-group" id="button-group">
-        <a data-toggle="modal" data-target="#myModal" class="btn btn-success col-md-4 col-md-offset-1" id="submit">Ok</a>
+        <a data-toggle="modal" data-target="#paymentModal" class="btn btn-success col-md-4 col-md-offset-1" id="submit">Ok</a>
     </div>
 </div>

@@ -23,6 +23,7 @@ class BoardingController extends Controller
 
     public function store(Request $form)
     {
+        dd($form->all());
         $customer = Customer::firstOrCreate([
             'phone' => $form->phone,
             'name'  => $form->customer

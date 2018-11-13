@@ -56,6 +56,7 @@
 
                     var init = parseInt($('#price_init').val());
                     $('#charge').val(parseInt($('#charge').val()) - init);
+                    $('#charge_modal').val(parseInt($('#charge_modal').val()) - init);
                     $('#price').val(parseInt($('#price').val()) - init);
                     
                 } else {
@@ -69,6 +70,7 @@
                     } else {
                         var init = parseInt($('#price_init').val());
                         $('#charge').val(parseInt($('#charge').val()) + init);
+                        $('#charge_modal').val(parseInt($('#charge_modal').val()) + init);
                         $('#price').val(parseInt($('#price').val()) + init);
                     }   
                 }
@@ -135,6 +137,7 @@
         $('#destination_to').change(function(){ 
             var price = $(this).find(':selected').data('price');
             $('#charge').val(0);
+            $('#charge_modal').val(0);
             $('#price').val(0);
             $('#ticket_price').val(priceFormat(price));
             $('#price_init').val(price);
@@ -231,5 +234,28 @@
             })
         }
 
+        function showPaymentForm(payment_type){
+            console.log(payment_type);
+
+            if (payment_type == 1) {
+                $('#payment').html(null);
+                $('#payment').html(`@include('boarding._cash')`);
+            } else {
+                $('#payment').html(null);
+                $('#payment').html(`@include('boarding._no_cash')`);
+            }
+        }
+
+        function selectBank(){
+            console.log($('#bank_not_exist').is(':checked'))
+            if ($('#bank_not_exist').is(':checked')) {
+                $('#card_bank').remove();
+                $('#select_bank').prepend(`@include('boarding._input_bank')`);
+            } else {
+                $('#card_bank').remove();
+                $('#select_bank').prepend(`@include('boarding._select_bank')`);
+            }
+        }
+        
     </script>
 @endsection
