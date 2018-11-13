@@ -9,11 +9,16 @@ class Cash extends Model
       protected $fillable = [
         'amount',
         'change',
-        
+        'ticket_id'
     ];
 
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
     }
 }

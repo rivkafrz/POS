@@ -3,7 +3,7 @@
     <div class="col-md-10">
         <div class="row">
             <div class="col-md-6">
-                <input type="radio" name="card_type" value="1"> Debit
+                <input type="radio" name="card_type" value="1" checked> Debit
             </div>
             <div class="col-md-6">
                 <input type="radio" name="card_type" value="0"> Credit

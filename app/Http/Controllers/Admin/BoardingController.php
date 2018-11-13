@@ -6,24 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Departure_time;
+use App\DepartureTime;
+use App\Destination as Dest;
 use App\Customer;
 use App\Ticket;
 use App\Seat;
+use App\Cash;
+use App\Bank;
+use App\NonCash;
 use Auth;
 use App\Baggage;
+use Alert;
 
 class BoardingController extends Controller
 {
     public function create()
     {
     	$destinations = Destination::all();
-    	$departures = Departure_time::all();
-        return view('boarding.create', compact('destinations', 'departures'));
+        $departures = Departure_time::all();
+        $banks = Bank::all();
+        return view('boarding.create', compact('destinations', 'departures', 'banks'));
     }
 
     public function store(Request $form)
     {
-        dd($form->all());
         $customer = Customer::firstOrCreate([
             'phone' => $form->phone,
             'name'  => $form->customer
@@ -55,23 +61,80 @@ class BoardingController extends Controller
                 'ticket_id'     => $ticket->id
             ]);
         };
+
+        // cash == 1
+        if ($form->payment_type){
+            Cash::create([
+                'amount'    => $form->cash_amount,
+                'change'    => $form->cash_change,
+                'ticket_id' => $ticket->id
+
+            ]);
+        } else {
+            $bank = Bank::firstOrCreate([
+                'name' => str_slug($form->bank_name)
+            ]);
+
+            NonCash::create([
+                'card_type' => $form->card_type,
+                'bank_id'   => $bank->id,
+                'no_card'   => $form->no_card,
+                'ticket_id' => $ticket->id
+
+            ]);
+        }
+
+        Alert::success('Ticket created successfully')->flash();
+        return redirect()->back();
     }
 
     public function update($id, Request $form)
     {
-        $ticket = Ticket::find($id);
-        foreach ($ticket->seats as $seat) {
-            Seat::find($seat->id)->delete();
-        }
-
-        foreach ($form->selectedSeat as $seat) {
-            $ticket->seats()->create([
-                'seat_number'          => $seat,
-                'departure_time_id'    => $form->departureTime,
-                'destination_id'       => $form->destination,
-                'assign_location_id'   => Auth::user()->workTime->assignLocation->id
+        $ticket = Ticket::where('code', $form->find)->first();
+        
+        // Jika DepartureTime berubah
+        if ($ticket->departure_time_id != $form->departureTime) {
+            $ticket->update([
+                'departure_time_id' => $form->departureTime
             ]);
         }
+
+        // update Seat
+        foreach($ticket->seats as $seat){
+            // Seat yang tidak dipilih kembali status refund = true
+            if (!in_array($seat->seat_number, $form->selectedSeat)) {
+                $seat->update([
+                    'refund' => 1
+                ]);
+            }
+        }
+
+        // Seat baru yang dipilih tidak sama dengan Seat sebelumnya di masuk database
+        foreach ($form->selectedSeat as $newSeat) {
+            if (Seat::seats(Dest::find($ticket->destination->id), DepartureTime::find($form->departureTime), true)->where('seat_number', $newSeat)->first() == null) {
+                Seat::create([
+                    'seat_number'       => $newSeat,
+                    'departure_time_id' => $form->departureTime,
+                    'destination_id'    => $ticket->destination->id,
+                    'ticket_id'         => $ticket->id
+                 ]);
+            }
+        }
+
+        // Update Baggage
+        foreach ($ticket->baggages as $baggage) {
+            $baggage->delete();
+        }
+        foreach ($form->baggages as $baggage) {
+            if ($baggage != null) {
+                $ticket->baggages()->create([
+                    'amount' => $baggage
+                ]);
+            }
+        }
+
+        Alert::success('Ticket updated successfully')->flash();
+        return redirect()->back();
     }
 
     public function tickets($phone)
@@ -103,7 +166,8 @@ class BoardingController extends Controller
     public function seats($to, $time)
     {
         $seat = Seat::where('destination_id', $to)
-                    ->where('departure_time_id', $time);
+                    ->where('departure_time_id', $time)
+                    ->where('refund', 0);
 
         return response()->json($seat->get());
     }

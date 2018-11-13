@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNonCashesTable extends Migration
+class CreateBanksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateNonCashesTable extends Migration
      */
     public function up()
     {
-        Schema::create('non_cashes', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('card_type');
-            // 1 debit
-            // 0 credit
-            $table->string('no_card',16);
+            $table->string('name')->unique();
             $table->timestamps();
         });
 
         Schema::table('non_cashes', function (Blueprint $table) {
-            $table->unsignedInteger('ticket_id');
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->unsignedInteger('bank_id');
+            $table->foreign('bank_id')->references('id')->on('banks');
         });
     }
 
@@ -35,6 +32,6 @@ class CreateNonCashesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('non_cashes');
+        Schema::dropIfExists('banks');
     }
 }
