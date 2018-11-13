@@ -40,8 +40,8 @@
     <div class="form-group row">
         <label for="price" class="col-md-6">Price</label>
         <div class="col-sm-12">
-            <input type="text" class="form-control" disabled="" id="price">
-            <input name="price" type="hidden" class="form-control" id="price_val">
+            <input type="text" class="form-control" disabled="" id="ticket_price">
+            <input name="price" type="hidden" class="form-control" id="price">
             <input type="hidden" class="form-control" id="price_init">
         </div>
     </div>

@@ -55,7 +55,7 @@
                     console.log("Un-Selected " + seat_id);
 
                     var init = parseInt($('#price_init').val());
-                    $('#price_val').val(parseInt($('#price_val').val()) - init);
+                    $('#charge').val(parseInt($('#charge').val()) - init);
                     $('#price').val(parseInt($('#price').val()) - init);
                     
                 } else {
@@ -68,7 +68,7 @@
                         console.log($('#price_comparator').val(parseInt($('#price_comparator').val()) + 1));
                     } else {
                         var init = parseInt($('#price_init').val());
-                        $('#price_val').val(parseInt($('#price_val').val()) + init);
+                        $('#charge').val(parseInt($('#charge').val()) + init);
                         $('#price').val(parseInt($('#price').val()) + init);
                     }   
                 }
@@ -134,8 +134,9 @@
 
         $('#destination_to').change(function(){ 
             var price = $(this).find(':selected').data('price');
-            $('#price_val').val(0);
+            $('#charge').val(0);
             $('#price').val(0);
+            $('#ticket_price').val(priceFormat(price));
             $('#price_init').val(price);
             rebuildCodeTransaction();
         });
