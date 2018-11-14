@@ -33,7 +33,8 @@ class Seat extends Model
         'seat_number',
         'ticket_id',
         'departure_time_id',
-        'destination_id'
+        'destination_id',
+        'refund'
     ];
 
     public function ticket()
@@ -51,11 +52,17 @@ class Seat extends Model
         return $this->belongsTo(Destination::class);
     }
     
-    public static function seats(Destination $to, DepartureTime $departure)
+    public static function seats(Destination $to, DepartureTime $departure, $refund = false)
     {
         $time = Carbon::now()->toDateString();
 
-        return Seat::where('destination_id', $to->id)
+        if ($refund) {
+            return Seat::where('destination_id', $to->id)
+                ->where('departure_time_id', $departure->id)
+                ->where('created_at', 'like', $time . '%');    
+        }
+        return Seat::where('refund', $refund)
+                    ->where('destination_id', $to->id)
                     ->where('departure_time_id', $departure->id)
                     ->where('created_at', 'like', $time . '%');
     }

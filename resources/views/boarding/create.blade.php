@@ -11,7 +11,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="date" class="col-md-2 control-label">Date</label>
                                     <div class="col-md-10">
-                                        <input name="date" type="date" class="form-control" id="date_input">
+                                        <input name="date" type="date" class="form-control" id="date_input" value="{{ substr(now()->toDateString(), 0, 10) }}">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -53,12 +53,33 @@
                     $('#' + seat_id.substr(4)).remove();
                     console.log($('#seats_commit').val());
                     console.log("Un-Selected " + seat_id);
+
+                    var init = parseInt($('#price_init').val());
+                    $('#charge').val(parseInt($('#charge').val()) - init);
+                    $('#charge_modal').val(parseInt($('#charge_modal').val()) - init);
+                    $('#price').val(parseInt($('#price').val()) - init);
+                    $('#seat_selected').val($('#seat_selected').val() - 1);
+                    $('#refunded_seat').html(parseInt($('#refunded_seat').html()) + 1);
                 } else {
-                    $(current).addClass('seat-selected');
-                    $(current).removeClass('seat-last');
-                    console.log("Selected " + seat_id);
-                    $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
-                    console.log($('#seats_commit').val());
+                    if (parseInt($('#seat_limit').val()) > parseInt($('#seat_selected').val())) {
+                        $(current).addClass('seat-selected');
+                        $(current).removeClass('seat-last');
+                        console.log("Selected " + seat_id);
+                        $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
+                        console.log($('#seats_commit').val());
+                        if ($('#price_comparator').val() == 0) {
+                            console.log($('#price_comparator').val(parseInt($('#price_comparator').val()) + 1));
+                        } else {
+                            var init = parseInt($('#price_init').val());
+                            $('#charge').val(parseInt($('#charge').val()) + init);
+                            $('#charge_modal').val(parseInt($('#charge_modal').val()) + init);
+                            $('#price').val(parseInt($('#price').val()) + init);
+                            $('#seat_selected').val(parseInt($('#seat_selected').val()) + 1);
+                            $('#refunded_seat').html(parseInt($('#refunded_seat').html()) - 1);
+                        }
+                    } else {
+                        alert('Cannot add more seats');
+                    }
                 }
             }
         }
@@ -122,8 +143,11 @@
 
         $('#destination_to').change(function(){ 
             var price = $(this).find(':selected').data('price');
-            $('#price_val').val(priceFormat(price));
-            $('#price').val(priceFormat(price));
+            $('#charge').val(0);
+            $('#charge_modal').val(0);
+            $('#price').val(0);
+            $('#ticket_price').val(priceFormat(price));
+            $('#price_init').val(price);
             rebuildCodeTransaction();
         });
 
@@ -140,15 +164,25 @@
                         appendTabOneInfo(data);
                         checkForSeat();
                         appendTabTwoInfo(data);
-                        appendThreeOneInfo(data);
+                        appendTabThreeInfo(data);
+                        changeModalButtonToSubmit();
                     }
                 }
             });
         }
 
+        function changeModalButtonToSubmit(){
+            $('#paymentModal').remove();
+            $('#submit').remove();
+            $('#button-group').append('<button id="submit">Change</button>');
+            $('#submit').attr('class', 'btn btn-warning col-md-4 col-md-offset-1').attr('type', 'submit');
+        }
+
         function prependPatch(data) {
             $('#ticket_form').prepend('<input type="hidden" name="_method" value="PATCH">');
             $('#ticket_form').attr('action', "{{ url('/') }}" + '/app/boarding/' + data.id);
+            $('#seat_limit').val(data.seats.length);
+            $('#destination_to').attr('disabled', true);
         }
 
         function showClearButton(){
@@ -157,7 +191,9 @@
 
         function appendTabOneInfo(data){
             $('#destination_to').val(data.to.id);
-            $('#price').val(data.to.price);
+            let price = $('#destination_to').find(':selected').data('price');
+            $('#ticket_price').val(priceFormat(price));
+            $('#price_init').val(price);
             $('#departure_time').val(data.departure_time.id);
             $('#submit').html('Change');
             $('#submit').removeClass('btn-success');
@@ -182,6 +218,16 @@
         }
 
         function occupySeat(data){
+
+            // Clear seat
+            for (let i = 1; i <= 40; i++) {
+                $('#seat-number-' + i).removeClass('seat-selected');
+                $('#seat-number-' + i).removeClass('seat-occupied');
+                $('#seats').html(null);
+                $('#charge').val(0)  
+                $('#charge_modal').val(0)  
+            }
+            
             for (let i = 0; i < data.length; i++) {
                 if ($('#seat-number-' + data[i].seat_number).hasClass('seat-last')) {
                     $('#seat-number-' + data[i].seat_number).removeClass('seat-occupied');
@@ -191,17 +237,21 @@
             }
         }
 
-        function appendThreeOneInfo(data){
+        function appendTabThreeInfo(data){
             $('#phone').val(data.customer.phone);
             $('#name').val(data.customer.name);
             $('#baggages').html(null);
             for (let i = 0; i < data.baggages.length; i++) {
                 $('#baggages').append(addBaggage(data.baggages[i].amount));
             }
-            // TODO : Add fee belum
             $('#noted').html(data.note);
             $('#date_input').val(data.created_at.substr(0, 10));
             $('#transaction_code').val(data.code);
+            $('#charge').val(0);
+            $('#charge_modal').val(0);
+            $('#refunded').append(`@include('boarding._refund')`);
+            console.log(data.seats);
+            $('#refunded_seat').html(data.seats.length);
         }
 
         function checkForSeat(){
@@ -217,5 +267,33 @@
             })
         }
 
+        function showPaymentForm(payment_type){
+            console.log(payment_type);
+
+            if (payment_type == 1) {
+                $('#payment').html(null);
+                $('#payment').html(`@include('boarding._cash')`);
+            } else {
+                $('#payment').html(null);
+                $('#payment').html(`@include('boarding._no_cash')`);
+            }
+        }
+
+        function selectBank(){
+            console.log($('#bank_not_exist').is(':checked'))
+            if ($('#bank_not_exist').is(':checked')) {
+                $('#card_bank').remove();
+                $('#select_bank').prepend(`@include('boarding._input_bank')`);
+            } else {
+                $('#card_bank').remove();
+                $('#select_bank').prepend(`@include('boarding._select_bank')`);
+            }
+        }
+
+        function sumChange() {
+            let change = $('#cash_change');
+            change.val(parseInt($('#cash_amount').val()) - parseInt($('#charge').val()));
+        }
+        
     </script>
 @endsection

@@ -20,6 +20,9 @@
 .seat-info-selected{
     background-color: yellow;
 }
+.seat-info-last{
+    background-color: green;
+}
 .seat-info{
     border-radius: 100px;
     height: 25px !important;

@@ -36,7 +36,7 @@ class Ticket extends Model
 
     public function seats()
     {
-        return $this->hasMany(Seat::class);
+        return $this->hasMany(Seat::class)->where('refund', 0);
     }
 
     public function cash()

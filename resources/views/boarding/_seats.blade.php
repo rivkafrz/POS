@@ -1,4 +1,6 @@
 <div class="col-md-4">
+    <input type="hidden" name="seat_limit" id="seat_limit" value="40">
+    <input type="hidden" name="seat_selected" id="seat_selected" value="0">
     <div id="seats">
     </div>
     <p class="lead">Select Seat</p>

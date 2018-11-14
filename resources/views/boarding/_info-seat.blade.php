@@ -25,4 +25,12 @@
             Occupied
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="seat seat-info seat-info-last"></div>
+        </div>
+        <div class="col-md-10">
+            Last Seat
+        </div>
+    </div>
 </div>

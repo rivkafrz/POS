@@ -22,7 +22,15 @@
             <a onclick="addBaggage()" class="btn btn-primary pull-right" style="border-radius: 100px; margin-top: 10pt"><i class="fa fa-plus"></i></a>
         </div>
     </div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label for="name" class="control-label">Charge</label>
+            <input disabled id="charge" type="text" class="form-control">
+        </div>
+    </div>
+    <div id="refunded">
+    </div>
     <div class="form-group" id="button-group">
-        <a data-toggle="modal" data-target="#myModal" class="btn btn-success col-md-4 col-md-offset-1" id="submit">Ok</a>
+        <a data-toggle="modal" data-target="#paymentModal" class="btn btn-success col-md-4 col-md-offset-1" id="submit">Ok</a>
     </div>
 </div>
