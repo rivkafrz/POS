@@ -11,7 +11,9 @@ class Ticket extends Model
         'code',
         'departure_time_id',
         'destination_id',
-        'customer_id'
+        'customer_id',
+        'amount',
+        'user_id'
     ];
 
     public function customer()
@@ -48,12 +50,24 @@ class Ticket extends Model
     {
         return $this->hasOne(NonCash::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     // Alias
 
     public function to()
     {
         return $this->destination();
+    }
+
+    public static function eod($user_id)
+    {
+        $time = now()->toDateString();
+        return Ticket::where('user_id', $user_id)
+                    ->where('created_at', 'like', $time . '%');
     }
 
 

@@ -16,7 +16,13 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->unsignedInteger('amount');
             $table->timestamps();
+        });
+
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
 
         Schema::table('tickets', function (Blueprint $table) {
