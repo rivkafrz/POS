@@ -12,6 +12,7 @@ class Ticket extends Model
         'departure_time_id',
         'destination_id',
         'customer_id',
+        'amount',
         'user_id'
     ];
 
@@ -60,6 +61,13 @@ class Ticket extends Model
     public function to()
     {
         return $this->destination();
+    }
+
+    public static function eod($user_id)
+    {
+        $time = now()->toDateString();
+        return Ticket::where('user_id', $user_id)
+                    ->where('created_at', 'like', $time . '%');
     }
 
 
