@@ -42,7 +42,7 @@ class BoardingController extends Controller
             'destination_id'        => $form->destination,
             'assign_location_id'    => Auth::user()->workTime->assignLocation->id,
             'customer_id'           => $customer->id,
-            'note'                  => $form->note
+            'user_id'               => Auth::user()->id
         ]);
 
         foreach ($form->selectedSeat as $seat) {

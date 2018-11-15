@@ -20,6 +20,11 @@ class CreateTicketsTable extends Migration
         });
 
         Schema::table('tickets', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+
+        Schema::table('tickets', function (Blueprint $table) {
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
         });

@@ -7,6 +7,7 @@ use App\Destination;
 use App\AssignLocation;
 use App\Seat;
 use App\Customer;
+use App\User;
 
 class TicketsTableSeeder extends Seeder
 {
@@ -21,7 +22,8 @@ class TicketsTableSeeder extends Seeder
             'code'                  => 'kmzwa8awaa',
             'departure_time_id'     => DepartureTime::first()->id,
             'destination_id'        => Destination::first()->id,
-            'customer_id'           => Customer::first()->id
+            'customer_id'           => Customer::first()->id,
+            'user_id'               => User::first()->id
         ]);
 
         Seat::create([

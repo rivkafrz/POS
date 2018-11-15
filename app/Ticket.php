@@ -11,7 +11,8 @@ class Ticket extends Model
         'code',
         'departure_time_id',
         'destination_id',
-        'customer_id'
+        'customer_id',
+        'user_id'
     ];
 
     public function customer()
@@ -47,6 +48,11 @@ class Ticket extends Model
     public function nonCash()
     {
         return $this->hasOne(NonCash::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     
     // Alias
