@@ -30,7 +30,7 @@ class EmployeeRequest extends FormRequest
             'employee_name' => 'required|alpha',
             'gender'=> 'required',
             'job_section'=>'required|max:50|alpha',
-            'phone'=>'required|max:13|numeric',
+            'phone'=>'required|regex:/^(08)[0-9]{8,11}$/|numeric',
             'address'=>'required|max:100',
 
         ];
