@@ -26,11 +26,11 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'nip' => 'required|min:3|max:5|numeric',
+            'nip' => 'required |numeric',
             'employee_name' => 'required|alpha',
             'gender'=> 'required',
             'job_section'=>'required|max:50|alpha',
-            'phone'=>'required|max:13|numeric',
+            'phone'=>'required |numeric',
             'address'=>'required|max:100',
 
         ];
