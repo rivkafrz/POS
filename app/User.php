@@ -38,4 +38,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Models\Work_time::class);
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function eods()
+    {
+        return $this->hasMany(EOD::class);
+    }
 }

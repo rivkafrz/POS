@@ -22,6 +22,10 @@ class BoardingController extends Controller
 {
     public function create()
     {
+        if (!is_null(Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->first())) {
+            Alert::success('EOD already created, redirect you back.')->flash();
+            return redirect()->back();
+        }
     	$destinations = Destination::all();
         $departures = Departure_time::all();
         $banks = Bank::all();
@@ -34,6 +38,12 @@ class BoardingController extends Controller
             'phone' => $form->phone,
             'name'  => $form->customer
         ]);
+        if (is_null($form->cash_amount)) {
+            $amount = Destination::find($form->destination)->price * count($form->selectedSeat);
+        } else {
+            $amount = $form->cash_amount;
+        }
+        
         
         $ticket = Ticket::create([
             'code'                  => $form->code,
@@ -42,7 +52,8 @@ class BoardingController extends Controller
             'destination_id'        => $form->destination,
             'assign_location_id'    => Auth::user()->workTime->assignLocation->id,
             'customer_id'           => $customer->id,
-            'note'                  => $form->note
+            'amount'                => $amount,
+            'user_id'               => Auth::user()->id
         ]);
 
         foreach ($form->selectedSeat as $seat) {
@@ -56,16 +67,17 @@ class BoardingController extends Controller
         };
         
         foreach ($form->baggages as $amount) {
-            Baggage::create([
-                'amount'        => $amount,
-                'ticket_id'     => $ticket->id
-            ]);
+            if ($amount != 0 or $amount != null) {
+                Baggage::create([
+                    'amount'        => $amount,
+                    'ticket_id'     => $ticket->id
+                ]);
+            }
         };
 
         // cash == 1
         if ($form->payment_type){
             Cash::create([
-                'amount'    => $form->cash_amount,
                 'change'    => $form->cash_change,
                 'ticket_id' => $ticket->id
 

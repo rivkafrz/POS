@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCashesTable extends Migration
+class CreateEODsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateCashesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cashes', function (Blueprint $table) {
+        Schema::create('e_o_d_s', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('change');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
-
-         Schema::table('cashes', function (Blueprint $table) {
-            $table->unsignedInteger('ticket_id');
-            $table->foreign('ticket_id')->references('id')->on('tickets');
-        });
-
     }
 
     /**
@@ -31,11 +26,8 @@ class CreateCashesTable extends Migration
      *
      * @return void
      */
-
-    
-
     public function down()
     {
-        Schema::dropIfExists('cashes');
+        Schema::dropIfExists('e_o_d_s');
     }
 }
