@@ -57,6 +57,8 @@
       <!-- /.sidebar -->
     </aside>
 @endif
-@if (Auth::user()->hasRole('ticketing'))
+@if (Auth::check())
+  @if (Auth::user()->hasRole('ticketing'))
     @include('partials._modal-eod')
+  @endif
 @endif
