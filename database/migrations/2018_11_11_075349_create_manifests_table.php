@@ -17,6 +17,7 @@ class CreateManifestsTable extends Migration
             $table->increments('id');
             $table->string('driver',30);
             $table->string('no_body',8);
+            $table->string('note');
             $table->timestamps();
         });
 
