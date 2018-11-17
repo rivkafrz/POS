@@ -15,6 +15,14 @@
   
           <div class="form-group">
             <div class="col-md-12">
+              @php
+                  $payment_invalid = ($errors->has('payment_type') or $errors->has('cash_amount') or $errors->has('cash_change') or $errors->has('card_type') or $errors->has('bank_name') or $errors->has('no_card'))
+              @endphp
+              @if ($payment_invalid)
+                <div class="alert alert-danger">
+                  <p>Payment data is invalid</p>
+                </div>
+              @endif
               <div class="col-md-6">
                 <input type="radio" name="payment_type" id="payment_type" value="1" onchange="showPaymentForm(1)"> Cash
               </div>

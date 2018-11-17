@@ -20,12 +20,12 @@
             </div>
         @endif
     </div>
-    <div class="form-group row">
+    <div class="form-group {{ $errors->has('destination') ? 'has-error' : null }} row">
         <label for="to" class="col-md-6">To</label>
         <div class="col-sm-12">
             @if ($destinations->count() !== 0)
                 <select name="destination" class="form-control" id="destination_to">
-                  <option value="0">{{ "-- Destination --" }}</option>
+                  <option value="">{{ "-- Destination --" }}</option>
                     @foreach ($destinations as $destination)
                       <option value="{{ $destination->id }}" data-code="{{ $destination->code }}" data-price={{ $destination->price }}>{{ $destination->to }}</option>
                     @endforeach
@@ -45,12 +45,12 @@
             <input type="hidden" class="form-control" id="price_init">
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group {{ $errors->has('departureTime') ? 'has-error' : null }} row">
         <label for="departure_time" class="col-md-6">Departure Time</label>
         <div class="col-sm-12">
             @if ($departures->count() !== 0)
                 <select name="departureTime" class="form-control" id="departure_time" onchange="checkForSeat()">
-                  <option value="0">{{ "-- Boarding --" }}</option>
+                  <option value="">{{ "-- Boarding --" }}</option>
                     @foreach ($departures as $departure)
                       <option value="{{ $departure->id }}" data-boarding-time={{ $departure->boarding_time }}>{{ substr($departure->boarding_time, -8, 5) }}</option>
                     @endforeach

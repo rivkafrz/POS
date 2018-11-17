@@ -26,7 +26,7 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'nip' => 'required |numeric',
+            'nip' => 'required|numeric|regex:/^[0-9]{3,7}$/|unique:employees,nip',
             'employee_name' => 'required|alpha',
             'gender'=> 'required',
             'job_section'=>'required|max:50|alpha',

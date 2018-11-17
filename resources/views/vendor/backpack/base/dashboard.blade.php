@@ -12,7 +12,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="{{ Auth::user()->hasRole('admin') ? 'col-md-12' : 'col-md-8' }}">
             <div class="box box-default">
                 <div class="box-body">
                   <div class="row">
@@ -26,19 +26,23 @@
                         </div>
                     </div>
                     
-                  <p><justify>PT Primajasa Perdanarayautama didirikan pada tanggal 6 September 1991, dipimpin oleh H. Amir Mahpud, SE. sebagai Direktur Utama. PT Primajasa Perdanarayautama menyelenggarakan kegiatan pokok perusahaan yaitu dalam bidang Angkutan Umum (Public Transportation) yang meliputi Angkutan Kota Antar Propinsi (AKAP), Angkutan Kota Dalam Propinsi 
-                  (AKDP), Taksi, Pariwisata dan Angkutan Karyawan.PT Primajasa Perdanarayautama berafiliasi dengan perusahaan besar yaitu Group Mayasari Bhakti Utama sebagai salah satu pelopor perusahaan Angkutan Umum Bus Kota di Jakarta sejak tahun 1967 dan yang terbesar sampai dengan sekarang, dipimpin oleh H. Mahpud sebagai Presiden Direktur.</justify> </p>
+                    <p class="text-justify">
+                        PT Primajasa Perdanarayautama didirikan pada tanggal 6 September 1991, dipimpin oleh H. Amir Mahpud, SE. sebagai Direktur Utama. PT Primajasa Perdanarayautama menyelenggarakan kegiatan pokok perusahaan yaitu dalam bidang Angkutan Umum (Public Transportation) yang meliputi Angkutan Kota Antar Propinsi (AKAP), Angkutan Kota Dalam Propinsi 
+                        (AKDP), Taksi, Pariwisata dan Angkutan Karyawan.PT Primajasa Perdanarayautama berafiliasi dengan perusahaan besar yaitu Group Mayasari Bhakti Utama sebagai salah satu pelopor perusahaan Angkutan Umum Bus Kota di Jakarta sejak tahun 1967 dan yang terbesar sampai dengan sekarang, dipimpin oleh H. Mahpud sebagai Presiden Direktur.
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <div class="box-title">Current Settings</div>
+        @if (!Auth::user()->hasRole('admin'))
+            <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <div class="box-title">Current Settings</div>
+                    </div>
+                    <div class="box-body">
+                        @include('partials.setting')
+                    </div>
                 </div>
-                <div class="box-body">
-                  @include('partials.setting')
-                </div>
-        </div>
-    </div>
+            </div>
+            @endif
 @endsection
