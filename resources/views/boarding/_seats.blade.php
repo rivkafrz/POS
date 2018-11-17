@@ -4,6 +4,11 @@
     <div id="seats">
     </div>
     <p class="lead">Select Seat</p>
+    @if ($errors->has('selectedSeat'))
+        <div class="alert alert-danger">
+            <p>At least one seat selected</p>
+        </div>
+    @endif
     @php
         $sub = 1;
         $arrange;

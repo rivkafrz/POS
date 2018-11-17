@@ -17,6 +17,7 @@ use App\NonCash;
 use Auth;
 use App\Baggage;
 use Alert;
+use App\Http\Requests\TicketRequest;
 
 class BoardingController extends Controller
 {
@@ -32,7 +33,7 @@ class BoardingController extends Controller
         return view('boarding.create', compact('destinations', 'departures', 'banks'));
     }
 
-    public function store(Request $form)
+    public function store(TicketRequest $form)
     {
         $customer = Customer::firstOrCreate([
             'phone' => $form->phone,

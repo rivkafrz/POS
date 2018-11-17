@@ -42,7 +42,8 @@ class UserCrudController extends CrudController
                     '2' => 'Leader',
                     '3' => 'Ticketing'
                 ],
-                'inline' => true
+                'inline' => true,
+                'default' => 3
             ]);
     }
 

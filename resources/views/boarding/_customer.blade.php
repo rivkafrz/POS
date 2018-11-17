@@ -1,18 +1,28 @@
 <div class="col-md-4">
     <p class="lead">Customer Information</p>
     <hr>
-    <div class="form-group row">
+    <div class="form-group {{ $errors->has('phone') ? 'has-error' : null }} row">
         <label for="name" class="col-sm-2 control-label">Phone</label>
         <div class="col-sm-10">
-            <input name="phone" id="phone" type="text" class="form-control" onchange="ajaxCallCustomer()">
+            <input name="phone" id="phone" type="text" class="form-control" onchange="ajaxCallCustomer()" value="{{ old('phone') }}">
             <input type="hidden" id="tickets">
+            @if ($errors->has('phone'))
+                <span class="help-block">
+                    <span>Phone number is invalid</span>
+                </span>
+            @endif
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group {{ $errors->has('customer') ? 'has-error' : null }} row">
         <label for="customer" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-            <input name="customer" type="text" class="form-control" id="name">
+            <input name="customer" type="text" class="form-control" id="name" value="{{ old('customer') }}">
+            @if ($errors->has('customer'))
+                <span class="help-block">
+                    <span>{{ $errors->first('customer') }}</span>
+                </span>
+            @endif
         </div>
     </div>
     <div class="form-group row">
