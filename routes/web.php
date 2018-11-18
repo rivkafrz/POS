@@ -1,7 +1,9 @@
 <?php
 
 Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_prefix')], function () {
-    Route::auth();
+	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+	Route::post('login', 'Auth\LoginController@login');
+	Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::get('logout', 'Auth\LoginController@logout');
 });
 
