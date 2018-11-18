@@ -12,7 +12,7 @@
     </div>
 
     <div class="row">
-        <div class="{{ Auth::user()->hasRole('admin') ? 'col-md-12' : 'col-md-8' }}">
+        <div class="{{ Auth::user()->hasRole('admin') ? 'col-md-6' : 'col-md-8' }}">
             <div class="box box-default">
                 <div class="box-body">
                   <div class="row">
@@ -33,16 +33,9 @@
                 </div>
             </div>
         </div>
-        @if (!Auth::user()->hasRole('admin'))
-            <div class="col-md-4">
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <div class="box-title">Current Settings</div>
-                    </div>
-                    <div class="box-body">
-                        @include('partials.setting')
-                    </div>
-                </div>
-            </div>
-            @endif
+        @if (Auth::user()->hasRole('admin'))
+            @include('partials._history')
+            @else
+            @include('partials._setting')
+        @endif
 @endsection
