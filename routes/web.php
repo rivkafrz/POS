@@ -1,5 +1,10 @@
 <?php
 
+Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_prefix')], function () {
+    Route::auth();
+    Route::get('logout', 'Auth\LoginController@logout');
+});
+
 Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 {
 	Route::resource('boarding', 'Admin\BoardingController');

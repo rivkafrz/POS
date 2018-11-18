@@ -18,7 +18,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0 col-xs-offset-1 col-xs-10">
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                                 {!! csrf_field() !!}
 
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -60,7 +60,7 @@
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {{ trans('backpack::base.login') }}
                                         </button>
-                                        <a class="btn btn-link" href="{{ route('backpack.auth.password.reset') }}">{{ trans('backpack::base.forgot_your_password') }}</a>
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">{{ trans('backpack::base.forgot_your_password') }}</a>
                                     </div>
                                 </div>
                             </form>
