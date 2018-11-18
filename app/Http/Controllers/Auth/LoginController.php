@@ -36,4 +36,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function showLoginForm()
+    {
+        return view('vendor.backpack.base.auth.login');
+    }
+
+    public function username()
+    {
+        $type = 'username';
+        if (preg_match('/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/', request()->input('username'))) {
+            $type = 'email';
+        }
+        return $type;
+    }
 }

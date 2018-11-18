@@ -18,13 +18,18 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12 col-md-offset-0 col-xs-offset-1 col-xs-10">
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                                 {!! csrf_field() !!}
 
-                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required>
-
+                                        <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}{{ old('email') }}" placeholder="Username or Email" required>
+                                        <input id="email" type="hidden" value="" name="email">
+                                        @if ($errors->has('username'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('username') }}</strong>
+                                            </span>
+                                        @endif
                                         @if ($errors->has('email'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('email') }}</strong>
@@ -60,7 +65,7 @@
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {{ trans('backpack::base.login') }}
                                         </button>
-                                        <a class="btn btn-link" href="{{ route('backpack.auth.password.reset') }}">{{ trans('backpack::base.forgot_your_password') }}</a>
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">{{ trans('backpack::base.forgot_your_password') }}</a>
                                     </div>
                                 </div>
                             </form>
@@ -70,4 +75,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('after_scripts')
+    <script>
+        $('#username').on('change', function () {
+            $('#email').val($('#username').val());
+        });
+    </script>
 @endsection

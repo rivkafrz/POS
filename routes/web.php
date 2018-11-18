@@ -1,5 +1,12 @@
 <?php
 
+Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_prefix')], function () {
+	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+	Route::post('login', 'Auth\LoginController@login');
+	Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::get('logout', 'Auth\LoginController@logout');
+});
+
 Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 {
 	Route::resource('boarding', 'Admin\BoardingController');

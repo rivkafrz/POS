@@ -118,6 +118,7 @@ class UsersTableSeeder extends Seeder
         //membuat sample admin
         $admin = new User();
         $admin->email = "admin@gmail.com";
+        $admin->username = "admin";
         $admin->password = bcrypt ('secret');
         $admin->employee_id = $rivka->id;
         $admin->save ();
@@ -127,6 +128,7 @@ class UsersTableSeeder extends Seeder
         //membuat sample leader
         $leader = new User();
         $leader->email = "leader@gmail.com";
+        $leader->username = "leader";
         $leader->password =bcrypt ('secretleader');
         $leader->employee_id = $faris->id;
         $leader->save ();
@@ -136,6 +138,7 @@ class UsersTableSeeder extends Seeder
         //membuat sample ticketing
         $ticketing = new User();
         $ticketing->email = "ticketing@gmail.com";
+        $ticketing->username = "ticketing";
         $ticketing->password =bcrypt ('secretticketing');
         $ticketing->employee_id = $melan->id;
         $ticketing->save ();
