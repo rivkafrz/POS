@@ -67,8 +67,6 @@ class Seat extends Model
                     ->where('created_at', 'like', $time . '%');
     }
 
-    // TODO : BUG !! Refund ticket dengan baggage kosong
-    // TODO : BUG !! Cash Charge masuk ke Ticket Amount
     // TODO : Masih belum jelas kalo di refund apakan Ticket amount masih sama ?
 
 }
