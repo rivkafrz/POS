@@ -18,8 +18,15 @@
     .justify{
         font-style: inherit justify;
     }
+    .page-break {
+        page-break-after: always;
+    }
 </style>
 <body>
+    @php
+        $last = $ticket->seats()->orderBy('seat_number', 'desc')->first()->seat_number
+    @endphp
+    @foreach ($ticket->seats()->orderBy('seat_number')->get() as $seat)
     <table width="100%">
         <tr>
             <td width="15%">
@@ -38,34 +45,34 @@
     <table width="100%">
         <tr width="30%">
             <td>No Tiket</td>
-            <td>: 123123123</td>
+            <td>: {{ $ticket->code }}</td>
         </tr>
         <tr width="30%">
             <td>Jam / Tanggal</td>
-            <td>: {{ now()->toDateTimeString() }}</td>
+            <td>: {{ $ticket->created_at }}</td>
         </tr>
         <tr width="30%">
             <td>Tujuan</td>
-            <td>: Terminal 2 D</td>
+            <td>: {{ $ticket->destination->to }}</td>
         </tr>
         <tr width="30%">
             <td>Nama</td>
-            <td>: Hanis</td>
+            <td>: {{ $ticket->customer->name }}</td>
         </tr>
         <tr width="30%">
             <td>No. Tlp</td>
-            <td>: 0821312321312</td>
+            <td>: {{ $ticket->customer->phone }}</td>
         </tr>
         <tr width="30%">
             <td>No Seat</td>
-            <td>: 12</td>
+            <td>: {{ $seat->seat_number }}</td>
         </tr>
         <tr>
             <td colspan="2"><hr></td>
         </tr>
         <tr width="30%">
             <td>Harga Tiket</td>
-            <td>: Rp. 120.000</td>
+            <td>: Rp. {{ number_format($ticket->destination->price) }}</td>
         </tr>
         <tr>
             <td colspan="2"><hr></td>
@@ -73,7 +80,9 @@
     </table>
     <table width="100%">
         <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Codabar-example.svg" alt="Barcode" width="80pt" height="50pt"></td>
+            <td>
+                {!! '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG("1", "C39+") . '" alt="barcode"  width="70pt" heigh="50pt"/>' !!}
+            </td>
             <td>
                 <p class="justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio nisi quidem eum molestias fugit earum ea quis tempore.</p>
             </td>
@@ -90,5 +99,9 @@
             <td colspan="2"><hr></td>
         </tr>
     </table>
+    @if ($seat->seat_number != $last)
+        <div class="page-break"></div>
+    @endif
+    @endforeach
 </body>
 </html>

@@ -20,6 +20,5 @@ Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 	Route::post('settings/assign_location', 'Admin\SettingsController@getWorkTime')->name('settings.get-work-time');
 	Route::post('end-of-day', 'EODController@eod')->name('eod.submit');
 	Route::post('end-of-day/approve', 'EODController@approve')->name('eod.approve');
-	Route::get('test/ticket', 'Admin\TicketController@ticket')->name('ticket.pdf');
 });
 Route::get('/','pagesController@welcome');

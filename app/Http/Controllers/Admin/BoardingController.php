@@ -18,6 +18,7 @@ use Auth;
 use App\Baggage;
 use Alert;
 use App\Http\Requests\TicketRequest;
+use PDF;
 
 class BoardingController extends Controller
 {
@@ -91,8 +92,8 @@ class BoardingController extends Controller
             ]);
         }
 
-        Alert::success('Ticket created successfully')->flash();
-        return redirect()->back();
+        $pdf = PDF::loadView('pdf.ticket', compact('ticket'))->setPaper([0,0, 226.78, 340.16]);
+        return $pdf->stream('ticket.pdf');
     }
 
     public function update($id, Request $form)
