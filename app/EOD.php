@@ -10,6 +10,8 @@ class EOD extends Model
     use CrudTrait;
     protected $fillable = [
         'user_id',
+        'assign_location_id',
+        'work_time_id',
         'approved'
     ];
 

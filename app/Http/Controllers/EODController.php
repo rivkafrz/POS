@@ -12,7 +12,10 @@ class EODController extends Controller
     public function eod()
     {
         Alert::success('EOD successfully created')->flash();
-        Auth::user()->eods()->create();
+        Auth::user()->eods()->create([
+                'assign_location_id' => Auth::user()->workTime->assignLocation->id,
+                'work_time_id' => Auth::user()->workTime->id,
+            ]);
         return redirect()->route('backpack.dashboard');
     }
 
