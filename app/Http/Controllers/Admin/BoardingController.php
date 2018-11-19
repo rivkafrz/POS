@@ -39,13 +39,7 @@ class BoardingController extends Controller
             'phone' => $form->phone,
             'name'  => $form->customer
         ]);
-        if (is_null($form->cash_amount)) {
-            $amount = Destination::find($form->destination)->price * count($form->selectedSeat);
-        } else {
-            $amount = $form->cash_amount;
-        }
-        
-        
+        $amount = Destination::find($form->destination)->price * count($form->selectedSeat);
         $ticket = Ticket::create([
             'code'                  => $form->code,
             'note'                  => $form->note,
@@ -138,11 +132,13 @@ class BoardingController extends Controller
         foreach ($ticket->baggages as $baggage) {
             $baggage->delete();
         }
-        foreach ($form->baggages as $baggage) {
-            if ($baggage != null) {
-                $ticket->baggages()->create([
-                    'amount' => $baggage
-                ]);
+        if (isset($form->baggages)) {
+            foreach ($form->baggages as $baggage) {
+                if ($baggage != null) {
+                    $ticket->baggages()->create([
+                        'amount' => $baggage
+                    ]);
+                }
             }
         }
 

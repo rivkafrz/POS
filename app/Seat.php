@@ -67,4 +67,6 @@ class Seat extends Model
                     ->where('created_at', 'like', $time . '%');
     }
 
+    // TODO : Masih belum jelas kalo di refund apakan Ticket amount masih sama ?
+
 }
