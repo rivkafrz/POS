@@ -16,6 +16,7 @@ class CreateEODsTable extends Migration
         Schema::create('e_o_d_s', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->boolean('approved')->default(0);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -3,10 +3,32 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Backpack\CRUD\CrudTrait;
 
 class EOD extends Model
 {
+    use CrudTrait;
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'approved'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return substr($value, 11, 5) . " WIB";
+    }
+
+    public function getApprovedAttribute($value)
+    {
+        $status = [
+            'Unapproved',
+            'Approved'
+        ];
+        return $status[$value];
+    }
 }
