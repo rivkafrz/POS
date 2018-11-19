@@ -33,7 +33,7 @@ class EodCrudController extends CrudController
          ]);
          $this->crud->addColumn([
             'label' => "Status",
-            'name' => 'approved'
+            'type' => 'eod_status'
          ]);
          $this->crud->addColumn([
             'label' => "",
