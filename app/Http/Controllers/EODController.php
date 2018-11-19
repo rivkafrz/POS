@@ -13,6 +13,6 @@ class EODController extends Controller
     {
         Alert::success('EOD successfully created')->flash();
         Auth::user()->eods()->create();
-        return redirect()->back();
+        return redirect()->route('backpack.dashboard');
     }
 }
