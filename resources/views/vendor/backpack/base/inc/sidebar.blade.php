@@ -47,7 +47,7 @@
           @if (Auth::user()->hasRole('admin'))
             <li><a href="{{ backpack_url('eod') }}"><i class="fa fa-bell"></i> <span>{{ trans('Approve EOD') }}</span></a></li>
             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Report ') }}</span></a></li>
-            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-bar-chart"></i> <span>{{ trans('View Board ') }}</span></a></li>
+            
           @endif  
 
           <!-- ======================================= -->
