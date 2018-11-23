@@ -34,7 +34,7 @@
           @if (!is_null(Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->first()))
             <li><a type="button" data-toggle="modal" data-target="#modalEOD"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
             @else
-            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
+            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Order') }}</span></a></li>
           @endif
             <li><a type="button" data-toggle="modal" data-target="#modalEOD"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
           @endif
