@@ -183,7 +183,8 @@ class BoardingController extends Controller
 
     public function seats($to, $time)
     {
-        $seat = Seat::where('destination_id', $to)
+        $seat = Seat::where('created_at', 'like', now()->toDateString() . '%')
+                    ->where('destination_id', $to)
                     ->where('departure_time_id', $time)
                     ->where('refund', 0);
 
