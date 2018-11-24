@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Backpack\CRUD\CrudTrait;
 
 class Seat extends Model
 {
+ use CrudTrait;
     /*
 
     Step step test relasi

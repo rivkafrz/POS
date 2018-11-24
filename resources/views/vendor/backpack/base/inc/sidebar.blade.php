@@ -37,6 +37,7 @@
             <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Order') }}</span></a></li>
           @endif
             <li><a type="button" data-toggle="modal" data-target="#modalEOD"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
+            <li><a href="{{ backpack_url('ticket') }}"><i class="fa fa-search"></i> <span>{{ trans('Search') }}</span></a></li>
           @endif
 
           @if (Auth::user()->hasRole('leader'))

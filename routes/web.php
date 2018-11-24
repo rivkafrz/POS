@@ -17,6 +17,7 @@ Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
 	CRUD::resource('destination','Admin\DestinationCrudController');
 	CRUD::resource('employee','Admin\EmployeeCrudController');
 	CRUD::resource('eod','Admin\EodCrudController');
+	CRUD::resource('ticket','Admin\TicketCrudController');
 	Route::post('settings/assign_location', 'Admin\SettingsController@getWorkTime')->name('settings.get-work-time');
 	Route::post('end-of-day', 'EODController@eod')->name('eod.submit');
 	Route::post('end-of-day/approve', 'EODController@approve')->name('eod.approve');
