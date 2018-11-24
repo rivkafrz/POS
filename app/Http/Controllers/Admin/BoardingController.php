@@ -177,7 +177,7 @@ class BoardingController extends Controller
         if ($ticket == null) {
             return response()->json(null);
         }
-
+        
         return response()->json($ticket->load(['customer', 'baggages', 'departureTime', 'to', 'seats']));
     }
 

@@ -159,13 +159,21 @@
                     if (data.id == null) {
                         alert('Ticket not exist');
                     } else {
-                        prependPatch(data);
-                        showClearButton();
-                        appendTabOneInfo(data);
-                        checkForSeat();
-                        appendTabTwoInfo(data);
-                        appendTabThreeInfo(data);
-                        changeModalButtonToSubmit();
+                        let today = new Date('{{ now() }}');
+                        console.log(data.created_at.substr(0, 10) + " " + today.toISOString().substr(0, 10));
+                        if (today.toISOString().substr(0, 10) == data.created_at.substr(0, 10)) {
+                            prependPatch(data);
+                            showClearButton();
+                            appendTabOneInfo(data);
+                            checkForSeat();
+                            appendTabTwoInfo(data);
+                            appendTabThreeInfo(data);
+                            changeModalButtonToSubmit();
+                        } else {
+                            alert('Tickets is expired');
+                            location.reload();
+                        }
+                        
                     }
                 }
             });
