@@ -255,7 +255,7 @@
         }
 
         function checkForSeat(){
-            $.ajax({
+        $.ajax({
                 url: "{{ url('/') }}" 
                     + '/api/seats/' 
                     + $('#destination_to').val() + '/'
@@ -294,6 +294,5 @@
             let change = $('#cash_change');
             change.val(parseInt($('#cash_amount').val()) - parseInt($('#charge').val()));
         }
-        
     </script>
 @endsection

@@ -62,3 +62,22 @@
     @include('partials._modal-eod')
   @endif
 @endif
+
+@section('after_scripts')
+    @if (Auth::check())
+    @if (Auth::user()->hasRole('ticketing'))
+      <script>
+          if ({{ Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->get()->count() }} == 0) {
+              $('#logout')
+              .attr('href', "")
+              .on('click', function () {
+                alert('You have unsubmitted EOD today');
+              });
+          } else {
+            $('#logout')
+              .attr('href', "{{ route('logout') }}");
+          }
+      </script>
+    @endif
+    @endif
+@endsection
