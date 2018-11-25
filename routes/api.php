@@ -21,4 +21,5 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('customer/{phone}', 'Admin\BoardingController@customer')->name('customer.customer');
     Route::get('ticket/{code}', 'Admin\BoardingController@show')->name('ticket.show');
     Route::get('seats/{to}/{time}', 'Admin\BoardingController@seats')->name('seats.show');
+    Route::get('manifest/{time}/{to}/{departure}', 'Admin\ManifestController@manifest')->name('manifest.api.index');
 });

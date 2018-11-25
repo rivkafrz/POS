@@ -8,9 +8,11 @@ class Manifest extends Model
 {
    
    protected $fillable = [
-        'driver',
-        'no_body'
-        
+            'driver',
+            'no_body',
+            'departure_time_id',
+            'destination_id',
+            'assign_location_id'
         ];
 
 

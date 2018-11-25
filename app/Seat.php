@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Ticket;
 
 class Seat extends Model
 {
@@ -40,7 +41,7 @@ class Seat extends Model
     public function ticket()
     {
         return $this->belongsTo(Ticket::class);
-	}
+    }
 
 	public function departureTime()
     {
@@ -67,6 +68,12 @@ class Seat extends Model
                     ->where('created_at', 'like', $time . '%');
     }
 
-    // TODO : Masih belum jelas kalo di refund apakan Ticket amount masih sama ?
+    public static function manifest(Carbon $time, Destination $to, DepartureTime $departure)
+    {
+        return Seat::where('created_at', 'like', $time->toDateString() . "%")
+                ->where('destination_id', $to->id)
+                ->where('refund', 0)
+                ->where('departure_time_id', $departure->id);
+    }
 
 }

@@ -7,8 +7,9 @@ Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_pre
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 });
 
-Route::group(['prefix' => 'app', 'middleware' => 'admin'], function()
+Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 'admin'], function()
 {
+	Route::resource('manifest', 'Admin\ManifestController')->only(['index', 'store']);
 	Route::resource('boarding', 'Admin\BoardingController');
 	CRUD::resource('user','Admin\UserCrudController');
 	CRUD::resource('departure_time','Admin\Departure_timeCrudController');
