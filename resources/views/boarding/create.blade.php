@@ -41,7 +41,6 @@
 @section('after_scripts')
     <script>
         console.log("Script enable");
-
         function selectSeat(seat_id) {
             var current = '#' + seat_id;
             if ($(current).hasClass('seat-occupied')) {
@@ -263,16 +262,31 @@
         }
 
         function checkForSeat(){
-        $.ajax({
+            $.ajax({
                 url: "{{ url('/') }}" 
-                    + '/api/seats/' 
+                    + '/api/ticket/' 
+                    + '{{ Auth::user()->workTime->assignLocation->id }}' + '/'
                     + $('#destination_to').val() + '/'
-                    + $('#departure_time').val() + '/',
+                    + $('#departure_time').val() + '/'
+                    + "manifest",
                 success: function (data) {
-                    console.log(data);
-                    occupySeat(data);
+                    if (data.locked) {
+                        alert('This Bus is locked by Leader, please select another Bus');
+                        location.reload();
+                    } else{
+                        $.ajax({
+                            url: "{{ url('/') }}" 
+                                + '/api/seats/' 
+                                + $('#destination_to').val() + '/'
+                                + $('#departure_time').val() + '/',
+                            success: function (data) {
+                                console.log(data);
+                                occupySeat(data);
+                            }
+                        });
+                    }
                 }
-            })
+            });
         }
 
         function showPaymentForm(payment_type){

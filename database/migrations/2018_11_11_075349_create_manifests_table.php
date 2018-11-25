@@ -17,7 +17,6 @@ class CreateManifestsTable extends Migration
             $table->increments('id');
             $table->string('driver',30);
             $table->string('no_body',8);
-            $table->string('note');
             $table->timestamps();
         });
 
@@ -26,9 +25,14 @@ class CreateManifestsTable extends Migration
             $table->foreign('departure_time_id')->references('id')->on('departure_times');
         });
 
-         Schema::table('manifests', function (Blueprint $table) {
+        Schema::table('manifests', function (Blueprint $table) {
             $table->unsignedInteger('assign_location_id');
             $table->foreign('assign_location_id')->references('id')->on('assign_locations');
+        });
+
+        Schema::table('manifests', function (Blueprint $table) {
+            $table->unsignedInteger('destination_id');
+            $table->foreign('destination_id')->references('id')->on('destinations');
         });
 
     }

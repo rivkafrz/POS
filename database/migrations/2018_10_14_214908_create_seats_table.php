@@ -15,8 +15,9 @@ class CreateSeatsTable extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('seat_number',2);
+            $table->unsignedTinyInteger('seat_number');
             $table->boolean('refund')->default(0);
+            $table->boolean('checked')->default(0);
             $table->timestamps();
         });
 
@@ -29,6 +30,11 @@ class CreateSeatsTable extends Migration
              $table->unsignedInteger('destination_id');
              $table->foreign('destination_id')->references('id')->on('destinations');
         });
+
+        Schema::table('seats', function (Blueprint $table) {
+            $table->unsignedInteger('assign_location_id');
+            $table->foreign('assign_location_id')->references('id')->on('assign_locations');
+       });
 
     }
 

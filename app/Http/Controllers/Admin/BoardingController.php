@@ -16,6 +16,7 @@ use App\Bank;
 use App\NonCash;
 use Auth;
 use App\Baggage;
+use App\Manifest;
 use Alert;
 use App\Http\Requests\TicketRequest;
 use PDF;
@@ -124,6 +125,7 @@ class BoardingController extends Controller
                     'seat_number'       => $newSeat,
                     'departure_time_id' => $form->departureTime,
                     'destination_id'    => $ticket->destination->id,
+                    'assign_location_id'    => $ticket->destination->id,
                     'ticket_id'         => $ticket->id
                  ]);
             }
@@ -189,5 +191,15 @@ class BoardingController extends Controller
                     ->where('refund', 0);
 
         return response()->json($seat->get());
+    }
+
+    public function manifest($assignLocation, $destination, $departureTime)
+    {
+        $man = Manifest::where('created_at', 'like', now()->toDateString() . '%')
+                    ->where('assign_location_id', $assignLocation)
+                    ->where('destination_id', $destination)
+                    ->where('departure_time_id', $departureTime)
+                    ->first();
+        return response()->json(['locked' => !is_null($man)]);
     }
 }

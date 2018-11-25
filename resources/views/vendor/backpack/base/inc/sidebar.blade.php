@@ -42,7 +42,7 @@
 
           @if (Auth::user()->hasRole('leader'))
           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
-            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-book"></i> <span>{{ trans('Manifest') }}</span></a></li>
+            <li><a href="{{ route('manifest.index') }}"><i class="fa fa-book"></i> <span>{{ trans('Manifest') }}</span></a></li>
           @endif
           @if (Auth::user()->hasRole('admin') or Auth::user()->hasRole('ticketing'))
             <li><a href="{{ backpack_url('eod') }}"><i class="fa fa-bell"></i> <span>{{ Auth::user()->hasRole('admin') ? 'Approve EOD'  : 'My EOD'}}</span></a></li>
