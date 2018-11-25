@@ -52,7 +52,7 @@ class TicketCrudController extends CrudController
         $this->crud->addColumn([
             'label' => "Status",
             'type' => 'ticket_status'
-         ]);
+        ]);
         $this->crud->removeColumns(['user_id', 'destination_id', 'departure_time_id']);
     }
 

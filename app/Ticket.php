@@ -57,6 +57,15 @@ use CrudTrait;
     {
         return $this->belongsTo(User::class);
     }
+
+    public function formattedSeat()
+    {
+        $str = '';
+        foreach ($this->seats as $seat) {
+            $str = $str . $seat->seat_number . ", ";
+        }
+        return substr($str, 0, -2);
+    }
     
     // Alias
 

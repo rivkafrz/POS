@@ -37,6 +37,7 @@ class Seat extends Model
         'departure_time_id',
         'destination_id',
         'assign_location_id',
+        'checked',
         'refund'
     ];
 
@@ -76,7 +77,8 @@ class Seat extends Model
                 ->where('assign_location_id', $assign->id)
                 ->where('destination_id', $to->id)
                 ->where('refund', 0)
-                ->where('departure_time_id', $departure->id);
+                ->where('departure_time_id', $departure->id)
+                ->orderBy('seat_number');
     }
 
 }

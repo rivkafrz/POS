@@ -15,12 +15,6 @@ use Alert;
 
 class ManifestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * 
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $det = DepartureTime::all();
@@ -30,24 +24,6 @@ class ManifestController extends Controller
         return view('manifest.index', compact('det', 'asl', 'des'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * 
-     * @return \Illuminate\Http\Response
-     */
     public function store(ManifestRequest $request)
     {
         Manifest::create($request->all());
@@ -55,57 +31,28 @@ class ManifestController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($al, $dt, $d)
     {
-        //
-    }
+        $res = Manifest::where('created_at', 'like', now()->toDateString() . '%')
+            ->where('assign_location_id', $al)
+            ->where('departure_time_id', $dt)
+            ->where('destination_id', $d)
+            ->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json($res);
     }
 
     public function manifest($time, $assign, $to, $departure)
     {
-        return response()->json(Seat::manifest(Carbon::parse($time), AssignLocation::find($assign) , Destination::find($to), DepartureTime::find($departure))->orderBy('seat_number')->get()->load(['ticket']));
+        $response = Seat::manifest(Carbon::parse($time), AssignLocation::find($assign) , Destination::find($to), DepartureTime::find($departure))->orderBy('seat_number', 'asc')
+            ->get()
+            ->load(['ticket']);
+        return response()->json($response);
+    }
+
+    public function passengerCheck($id)
+    {
+        Seat::find($id)->update(['checked' => 1]);
+        return response()->json(Seat::find($id));
     }
 }

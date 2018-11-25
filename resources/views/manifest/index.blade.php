@@ -74,6 +74,7 @@
                                 <div class="box box-success">
                                     <div class="box-body">
                                         <p class="lead">Total Passangers : <strong id="total_passengers">{{ 0 }}</strong></p>
+                                        <p class="lead">Cancel Passangers : <strong id="cancel_passengers">{{ 0 }}</strong></p>
                                         <hr>
                                         <p>Manifest Information</p>
                                         <div class="row">
@@ -115,8 +116,12 @@
         let td = $('#td-placeholder');
         let tbody = $('#tbody');
         let total = $('#total_passengers');
+        let cancel = $('#cancel_passengers');
         let submit = $('#submit');
         let form = $('#form');
+        let no_body = $('#no_body');
+        let driver = $('#driver');
+        let manifest = false;
 
         date.on('change', function () {
             console.log('Date touched !!');
@@ -137,10 +142,25 @@
                 trPlaceholder('Fetching ...');
                 tbody.html("");
                 $.ajax({
+                   url: "{{ url('/') }}" + "/api/manifest/" + '{{ Auth::user()->workTime->assignLocation->id }}' + '/' + departure_time.val() + "/" + destination.val() + "/show",
+                   success: function (data) {
+                       console.log('Getting Manifest Object');
+                       if(data.id != null){
+                           submit.remove();
+                           form.attr('action', "");
+                           manifest = true;
+                           no_body.val(data.no_body);
+                           driver.val(data.driver);
+                       } else {
+                            showSubmit(true);
+                            directForm();
+                       }
+                   }
+                });
+                $.ajax({
                     url: "{{ url('/') }}" + '/api/manifest/' + date.val() + "/" + '{{ Auth::user()->workTime->assignLocation->id }}'+ "/" + destination.val() + "/" + departure_time.val(),
                     success: function (data) {
                         console.log("Successfully fetching manifest");
-                        total.html(data.length);
                         let iter = 1;
                         trHide(true);
                         data.forEach(seat => {
@@ -149,8 +169,6 @@
                         });
                     }
                 });
-                showSubmit(true);
-                directForm();
             }
 
         }
@@ -163,9 +181,18 @@
             $.ajax({
                 url: "{{ url('/') }}" + '/api/ticket/' + data.ticket.code,
                 success: function (ticket) {
-                    tbody.append("<tr><td>"+iter+"</td><td>"+data.seat_number+"</td><td>"+data.ticket.code+"</td><td>"+ticket.customer.name+"</td><td><a class='btn btn-danger btn-xs'>Ok</a></tr>");
+                    let style = [
+                        'btn-danger',
+                        'btn-success'
+                    ];
+                    tbody.append("<tr><td>"+iter+"</td><td>"+data.seat_number+"</td><td>"+data.ticket.code+"</td><td>"+ticket.customer.name+"</td><td><a id='passenger-"+ data.id +"' onClick='checkPassenger("+ data.id +")' class='btn " + style[data.checked] +" btn-xs'>Ok</a></tr>");
                 }
             });
+            if (data.checked) {
+                total.html(parseInt(total.html()) + 1);
+            } else {
+                cancel.html(parseInt(cancel.html()) + 1);
+            }
         }
 
         function trHide(boolean) {
@@ -188,6 +215,26 @@
 
         function directForm() {
             form.attr('action', '{{ route("manifest.store") }}');
+        }
+
+        function checkPassenger(seat){
+            if (!manifest) {
+                $.ajax({
+                    url: "{{ url('/') }}" + '/api/passenger/' + seat + "/check",
+                    success: function (data) {
+                        console.log(data.checked);
+                        if (data.checked == 1) {
+                            $('#passenger-' + data.id).removeClass('btn-danger').addClass('btn-success');
+                            total.html(parseInt(total.html()) + 1);
+                            cancel.html(parseInt(cancel.html()) - 1);
+                        } else {
+                            alert('Please re-click the button');
+                        }
+                    }
+                });
+            } else {
+                alert('Manifest already created');
+            }
         }
     </script>
 @stop
