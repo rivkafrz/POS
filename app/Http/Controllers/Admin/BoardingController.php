@@ -177,13 +177,14 @@ class BoardingController extends Controller
         if ($ticket == null) {
             return response()->json(null);
         }
-
+        
         return response()->json($ticket->load(['customer', 'baggages', 'departureTime', 'to', 'seats']));
     }
 
     public function seats($to, $time)
     {
-        $seat = Seat::where('destination_id', $to)
+        $seat = Seat::where('created_at', 'like', now()->toDateString() . '%')
+                    ->where('destination_id', $to)
                     ->where('departure_time_id', $time)
                     ->where('refund', 0);
 
