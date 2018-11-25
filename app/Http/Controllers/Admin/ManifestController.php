@@ -104,8 +104,8 @@ class ManifestController extends Controller
         //
     }
 
-    public function manifest($time, $to, $departure)
+    public function manifest($time, $assign, $to, $departure)
     {
-        return response()->json(Seat::manifest(Carbon::parse($time), Destination::find($to), DepartureTime::find($departure))->orderBy('seat_number')->get()->load(['ticket']));
+        return response()->json(Seat::manifest(Carbon::parse($time), AssignLocation::find($assign) , Destination::find($to), DepartureTime::find($departure))->orderBy('seat_number')->get()->load(['ticket']));
     }
 }

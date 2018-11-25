@@ -135,8 +135,9 @@
             if (date.val() != "" && departure_time.val() != "" && destination.val() != "") {
                 console.log('Fetching...');
                 trPlaceholder('Fetching ...');
+                tbody.html("");
                 $.ajax({
-                    url: "{{ url('/') }}" + '/api/manifest/' + date.val() + "/" + destination.val() + "/" + departure_time.val(),
+                    url: "{{ url('/') }}" + '/api/manifest/' + date.val() + "/" + '{{ Auth::user()->workTime->assignLocation->id }}'+ "/" + destination.val() + "/" + departure_time.val(),
                     success: function (data) {
                         console.log("Successfully fetching manifest");
                         total.html(data.length);

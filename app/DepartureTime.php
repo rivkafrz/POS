@@ -12,7 +12,7 @@ class DepartureTime extends Model
         'boarding_time'
     ];
    
-   public function manifest()
+    public function manifest()
     {
         return $this->hasMany(Manifest::class);
     }
@@ -20,5 +20,10 @@ class DepartureTime extends Model
     public function formatTime()
     {
         return substr(Carbon::parse($this->boarding_time)->toTimeString(), 0, 5);
+    }
+
+    public function getBoardingTimeAttribute($value)
+    {
+        return substr(Carbon::parse($value)->toTimeString(), 0, 5);
     }
 }

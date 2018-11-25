@@ -30,6 +30,11 @@ class CreateSeatsTable extends Migration
              $table->foreign('destination_id')->references('id')->on('destinations');
         });
 
+        Schema::table('seats', function (Blueprint $table) {
+            $table->unsignedInteger('assign_location_id');
+            $table->foreign('assign_location_id')->references('id')->on('assign_locations');
+       });
+
     }
 
     /**
