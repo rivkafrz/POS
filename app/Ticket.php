@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Backpack\CRUD\CrudTrait;
+
 
 class Ticket extends Model
 {
-
+use CrudTrait;
     protected $fillable = [
         'code',
         'departure_time_id',

@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class DepartureTime extends Model
 {
-
+	
     protected $fillable = [
         'boarding_time'
     ];

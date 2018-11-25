@@ -34,9 +34,10 @@
           @if (!is_null(Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->first()))
             <li><a type="button" data-toggle="modal" data-target="#modalEOD"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
             @else
-            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Boarding') }}</span></a></li>
+            <li><a href="{{ route('boarding.create') }}"><i class="fa fa-ticket"></i> <span>{{ trans('Order') }}</span></a></li>
           @endif
             <li><a type="button" data-toggle="modal" data-target="#modalEOD"><i class="fa fa-archive"></i> <span>{{ trans('EOD') }}</span></a></li>
+            <li><a href="{{ backpack_url('ticket') }}"><i class="fa fa-search"></i> <span>{{ trans('Search') }}</span></a></li>
           @endif
 
           @if (Auth::user()->hasRole('leader'))
@@ -48,7 +49,7 @@
           @endif
           @if (Auth::user()->hasRole('admin'))
             <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Report ') }}</span></a></li>
-            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-bar-chart"></i> <span>{{ trans('View Board ') }}</span></a></li>
+            
           @endif  
 
           <!-- ======================================= -->
