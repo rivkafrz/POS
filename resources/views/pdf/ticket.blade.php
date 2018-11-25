@@ -84,7 +84,9 @@
                 {!! '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG("1", "C39+") . '" alt="barcode"  width="70pt" heigh="50pt"/>' !!}
             </td>
             <td>
-                <p class="justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio nisi quidem eum molestias fugit earum ea quis tempore.</p>
+                <p class="justify">TERIMA KASIH</p>
+                <p class="justify">INFORMASI</p>
+                <p class="justify">BNI : 022-8752-6886</p>
             </td>
         </tr>
         <tr>
@@ -92,7 +94,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <p class="justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed quibusdam ab voluptatem, dolore consequuntur explicabo cum in, nam repudiandae alias magnam sunt accusantium reprehenderit, eaque ratione! Asperiores vel placeat doloremque!</p>
+                <p class="justify">Jagalah barang bawaan anda!! Periksa dan cocokkan saat turun,segala jeni kehilangan dan kerusakan atau tertukar bukan merupakan tanggung jawab manajemen Primajasa</p>
             </td>
         </tr>
         <tr>

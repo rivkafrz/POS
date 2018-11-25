@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-body">
-                    <p class="lead">Today's recent login</p>
+                    <p class="lead">Today's Information Update </p>
                 </div>
             </div>
         </div>
