@@ -23,7 +23,7 @@
 
                                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col-md-6 col-md-offset-3">
-                                        <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}{{ old('email') }}" placeholder="Username or Email" required>
+                                        <input id="username" type="text" class="form-control" name="username" value="{{ is_null(old('username')) ? old('email') : old('username') }}" placeholder="Username or Email" required>
                                         <input id="email" type="hidden" value="" name="email">
                                         @if ($errors->has('username'))
                                             <span class="help-block">
