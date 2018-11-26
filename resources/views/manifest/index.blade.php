@@ -73,8 +73,8 @@
                             <div class="col-md-4">
                                 <div class="box box-success">
                                     <div class="box-body">
-                                        <p class="lead">Total Passangers : <strong id="total_passengers">{{ 0 }}</strong></p>
-                                        <p class="lead">Cancel Passangers : <strong id="cancel_passengers">{{ 0 }}</strong></p>
+                                        <p class="lead">Total Passengers : <strong id="total_passengers">{{ 0 }}</strong></p>
+                                        <p class="lead">Passengers Canceled  : <strong id="cancel_passengers">{{ 0 }}</strong></p>
                                         <hr>
                                         <p>Manifest Information</p>
                                         <div class="row">
