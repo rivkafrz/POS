@@ -233,8 +233,15 @@
                     }
                 });
             } else {
-                alert('Manifest already created');
+                swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: 'Manifest already created',
+                    });
             }
         }
     </script>
 @stop
+@section('after_styles')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
+@endsection

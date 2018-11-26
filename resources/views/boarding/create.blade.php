@@ -37,6 +37,7 @@
 @endsection
 @section('after_styles')
     <link rel="stylesheet" href="{{ url('css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
 @endsection
 @section('after_scripts')
     <script>
@@ -44,7 +45,12 @@
         function selectSeat(seat_id) {
             var current = '#' + seat_id;
             if ($(current).hasClass('seat-occupied')) {
-                alert('Cannot select occupied seat');
+                swal({
+                        title: 'Error!',
+                        text: 'Cannot select occupied seat',
+                        type: 'error',
+                        confirmButtonText: 'Oke'
+                    });
             } else {
                 if ($(current).hasClass('seat-selected')) {
                     $(current).removeClass('seat-selected');
@@ -77,7 +83,12 @@
                             $('#refunded_seat').html(parseInt($('#refunded_seat').html()) - 1);
                         }
                     } else {
-                        alert('Cannot add more seats');
+                        swal({
+                            title: 'Error!',
+                            text: 'Cannot add more seats',
+                            type: 'error',
+                            confirmButtonText: 'Oke'
+                            });
                     }
                 }
             }
@@ -156,7 +167,12 @@
                 url: "{{ url('/') }}" + "/api/ticket/" + current.val(),
                 success: function (data) {
                     if (data.id == null) {
-                        alert('Ticket not exist');
+                        swal({
+                            title: 'Error!',
+                            text: 'Ticket not exist',
+                            type: 'error',
+                            confirmButtonText: 'Oke'
+                            });
                     } else {
                         let today = new Date('{{ now() }}');
                         console.log(data.created_at.substr(0, 10) + " " + today.toISOString().substr(0, 10));
@@ -169,8 +185,19 @@
                             appendTabThreeInfo(data);
                             changeModalButtonToSubmit();
                         } else {
-                            alert('Tickets is expired');
-                            location.reload();
+                            swal({
+                                title: 'Error',
+                                text: "Ticket is Expired",
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke'
+                                }).then((result) => {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                                })
                         }
                         
                     }
@@ -271,7 +298,12 @@
                     + "manifest",
                 success: function (data) {
                     if (data.locked) {
-                        alert('This Bus is locked by Leader, please select another Bus');
+                        swal({
+                            title: 'Error!',
+                            text: 'This Bus is locked by Leader, please select another Bus',
+                            type: 'error',
+                            confirmButtonText: 'Oke'
+                            });
                         location.reload();
                     } else{
                         $.ajax({
