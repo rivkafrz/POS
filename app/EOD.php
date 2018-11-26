@@ -33,4 +33,9 @@ class EOD extends Model
         ];
         return $status[$value];
     }
+
+    public function assignLocation()
+    {
+        return $this->belongsTo(AssignLocation::class);
+    }
 }
