@@ -54,8 +54,17 @@ class TicketCrudController extends CrudController
             'type' => 'ticket_status'
         ]);
         $this->crud->removeColumns(['user_id', 'destination_id', 'departure_time_id']);
-    }
 
+        $this->crud->addFilter([ // date filter
+          'type' => 'date',
+          'name' => 'date',
+          'label'=> 'Date'
+        ],
+        false,
+        function($value) { // if the filter is active, apply these constraints
+        $this->crud->addClause('where', 'date', '=', $value);
+        });
+    }
     public function store(StoreRequest $request)
     {
        
