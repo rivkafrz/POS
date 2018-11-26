@@ -53,6 +53,10 @@ class TicketCrudController extends CrudController
             'label' => "Status",
             'type' => 'ticket_status'
         ]);
+        $this->crud->addColumn([
+            'label' => "No Baggage",
+            'type' => 'ticket_baggage'
+        ]);
         $this->crud->removeColumns(['user_id', 'destination_id', 'departure_time_id']);
         $this->crud->addFilter([
             'type' => 'date',
