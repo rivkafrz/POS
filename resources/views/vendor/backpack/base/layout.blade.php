@@ -168,6 +168,7 @@
     @include('backpack::inc.alerts')
 
     @yield('after_scripts')
+    @stack('js')
 
     <!-- JavaScripts -->
     {{-- <script src="{{ mix('js/app.js') }}"></script> --}}

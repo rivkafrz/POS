@@ -64,8 +64,7 @@
     @include('partials._modal-eod')
   @endif
 @endif
-
-@section('after_scripts')
+@push('js')
     @if (Auth::check())
     @if (Auth::user()->hasRole('ticketing'))
       <script>
@@ -82,4 +81,4 @@
       </script>
     @endif
     @endif
-@endsection
+@endpush
