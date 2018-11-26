@@ -38,7 +38,7 @@
 @section('after_styles')
     <link rel="stylesheet" href="{{ url('css/custom.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
-@endsection
+@endsection 
 @section('after_scripts')
     <script>
         console.log("Script enable");
@@ -299,12 +299,18 @@
                 success: function (data) {
                     if (data.locked) {
                         swal({
-                            title: 'Error!',
-                            text: 'This Bus is locked by Leader, please select another Bus',
-                            type: 'error',
-                            confirmButtonText: 'Oke'
-                            });
-                        location.reload();
+                                title: 'Error',
+                                text: 'This Bus is locked by Leader, please select another Bus',
+                                type: 'error',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke'
+                                }).then((result) => {
+                                if (result.value) {
+                                    location.reload();
+                                }
+                            })
                     } else{
                         $.ajax({
                             url: "{{ url('/') }}" 
