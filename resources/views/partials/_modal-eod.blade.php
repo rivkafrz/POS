@@ -96,7 +96,7 @@
                                 @foreach ($tickets as $ticket)
                                     <tr>
                                         <td class="text-center">{{ $pijet ++ }}</td>
-                                        <td class="text-center">{{ substr($ticket->departureTime->boarding_time, 11, 5) }}</td>
+                                        <td class="text-center">{{ $ticket->departureTime->boarding_time }}</td>
                                         <td class="text-center">{{ $ticket->code }}</td>
                                         <td class="text-center">{{ substr($ticket->created_at, 11, 5) }}</td>
                                         <td class="text-center">{{ $ticket->customer->name }}</td>
