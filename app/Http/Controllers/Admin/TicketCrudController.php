@@ -53,33 +53,35 @@ class TicketCrudController extends CrudController
             'label' => "Status",
             'type' => 'ticket_status'
         ]);
+        $this->crud->addColumn([
+            'label' => "No Baggage",
+            'type' => 'ticket_baggage'
+        ]);
         $this->crud->removeColumns(['user_id', 'destination_id', 'departure_time_id']);
-
-        $this->crud->addFilter([ // date filter
-          'type' => 'date',
-          'name' => 'date',
-          'label'=> 'Date'
+        $this->crud->addFilter([
+            'type' => 'date',
+            'name' => 'date',
+            'label'=> 'Date'
         ],
         false,
-        function($value) { // if the filter is active, apply these constraints
-        $this->crud->addClause('where', 'date', '=', $value);
+        function($value) {
+            $this->crud->addClause('where', 'created_at', 'like', $value . "%");
         });
+
+        $this->crud->removeAllButtons('action');
+    
     }
+
+
     public function store(StoreRequest $request)
     {
-       
         $redirect_location = parent::storeCrud($request);
-       
-       
         return $redirect_location;
     }
 
     public function update(UpdateRequest $request)
     {
-       
         $redirect_location = parent::updateCrud($request);
-       
-       
         return $redirect_location;
     }
 }
