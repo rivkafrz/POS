@@ -25,22 +25,6 @@ class EodCrudController extends CrudController
         }
         $this->crud->denyAccess(['create', 'update', 'delete']);
         $this->crud->addColumn([
-            'label' => "Assign Location",
-            'name' => 'assign_location_id',
-            'type' => 'select',
-            'entity' => 'assignLocation',
-            'attribute' => 'assign_location',
-            'model' => 'App\AssignLocation'
-        ]);
-        $this->crud->addColumn([
-            'label' => "Work Time",
-            'name' => 'work_time_id',
-            'type' => 'select',
-            'entity' => 'workTime',
-            'attribute' => 'work_time',
-            'model' => 'App\WorkTime'
-        ]);
-        $this->crud->addColumn([
             'label' => "Ticketing",
             'type' => "employee",
             'name' => 'user_id'
@@ -106,6 +90,22 @@ class EodCrudController extends CrudController
                 $this->crud->addClause('where', 'work_time_id', $value->id);
             });
         } else {
+            $this->crud->addColumn([
+                'label' => "Assign Location",
+                'name' => 'assign_location_id',
+                'type' => 'select',
+                'entity' => 'assignLocation',
+                'attribute' => 'assign_location',
+                'model' => 'App\AssignLocation'
+            ]);
+            $this->crud->addColumn([
+                'label' => "Work Time",
+                'name' => 'work_time_id',
+                'type' => 'select',
+                'entity' => 'workTime',
+                'attribute' => 'work_time',
+                'model' => 'App\WorkTime'
+            ]);
             $this->crud->addClause('where', 'user_id', Auth::user()->id);
             $this->crud->removeColumns(['user_id']);
             $this->crud->removeAllButtons();
