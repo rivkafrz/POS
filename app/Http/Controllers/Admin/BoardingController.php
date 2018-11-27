@@ -25,6 +25,10 @@ class BoardingController extends Controller
 {
     public function create()
     {
+        if (Auth::user()->settingIsUnset()) {
+            Alert::error('Please set your Setting')->flash();
+            return redirect()->route('backpack.dashboard');
+        }
         if (!is_null(Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->first())) {
             Alert::success('EOD already created, redirect you back.')->flash();
             return redirect()->back();

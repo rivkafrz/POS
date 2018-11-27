@@ -38,4 +38,9 @@ class EOD extends Model
     {
         return $this->belongsTo(AssignLocation::class);
     }
+
+    public function workTime()
+    {
+        return $this->belongsTo(WorkTime::class);
+    }
 }
