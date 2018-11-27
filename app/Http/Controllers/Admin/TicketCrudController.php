@@ -67,7 +67,11 @@ class TicketCrudController extends CrudController
         function($value) {
             $this->crud->addClause('where', 'created_at', 'like', $value . "%");
         });
+
+        $this->crud->removeAllButtons('action');
+    
     }
+
 
     public function store(StoreRequest $request)
     {
