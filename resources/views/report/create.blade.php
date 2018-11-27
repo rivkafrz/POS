@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="to" class="col-md-3 control-label">To</label>
                                     <div class="col-md-9">
-                                        <input type="date" id="to" class="form-control" name="from">
+                                        <input type="date" id="to" class="form-control" name="from" max="{{ now()->toDateString() }}">
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbody">
-                                            <tr class="tplaceholder">
+                                            <tr id="tplaceholder">
                                                 <td colspan="3" class="text-center">No Data</td>
                                             </tr>
                                         </tbody>
@@ -86,6 +86,9 @@
     </div>
 @endsection
 @push('js')
+    @php
+        use Carbon\Carbon;
+    @endphp
     <script>
         console.log('Script Active');
         let type = $('#type');
@@ -94,5 +97,68 @@
         let tbody = $('#tbody');
         let tplaceholder = $('#tplaceholder');
         let assign_location = $('#assign_location');
+
+        type.on('change', function () {
+            console.log('Type touched');
+            runQuerry();
+        });
+
+        from.on('change', function () {
+            console.log('From touched');
+            runQuerry();
+        });
+
+        to.on('change', function () {
+            console.log('To touched');
+            runQuerry();
+        });
+
+        assign_location.on('change', function () {
+            console.log('AssignLocation touched');
+            runQuerry();
+        }); 
+
+        function runQuerry() {
+            if (paramsValid()) {
+                $.ajax({
+                    url: "{{ url('/') }}" + "/api/report/"
+                        + type.val() + "/"
+                        + from.val() + "/"
+                        + to.val() + "/"
+                        + assign_location.val() + "/",
+                    success: function (data) {
+                        clearTable();
+                        data.forEach(el => {
+                            appendTable(el);
+                        });
+                    }
+                });
+            }
+        }
+
+        function paramsValid() {
+            return (type.val() != "" && from.val() != "" && to.val() != "" && assign_location.val() != "");
+        }
+
+        function clearTable() {
+            tplaceholder.remove();
+            tbody.html("");
+            return true;
+        }
+
+        function appendTable(el) {
+            let btn = {
+                "daily": 'btn-info',
+                "manifest": 'btn-warning',
+                "summary": 'btn-default'
+            };
+            tbody.append(`
+            <tr>
+                <td class="text-center">` + el + `</td>
+                <td class="text-center"><a class="btn ` + btn[type.val()] + `"><span class="fa fa-eye"></span></a></td>
+                <td class="text-center"><a class="btn btn-success"><span class="fa fa-file"></span></a></td>
+            </tr>
+            `);
+        }
     </script>
 @endpush

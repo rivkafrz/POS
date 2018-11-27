@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 Route::group(['middleware' => 'api'], function() {
+    Route::get('report/{type}/{from}/{to}/{AssignLocation}', 'Admin\ReportController@apiReport')->name('report.api');
     Route::get('manifest/{AL}/{DT}/{Des}/show', 'Admin\ManifestController@show')->name('passenger.show');
     Route::get('passenger/{seat}/check', 'Admin\ManifestController@passengerCheck')->name('passenger.check');
     Route::get('ticket/{AssignLocation}/{Destination}/{DepartureTime}/manifest', 'Admin\BoardingController@manifest')->name('tickets.manifest');
