@@ -20,7 +20,7 @@ class UserCrudController extends CrudController
         $this->crud->setFromDb();
 
         $this->crud->removeFields(['section', 'work_time_id']);
-        $this->crud->removeColumns(['section','location', 'shift']);
+        $this->crud->removeColumns(['section','location', 'shift', 'employee_id', 'work_time_id']);
 
         $this->crud->addField(
         [
