@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EOD::class);
     }
+
+    public function settingIsUnset()
+    {
+        return is_null($this->work_time_id);
+    }
 }
