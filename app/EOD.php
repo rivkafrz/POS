@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
+use App\Ticket;
+use Carbon\Carbon;
 
 class EOD extends Model
 {
@@ -18,11 +20,6 @@ class EOD extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return substr($value, 11, 5) . " WIB";
     }
 
     public function getApprovedAttribute($value)
@@ -42,5 +39,25 @@ class EOD extends Model
     public function workTime()
     {
         return $this->belongsTo(WorkTime::class);
+    }
+
+    public function openTransaction()
+    {
+
+        $ticket = Ticket::where('created_at', 'like', Carbon::parse($this->created_at)->toDateString() . '%')
+        ->where('user_id', $this->user_id)
+        ->orderBy('created_at', 'asc')
+        ->first()
+        ->created_at;
+
+        return date('G:i:s A', strtotime($ticket));
+    }
+
+    public function tickets()
+    {
+        return Ticket::where('created_at', 'like', Carbon::parse($this->created_at)->toDateString() . '%')
+                ->where('user_id', $this->user_id)
+                ->orderBy('created_at', 'asc')
+                ->get();
     }
 }
