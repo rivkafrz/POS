@@ -1,0 +1,1 @@
+{{ $entry->passenger(1) }}

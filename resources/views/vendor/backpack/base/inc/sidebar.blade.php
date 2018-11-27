@@ -43,7 +43,7 @@
           @if (Auth::user()->hasRole('leader'))
           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
             <li><a href="{{ route('manifest.index') }}"><i class="fa fa-book"></i> <span>{{ trans('Manifest') }}</span></a></li>
-            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-history"></i> <span>{{ trans('History Manifest') }}</span></a></li>
+            <li><a href="{{ backpack_url('history-manifest') }}"><i class="fa fa-history"></i> <span>{{ trans('History Manifest') }}</span></a></li>
             <li><a href="{{ backpack_url('ticket') }}"><i class="fa fa-search"></i> <span>{{ trans('Search') }}</span></a></li>
           @endif
           @if (Auth::user()->hasRole('admin') or Auth::user()->hasRole('ticketing'))
