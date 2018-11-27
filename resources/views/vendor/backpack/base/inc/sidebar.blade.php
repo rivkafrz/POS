@@ -50,7 +50,7 @@
             <li><a href="{{ backpack_url('eod') }}"><i class="fa fa-bell"></i> <span>{{ Auth::user()->hasRole('admin') ? 'Approve EOD'  : 'History My EOD'}}</span></a></li>
           @endif
           @if (Auth::user()->hasRole('admin'))
-            <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Report ') }}</span></a></li>
+            <li><a href="{{ route('report.create') }}"><i class="fa fa-clipboard"></i> <span>{{ trans('Report ') }}</span></a></li>
             
           @endif  
 

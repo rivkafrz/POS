@@ -9,6 +9,7 @@ Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_pre
 
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 'admin'], function()
 {
+	Route::get('report/create', 'Admin\ReportController@create')->name('report.create');
 	Route::resource('manifest', 'Admin\ManifestController')->only(['index', 'store']);
 	Route::resource('boarding', 'Admin\BoardingController');
 	CRUD::resource('user','Admin\UserCrudController');
@@ -22,5 +23,6 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::post('settings/assign_location', 'Admin\SettingsController@getWorkTime')->name('settings.get-work-time');
 	Route::post('end-of-day', 'EODController@eod')->name('eod.submit');
 	Route::post('end-of-day/approve', 'EODController@approve')->name('eod.approve');
+	Route::post('end-of-day/pdf', 'Admin\ReportController@pdfEOD')->name('eod.pdf');
 });
 Route::get('/','pagesController@welcome');
