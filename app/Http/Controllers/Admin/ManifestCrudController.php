@@ -62,6 +62,16 @@ class ManifestCrudController extends CrudController
             'label' => 'Total Passengers',
             'type' => 'passenger'
         ]);
+
+         $this->crud->addFilter([
+            'type' => 'date',
+            'name' => 'date',
+            'label'=> 'Date'
+        ],
+        false,
+        function($value) {
+            $this->crud->addClause('where', 'created_at', 'like', $value . "%");
+        });
     }
 
     public function store(StoreRequest $request)

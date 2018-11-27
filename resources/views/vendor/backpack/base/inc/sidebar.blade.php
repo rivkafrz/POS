@@ -76,9 +76,10 @@
               .on('click', function () {
                 swal({
                   type: 'error',
-                  title: 'Error',
-                  text: 'You have unsubmitted EOD today'
-                });
+                  tittle: 'eror',
+                  name: 'You have unsubmitted EOD today'
+                })
+              
               });
           } else {
             $('#logout')
