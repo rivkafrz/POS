@@ -74,7 +74,11 @@
               $('#logout')
               .attr('href', "")
               .on('click', function () {
-                alert('You have unsubmitted EOD today');
+                swal({
+                  type: 'error',
+                  title: 'Error',
+                  text: 'You have unsubmitted EOD today'
+                });
               });
           } else {
             $('#logout')
@@ -83,4 +87,5 @@
       </script>
     @endif
     @endif
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
 @endpush
