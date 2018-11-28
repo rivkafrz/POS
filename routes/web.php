@@ -20,6 +20,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('employee','Admin\EmployeeCrudController');
 	CRUD::resource('eod','Admin\EodCrudController');
 	CRUD::resource('ticket','Admin\TicketCrudController');
+	CRUD::resource('history-manifest','Admin\ManifestCrudController');
 	Route::post('settings/assign_location', 'Admin\SettingsController@getWorkTime')->name('settings.get-work-time');
 	Route::post('end-of-day', 'EODController@eod')->name('eod.submit');
 	Route::post('end-of-day/approve', 'EODController@approve')->name('eod.approve');
