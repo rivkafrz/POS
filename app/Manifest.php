@@ -45,3 +45,4 @@ class Manifest extends Model
             ->count();
     }
 }
+

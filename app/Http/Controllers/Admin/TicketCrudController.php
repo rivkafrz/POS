@@ -18,6 +18,11 @@ class TicketCrudController extends CrudController
         $this->crud->denyAccess(['create', 'update', 'delete']);
         $this->crud->setFromDb();
         $this->crud->addColumn([
+            'label' => "Date",
+            'type' => 'date',
+            'name' => 'created_at'
+         ]);
+        $this->crud->addColumn([
             'label' => "Name",
             'type' => 'select',
             'name' => 'customer_id',
