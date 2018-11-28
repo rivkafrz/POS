@@ -77,8 +77,8 @@
                 swal({
                   type: 'error',
                   tittle: 'eror',
-                  name: 'You have unsubmitted EOD today'
-                })
+                  text: 'You have unsubmitted EOD today'
+                });
               
               });
           } else {
