@@ -6,13 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use PDF;
 use App\EOD;
+use App\AssignLocation;
+use App\Manifest;
 use Carbon\Carbon;
+use App\Exports\DailyManifestExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
     public function create()
     {
-        return view('report.create');
+        $al = AssignLocation::all();
+        return view('report.create', compact('al'));
     }
 
     public function pdfEOD(Request $request)
@@ -75,5 +80,19 @@ class ReportController extends Controller
         }
         
         return response()->json($response);
+    }
+
+    public function excelDaily($assign, $from)
+    {
+        $from = Carbon::parse($from);
+        if ($assign == 0) {
+            $manifest = Manifest::where('created_at', 'like', $from->toDateString() . '%')
+            ->get();
+        } else {
+            $manifest = Manifest::where('created_at', 'like', $from->toDateString() . '%')
+                            ->where('assign_location_id', $assign)
+                            ->get();
+        }
+        return Excel::download(new DailyManifestExport($manifest, $assign), 'users.xlsx');
     }
 }

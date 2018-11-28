@@ -14,6 +14,7 @@
                                     <div class="col-md-10">
                                         <input name="date" type="date" class="form-control" id="date">
                                         <input name="assign_location_id" type="hidden" value="{{ Auth::user()->workTime->assignLocation->id }}">
+                                        <input name="user_id" type="hidden" value="{{ Auth::user()->id }}">
                                     </div>
                                 </div>
                             </div>

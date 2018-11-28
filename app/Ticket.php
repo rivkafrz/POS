@@ -15,8 +15,14 @@ use CrudTrait;
         'destination_id',
         'customer_id',
         'amount',
+        'work_time_id',
         'user_id'
     ];
+
+    public function workTime()
+    {
+        return $this->belongsTo(WorkTime::class);
+    }
 
     public function customer()
     {
