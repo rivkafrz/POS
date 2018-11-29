@@ -63,6 +63,8 @@ class ManifestCrudController extends CrudController
             'type' => 'passenger'
         ]);
 
+        $this->crud->removeColumn('user_id'); 
+
          $this->crud->addFilter([
             'type' => 'date',
             'name' => 'date',
