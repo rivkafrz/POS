@@ -70,21 +70,22 @@
     @if (Auth::check())
     @if (Auth::user()->hasRole('ticketing'))
       <script>
-          if ({{ Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->get()->count() }} == 0) {
+        if ({{ Auth::user()->tickets()->where('created_at', 'like', now()->toDateString() . '%')->get()->count() != 0 }}) {
+          if ({{ Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->get()->count() == 0 }}) {
               $('#logout')
               .attr('href', "")
               .on('click', function () {
-                swal({
-                  type: 'error',
-                  tittle: 'eror',
-                  text: 'You have unsubmitted EOD today'
-                });
-              
+                swal(
+                  'Error',
+                  'You have unsubmitted EOD for today!',
+                  'error'
+                );
               });
           } else {
             $('#logout')
               .attr('href', "{{ route('logout') }}");
           }
+        }
       </script>
     @endif
     @endif
