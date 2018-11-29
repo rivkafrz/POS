@@ -9,6 +9,7 @@ Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_pre
 
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 'admin'], function()
 {
+	Route::get('report/daily/{AssignLocation}/{from}', 'Admin\ReportController@excelDaily')->name('report.excel.daily');
 	Route::get('report/create', 'Admin\ReportController@create')->name('report.create');
 	Route::resource('manifest', 'Admin\ManifestController')->only(['index', 'store']);
 	Route::resource('boarding', 'Admin\BoardingController');

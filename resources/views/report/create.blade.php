@@ -48,6 +48,9 @@
                                         <select name="assign_location" id="assign_location" class="form-control">
                                             <option value="">-- Select --</option>
                                             <option value="0">All Counter</option>
+                                            @foreach ($al as $assign)
+                                                <option value="{{ $assign->id }}">{{ $assign->assign_location }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -155,8 +158,8 @@
             tbody.append(`
             <tr>
                 <td class="text-center">` + el + `</td>
-                <td class="text-center"><a class="btn ` + btn[type.val()] + `"><span class="fa fa-eye"></span></a></td>
-                <td class="text-center"><a class="btn btn-success"><span class="fa fa-file"></span></a></td>
+                <td class="text-center"><a href="` + "{{ url('/') }}" + `/app/report/` + type.val() + `/` + assign_location.val() + "/" + el + `" class="btn ` + btn[type.val()] + `"><span class="fa fa-eye"></span></a></td>
+                <td class="text-center"><a href="` + "{{ url('/') }}" + `/app/report/` + type.val() + `/` + assign_location.val() + "/" + el + `" class="btn btn-success"><span class="fa fa-file"></span></a></td>
             </tr>
             `);
         }

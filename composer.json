@@ -12,6 +12,7 @@
         "fideloper/proxy": "~4.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "^3.1",
         "milon/barcode": "^5.3",
         "santigarcor/laratrust": "5.0.*",
         "yadahan/laravel-authentication-log": "^1.1"
