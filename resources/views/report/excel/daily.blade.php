@@ -22,6 +22,7 @@
             <td>Assign Location</td>
             <td>: {{ isset($assign->assign_location) ? $assign->assign_location : $assign }}</td>
         </tr>
+        
     </table>
 
     <table>
@@ -33,11 +34,11 @@
         @foreach ($manifest as $man)
             @foreach ($man->ticketings() as $t)
                 <tr>
-                    <td>{{ $man->workTime()->work_time }}</td>
+                    <td>{{ $man->workTime()->workTime->work_time }}</td>
                     <td>{{ $man->user->employee->employee_name }}</td>
+            @endforeach
                     <td>{{ $t->employee_name }}</td>
                 </tr>
-            @endforeach
         @endforeach
     </table>
 
@@ -71,6 +72,7 @@
         @php
             $income += $m->nonCash();
             $income += $m->cash();
+            $pijet++;
         @endphp
         @endforeach
         <tr>
