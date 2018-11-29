@@ -100,6 +100,8 @@
         </tr>
         @php
             $pijet = 1;
+            $nonCash = 0;
+            $cash = 0;
         @endphp
         @foreach ($eod->tickets() as $ticket)
         <tr class="center border-right">
@@ -111,10 +113,28 @@
             <td>{{ $ticket->seats->count() }}</td>
             <td>{{ !is_null($ticket->nonCash) ? $ticket->nonCash->no_card : null }}</td>
             <td>{{ !is_null($ticket->nonCash) ? $ticket->nonCash->bank->name : null }}</td>
-            <td>{{ isset($ticket->nonCash) ? $ticket->amount : null }}</td>
-            <td>{{ isset($ticket->cash) ? $ticket->amount : null }}</td>
+            <td>{{ isset($ticket->nonCash) ? number_format($ticket->amount) : null }}</td>
+            <td>{{ isset($ticket->cash) ? number_format($ticket->amount) : null }}</td>
         </tr>
+        @if (is_null($ticket->cash))
+            @php
+                $nonCash += $ticket->amount;
+            @endphp
+            @else
+            @php
+                $cash += $ticket->amount;
+            @endphp
+        @endif
         @endforeach
+        <tr class="center border-right border-top">
+            <td colspan="8" class="text-center">SUB TOTAL</td>
+            <td class="text-center">{{ number_format($nonCash) }}</td>
+            <td class="text-center">{{ number_format($cash) }}</td>
+        </tr>
+        <tr class="center border-right border-top">
+            <td colspan="8" class="text-center">TOTAL</td>
+            <td colspan="2" class="text-center">{{ "Rp . " . number_format($cash + $nonCash) }}</td>
+        </tr>
     </table>
 </body>
 </html>
