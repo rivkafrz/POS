@@ -73,8 +73,8 @@ class Manifest extends Model
 
         $price = 0;
         foreach ($seat as $s) {
-            if (is_null($s->first()->first()->ticket->nonCash)) {
-                $price += $s->first()->first()->ticket->amount;
+            if (is_null($s->first()->ticket->nonCash)) {
+                $price += $s->first()->ticket->amount;
             }
         }
 
@@ -93,8 +93,8 @@ class Manifest extends Model
 
         $price = 0;
         foreach ($seat as $s) {
-            if (is_null($s->first()->first()->ticket->cash)) {
-                $price += $s->first()->first()->ticket->amount;
+            if (is_null($s->first()->ticket->cash)) {
+                $price += $s->first()->ticket->amount;
             }
         }
 
@@ -112,7 +112,7 @@ class Manifest extends Model
             ->groupBy('ticket_id');
         $t = [];
         foreach ($seat as $ticket) {
-            $t = array_merge($t, [$ticket->first()->first()->ticket->user->employee]);
+            $t = array_merge($t, [$ticket->first()->ticket->user->employee]);
         }
 
         return $t;
@@ -128,7 +128,7 @@ class Manifest extends Model
             ->get()
             ->groupBy('ticket_id');
 
-        return $seat->first()->first()->ticket->workTime;
+        return $seat->first()->first()->ticket;
     }
 }
 

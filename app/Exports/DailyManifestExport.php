@@ -143,7 +143,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         );
                     }
                 }
-                for ($i=(10 + count($this->manifest)); $i <= (10 + count($this->manifest)); $i++) {
+                for ($i=(10 + count($this->manifest)); $i <= (11 + count($this->manifest)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
