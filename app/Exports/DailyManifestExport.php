@@ -15,6 +15,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
 {
     protected $manifest;
     protected $assign;
+    protected $metadata;
     
     public function __construct($manifest, $assign)
     {
@@ -26,6 +27,15 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
     {
         $manifest = $this->manifest;
         $metadata = [];
+
+        foreach ($manifest as $man) {
+            foreach ($man->ticketings() as $ticketing) {
+                !in_array($ticketing->id, $metadata) ? array_push($metadata, $ticketing->id) : null ;
+            }
+        }
+
+        $this->metadata = $metadata;
+
         if ($this->assign == 0) {
             $assign = 'All Counter';
         } else {
@@ -53,7 +63,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     ]
                 );
 
-                $thead1 = 'A7:C' . (6 + count($this->manifest));
+                $thead1 = 'A7:C' . (6 + count($this->metadata));
                 $table1 = 'A7:C10';
                 $event->sheet->styleCells(
                     $thead1,
@@ -63,7 +73,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         ],
                     ]
                 );
-                for ($i=6; $i <= (6 + count($this->manifest)); $i++) {
+                for ($i=6; $i <= (6 + count($this->metadata)); $i++) {
                     $cel = ['A', 'B', 'C'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
@@ -86,7 +96,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                 $thead2 = 'A12:G13';
                 $table2 = 'A12:G13';
                 $tbody2 = "A14:G" . (12 + count($this->manifest));
-                $tfoot2 = 'A' . (14 + count($this->manifest)) . ':H' . (15 + count($this->manifest));
+                $tfoot2 = 'A' . (10 + count($this->manifest) + count($this->metadata)) . ':H' . (11 + count($this->metadata) + count($this->manifest));
                 $event->sheet->styleCells(
                     $thead2,
                     [
@@ -103,7 +113,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         ],
                     ]
                 );
-                for ($i=(6 + count($this->manifest) + 2); $i <= (6 + count($this->manifest) + 3); $i++) {
+
+                // Table 2 head
+                for ($i=(8 + count($this->metadata)); $i <= (9 + count($this->metadata)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
@@ -123,7 +135,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         );
                     }
                 }
-                for ($i=(7 + (count($this->manifest) * 2) + 3 ); $i <= (6 + (count($this->manifest) * 2) + 5); $i++) {
+
+                // Table 2 footer
+                for ($i=(10 + count($this->metadata) + count($this->manifest)); $i <= (11 + count($this->metadata) + count($this->manifest) ); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
@@ -143,7 +157,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         );
                     }
                 }
-                for ($i=(10 + count($this->manifest)); $i <= (11 + count($this->manifest)); $i++) {
+
+                // Table 2 body
+                for ($i=(10 + count($this->metadata)); $i <= (11 + count($this->manifest)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(

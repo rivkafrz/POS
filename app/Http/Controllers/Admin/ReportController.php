@@ -11,9 +11,11 @@ use App\Manifest;
 use Carbon\Carbon;
 use App\Exports\DailyManifestExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Alert;
 
 class ReportController extends Controller
 {
+    
     public function create()
     {
         $al = AssignLocation::all();
@@ -93,7 +95,6 @@ class ReportController extends Controller
                             ->where('assign_location_id', $assign)
                             ->get();
         }
-
         return Excel::download(new DailyManifestExport($manifest, $assign), 'users.xlsx');
     }
 }
