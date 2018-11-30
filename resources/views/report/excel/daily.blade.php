@@ -36,8 +36,8 @@
                 <tr>
                     <td>{{ $man->workTime()->workTime->work_time }}</td>
                     <td>{{ $man->user->employee->employee_name }}</td>
-            @endforeach
                     <td>{{ $t->employee_name }}</td>
+            @endforeach
                 </tr>
         @endforeach
     </table>
