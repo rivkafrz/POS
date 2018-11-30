@@ -93,7 +93,6 @@ class ReportController extends Controller
                             ->where('assign_location_id', $assign)
                             ->get();
         }
-
         return Excel::download(new DailyManifestExport($manifest, $assign), 'users.xlsx');
     }
 }
