@@ -63,8 +63,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     ]
                 );
 
-                $thead1 = 'A7:C' . (6 + count($this->metadata));
-                $table1 = 'A7:C10';
+                $thead1 = 'A6:D10';
                 $event->sheet->styleCells(
                     $thead1,
                     [
@@ -74,7 +73,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     ]
                 );
                 for ($i=6; $i <= (6 + count($this->metadata)); $i++) {
-                    $cel = ['A', 'B', 'C'];
+                    $cel = ['A', 'B', 'C', 'D'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",

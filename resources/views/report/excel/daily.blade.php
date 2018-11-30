@@ -27,6 +27,7 @@
 
     <table>
         <tr>
+            <td>Assign Location</td>
             <td>Work Time</td>
             <td>Leader</td>
             <td>Ticketing</td>
@@ -38,6 +39,7 @@
             @foreach ($man->ticketings() as $t)
                 @if (!in_array($t->id, $metadata))
                     <tr>
+                        <td>{{ $man->workTime()->workTime->assignLocation->assign_location }}</td>
                         <td>{{ $man->workTime()->workTime->work_time }}</td>
                         <td>{{ $man->user->employee->employee_name }}</td>
                         <td>{{ $t->employee_name }}</td>
