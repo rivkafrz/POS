@@ -158,7 +158,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                 }
 
                 // Table 2 body
-                for ($i=(10 + count($this->metadata)); $i <= (11 + count($this->manifest)); $i++) {
+                for ($i=(10 + count($this->metadata)); $i <= (9 + count($this->metadata) + count($this->manifest)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
