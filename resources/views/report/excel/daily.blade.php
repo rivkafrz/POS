@@ -55,6 +55,7 @@
     <table>
         <tr>
             <th rowspan="2">No</th>
+            <th rowspan="2">Assign Location</th>
             <th rowspan="2">Departure Time</th>
             <th rowspan="2">No Body</th>
             <th rowspan="2">Driver</th>
@@ -72,10 +73,11 @@
         @foreach ($manifest as $m)
         <tr>
             <td>{{ $pijet }}</td>
+            <td>{{ $m->assignLocation->assign_location }}</td>
             <td>{{ $m->departureTime->boarding_time }}</td>
             <td>{{ $m->no_body }}</td>
             <td>{{ $m->driver }}</td>
-            <td>{{ $m->passenger(1) }}</td>
+            <td>{{ $m->passenger(1) + $m->passenger(0) }}</td>
             <td>{{ number_format($m->nonCash()) }}</td>
             <td>{{ number_format($m->cash()) }}</td>
         </tr>
@@ -86,7 +88,7 @@
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="4">Total</td>
+            <td rowspan="2" colspan="5">Total</td>
             <td rowspan="2"></td>
             <td rowspan="2"></td>
             <td rowspan="2"></td>
