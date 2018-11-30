@@ -27,18 +27,28 @@
 
     <table>
         <tr>
+            <td>Assign Location</td>
             <td>Work Time</td>
             <td>Leader</td>
             <td>Ticketing</td>
         </tr>
+        @php
+            $metadata = [];
+        @endphp
         @foreach ($manifest as $man)
             @foreach ($man->ticketings() as $t)
-                <tr>
-                    <td>{{ $man->workTime()->workTime->work_time }}</td>
-                    <td>{{ $man->user->employee->employee_name }}</td>
-                    <td>{{ $t->employee_name }}</td>
+                @if (!in_array($t->id, $metadata))
+                    <tr>
+                        <td>{{ $man->workTime()->workTime->assignLocation->assign_location }}</td>
+                        <td>{{ $man->workTime()->workTime->work_time }}</td>
+                        <td>{{ $man->user->employee->employee_name }}</td>
+                        <td>{{ $t->employee_name }}</td>
+                    </tr>
+                @endif
+                @php
+                    !in_array($t->id, $metadata) ? array_push($metadata, $t->id) : null;
+                @endphp
             @endforeach
-                </tr>
         @endforeach
     </table>
 

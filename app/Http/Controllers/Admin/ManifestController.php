@@ -12,11 +12,16 @@ use App\Seat;
 use App\Manifest;
 use Carbon\Carbon;
 use Alert;
+use Auth;
 
 class ManifestController extends Controller
 {
     public function index()
     {
+        if (is_null(Auth::user()->workTime)) {
+            Alert::error('Settings is unset')->flash();
+            return redirect()->route('backpack.dashboard');
+        }
         $det = DepartureTime::all();
         $asl = AssignLocation::all();
         $des = Destination::all();

@@ -11,9 +11,11 @@ use App\Manifest;
 use Carbon\Carbon;
 use App\Exports\DailyManifestExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Alert;
 
 class ReportController extends Controller
 {
+    
     public function create()
     {
         $al = AssignLocation::all();

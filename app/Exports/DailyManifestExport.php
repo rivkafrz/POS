@@ -63,8 +63,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     ]
                 );
 
-                $thead1 = 'A7:C' . (6 + count($this->metadata));
-                $table1 = 'A7:C10';
+                $thead1 = 'A6:D10';
                 $event->sheet->styleCells(
                     $thead1,
                     [
@@ -74,7 +73,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     ]
                 );
                 for ($i=6; $i <= (6 + count($this->metadata)); $i++) {
-                    $cel = ['A', 'B', 'C'];
+                    $cel = ['A', 'B', 'C', 'D'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
@@ -113,7 +112,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         ],
                     ]
                 );
-                for ($i=(8 + count($this->manifest) + count($this->manifest)); $i <= (9 + count($this->metadata) + count($this->manifest)); $i++) {
+
+                // Table 2 head
+                for ($i=(8 + count($this->metadata)); $i <= (9 + count($this->metadata)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
@@ -133,6 +134,8 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         );
                     }
                 }
+
+                // Table 2 footer
                 for ($i=(10 + count($this->metadata) + count($this->manifest)); $i <= (11 + count($this->metadata) + count($this->manifest) ); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
                     for ($j=0; $j < count($cel); $j++) {
@@ -153,7 +156,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                         );
                     }
                 }
-                for ($i=(10 + count($this->manifest)); $i <= (11 + count($this->manifest)); $i++) {
+
+                // Table 2 body
+                for ($i=(10 + count($this->metadata)); $i <= (11 + count($this->manifest)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
