@@ -42,6 +42,32 @@
 @section('after_scripts')
     <script>
         console.log("Script enable");
+        let commit = $('#commit');
+        let print = $('#print');
+        let form = $('#ticket_form');
+
+        commit.on('click', function (e) {
+            e.preventDefault();
+            swal({
+                title: 'Print Ticket ?',
+                text: "You won't be able to retrieve ticket if select 'No'",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                }).then((result) => {
+                    if (result.value) {
+                        print.val(1);
+                        form.submit();
+                    } else {
+                        print.val(0);
+                        form.submit();
+                    }
+                })
+        })
+        
         function selectSeat(seat_id) {
             var current = '#' + seat_id;
             if ($(current).hasClass('seat-occupied')) {

@@ -98,8 +98,13 @@ class BoardingController extends Controller
             ]);
         }
 
-        $pdf = PDF::loadView('pdf.ticket', compact('ticket'))->setPaper([0,0, 226.78, 340.16]);
-        return $pdf->stream('ticket.pdf');
+        if ($form->print) {
+            $pdf = PDF::loadView('pdf.ticket', compact('ticket'))->setPaper([0,0, 226.78, 340.16]);
+            return $pdf->stream('ticket.pdf');
+        } else {
+            Alert::success('Ticket successfully created')->flash();
+            return redirect()->back();
+        }
     }
 
     public function update($id, Request $form)
