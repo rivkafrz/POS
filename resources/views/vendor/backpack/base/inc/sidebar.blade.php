@@ -74,7 +74,8 @@
           if ({{ Auth::user()->eods()->where('created_at', 'like', now()->toDateString() . '%')->get()->count() == 0 }}) {
               $('#logout')
               .attr('href', "")
-              .on('click', function () {
+              .on('click', function (e) {
+                e.preventDefault();
                 swal(
                   'Error',
                   'You have unsubmitted EOD for today!',

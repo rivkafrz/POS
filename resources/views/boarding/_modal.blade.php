@@ -36,7 +36,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success">Oke</button>
+        <input type="hidden" value="1" name="print" id="print">
+        <button id="commit" type="submit" class="btn btn-success">Oke</button>
       </div>
     </div>
   </div>

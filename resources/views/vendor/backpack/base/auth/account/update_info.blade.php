@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-6">
 
-        <form class="form" action="{{ route('backpack.account.info') }}" method="post">
+        <form class="form" action="{{ route('user.updateInfo') }}" method="post">
 
             {!! csrf_field() !!}
 
@@ -68,8 +68,8 @@
 
                     <div class="form-group">
                         @php
-                            $label = trans('backpack::base.name');
-                            $field = 'name';
+                            $label = 'Name';
+                            $field = 'employee_name';
                         @endphp
                         <label class="required">{{ $label }}</label>
                         <input required class="form-control" type="text" name="{{ $field }}" value="{{ old($field) ? old($field) : Auth::user()->employee->employee_name }} ">
