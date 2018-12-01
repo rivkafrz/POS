@@ -146,6 +146,7 @@
                    url: "{{ url('/') }}" + "/api/manifest/" + '{{ Auth::user()->workTime->assignLocation->id }}' + '/' + departure_time.val() + "/" + destination.val() + "/show",
                    success: function (data) {
                        console.log('Getting Manifest Object');
+                       console.log({data});
                        if(data.id != null){
                            submit.remove();
                            form.attr('action', "");

@@ -33,6 +33,11 @@
             <td>Ticketing</td>
         </tr>
         @php
+            use App\AssignLocation;
+            use App\Manifest;
+            use Carbon\Carbon;
+
+            $assigns = AssignLocation::all();
             $metadata = [];
         @endphp
         @foreach ($manifest as $man)
@@ -55,7 +60,7 @@
     <table>
         <tr>
             <th rowspan="2">No</th>
-            <th rowspan="2">Assign Location</th>
+            <th colspan="{{ $assigns->count() }}">Assign Location</th>
             <th rowspan="2">Departure Time</th>
             <th rowspan="2">No Body</th>
             <th rowspan="2">Driver</th>
@@ -63,32 +68,60 @@
             <th colspan="2">Payment Method</th>
         </tr>
         <tr>
+            @foreach ($assigns as $assign)
+                <th>{{ $assign->assign_location }}</th>
+            @endforeach
             <th>Non Cash</th>
             <th>Cash</th>
         </tr>
         @php
             $pijet = 1;
             $income = 0;
+            $stack = [];
         @endphp
         @foreach ($manifest as $m)
-        <tr>
-            <td>{{ $pijet }}</td>
-            <td>{{ $m->assignLocation->assign_location }}</td>
-            <td>{{ $m->departureTime->boarding_time }}</td>
-            <td>{{ $m->no_body }}</td>
-            <td>{{ $m->driver }}</td>
-            <td>{{ $m->passenger(1) + $m->passenger(0) }}</td>
-            <td>{{ number_format($m->nonCash()) }}</td>
-            <td>{{ number_format($m->cash()) }}</td>
-        </tr>
+            @php
+                $current_total_passenger = 0;
+                $current_cash = 0;
+                $current_noncash = 0;
+                $needle = $m->departureTime->id . "-" . $m->destination->id;
+            @endphp
+            @if (!in_array($needle, $stack))
+                <tr>
+                    <td>{{ $pijet }}</td>
+                    @foreach ($assigns as $assign)
+                        @php
+                            $current_manifest = Manifest::where('created_at', 'like', Carbon::parse($m->created_at)->toDateString() . '%')
+                                    ->where('departure_time_id', $m->departureTime->id)
+                                    ->where('destination_id', $m->destination->id)
+                                    ->where('assign_location_id', $assign->id)
+                                    ->first();
+                            $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
+                        @endphp
+                        <td>{{ $total }}</td>
+                        @php
+                            $current_total_passenger += $total;
+                            $current_cash += $current_manifest->cash(); 
+                            $current_noncash += $current_manifest->nonCash(); 
+                        @endphp
+                    @endforeach
+                    <td>{{ $m->departureTime->boarding_time }}</td>
+                    <td>{{ $m->no_body }}</td>
+                    <td>{{ $m->driver }}</td>
+                    <td>{{ $current_total_passenger }}</td>
+                    <td>{{ number_format($current_noncash) }}</td>
+                    <td>{{ number_format($current_cash) }}</td>
+                </tr>
+            @endif
         @php
             $income += $m->nonCash();
             $income += $m->cash();
             $pijet++;
+            !in_array($needle, $stack) ? array_push($stack, $needle) : null;
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="5">Total</td>
+            <td rowspan="2" colspan="6">Total</td>
             <td rowspan="2"></td>
             <td rowspan="2"></td>
             <td rowspan="2"></td>

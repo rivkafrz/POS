@@ -16,11 +16,20 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
     protected $manifest;
     protected $assign;
     protected $metadata;
+    protected $manifest_metadata;
     
     public function __construct($manifest, $assign)
     {
         $this->manifest = $manifest;
         $this->assign = $assign;
+        $manifest_metadata = [];
+        foreach ($manifest as $single) {
+            $needle = $single->departureTime->id . "-" . $single->destination->id;
+            if (!in_array($needle, $manifest_metadata)) {
+                array_push($manifest_metadata, $needle);
+            }
+        }
+        $this->manifest_metadata = $manifest_metadata;
     }
 
     public function view() : View
@@ -93,31 +102,6 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
 
                 // Table 2 head
                 for ($i=(8 + count($this->metadata)); $i <= (9 + count($this->metadata)); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-                    for ($j=0; $j < count($cel); $j++) {
-                        $event->sheet->styleCells(
-                            "$cel[$j]$i",
-                            [
-                                'borders' => [
-                                    'outline' => [
-                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                                        'color' => ['argb' => '00000000'],
-                                    ],
-                                'inline' => [
-                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                                        'color' => ['argb' => '00000000'],
-                                    ],
-                                ],
-                                'alignment' => [
-                                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                                ],
-                            ]
-                        );
-                    }
-                }
-
-                // Table 2 footer
-                for ($i=(10 + count($this->metadata) + count($this->manifest)); $i <= (11 + count($this->metadata) + count($this->manifest) ); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
@@ -141,9 +125,34 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                     }
                 }
 
+                // Table 2 footer
+                for ($i=(10 + count($this->metadata) + count($this->manifest_metadata)); $i <= (11 + count($this->metadata) + count($this->manifest_metadata) ); $i++) {
+                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                    for ($j=0; $j < count($cel); $j++) {
+                        $event->sheet->styleCells(
+                            "$cel[$j]$i",
+                            [
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '00000000'],
+                                    ],
+                                'inline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '00000000'],
+                                    ],
+                                ],
+                                'alignment' => [
+                                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                                ],
+                            ]
+                        );
+                    }
+                }
+
                 // Table 2 body
-                for ($i=(10 + count($this->metadata)); $i <= (9 + count($this->metadata) + count($this->manifest)); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                for ($i=(10 + count($this->metadata)); $i <= (9 + count($this->metadata) + count($this->manifest_metadata)); $i++) {
+                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
