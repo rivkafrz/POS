@@ -9,6 +9,8 @@ use App\Http\Requests\UserRequest as StoreRequest;
 use App\Http\Requests\UserRequest as UpdateRequest;
 use App\User;
 use App\Role;
+use App\Models\Employee;
+use Alert;
 
 class UserCrudController extends CrudController
 {
@@ -49,21 +51,19 @@ class UserCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        // your additional operations before save here
+        if (!is_null(Employee::find($request->employee_id)->user)) {
+            Alert::error('An account already attached to selected Employee')->flash();
+            return redirect()->back();
+        }
         $redirect_location = parent::storeCrud($request);
         $user = User::where('email', $request->email)->first();
         $user->roles()->attach(Role::find($request->role_id));
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
     }
 
     public function update(UpdateRequest $request)
     {
-        // your additional operations before save here
         $redirect_location = parent::updateCrud($request);
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
     }
 }
