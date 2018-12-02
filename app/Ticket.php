@@ -4,17 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
-
+use Carbon\Carbon;
 
 class Ticket extends Model
 {
-use CrudTrait;
+    use CrudTrait;
     protected $fillable = [
         'code',
         'departure_time_id',
         'destination_id',
         'customer_id',
         'amount',
+        'refund',
         'work_time_id',
         'user_id'
     ];
@@ -44,9 +45,9 @@ use CrudTrait;
         return $this->hasMany(Baggage::class);
     }
 
-    public function seats()
+    public function seats($refund = 0)
     {
-        return $this->hasMany(Seat::class)->where('refund', 0);
+        return $this->hasMany(Seat::class)->where('refund', $refund);
     }
 
     public function cash()
@@ -85,6 +86,11 @@ use CrudTrait;
         $time = now()->toDateString();
         return Ticket::where('user_id', $user_id)
                     ->where('created_at', 'like', $time . '%');
+    }
+
+    public function isToday()
+    {
+        return Carbon::parse($this->created_at)->isToday();
     }
 
 

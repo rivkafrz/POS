@@ -18,6 +18,7 @@
                                             <option value="daily">Daily Report</option>
                                             <option value="manifest">Manifest Report</option>
                                             <option value="summary">Summary Report</option>
+                                            <option value="refund">Refund Report</option>
                                         </select>
                                     </div>
                                 </div>
@@ -153,7 +154,8 @@
             let btn = {
                 "daily": 'btn-info',
                 "manifest": 'btn-warning',
-                "summary": 'btn-default'
+                "summary": 'btn-default',
+                "refund": 'btn-danger',
             };
             tbody.append(`
             <tr>

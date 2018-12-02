@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Daily Report</title>
+    <title>Refund Report</title>
 </head>
 <body>
     <table>
         <tr>
-            <td colspan="8"><strong>Daily Report</strong></td>
+            <td colspan="8"><strong>Refund Report</strong></td>
         </tr>
     </table>
 
@@ -62,28 +62,21 @@
             <th rowspan="2">No</th>
             <th colspan="{{ $assigns->count() }}">Assign Location</th>
             <th rowspan="2">Departure Time</th>
-            <th rowspan="2">No Body</th>
-            <th rowspan="2">Driver</th>
-            <th rowspan="2">Total Passenger</th>
-            <th colspan="2">Payment Method</th>
+            <th rowspan="2">Refund Fee</th>
         </tr>
         <tr>
             @foreach ($assigns as $assign)
                 <th>{{ $assign->assign_location }}</th>
             @endforeach
-            <th>Non Cash</th>
-            <th>Cash</th>
         </tr>
         @php
             $pijet = 1;
-            $income = 0;
-            $income_cash = 0;
-            $income_nocash = 0;
+            $refund = 0;
             $stack = [];
         @endphp
         @foreach ($manifest as $m)
             @php
-                $current_total_passenger = 0;
+                $current_total_refund_price = 0;
                 $current_cash = 0;
                 $current_noncash = 0;
                 $needle = $m->departureTime->id . "-" . $m->destination->id;
@@ -98,41 +91,30 @@
                                     ->where('destination_id', $m->destination->id)
                                     ->where('assign_location_id', $assign->id)
                                     ->first();
-                            $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
+                            $total = $current_manifest->refundSeat()->count();
+                            $current_refund = $current_manifest->refundPrice();
                         @endphp
                         <td>{{ $total }}</td>
                         @php
-                            $current_total_passenger += $total;
-                            $current_cash += $current_manifest->cash(); 
-                            $current_noncash += $current_manifest->nonCash(); 
+                            $current_total_refund_price += $current_refund;
                         @endphp
                     @endforeach
                     <td>{{ $m->departureTime->boarding_time }}</td>
-                    <td>{{ $m->no_body }}</td>
-                    <td>{{ $m->driver }}</td>
-                    <td>{{ $current_total_passenger }}</td>
-                    <td>{{ number_format($current_noncash) }}</td>
-                    <td>{{ number_format($current_cash) }}</td>
+                    <td>{{ number_format($current_total_refund_price) }}</td>
                 </tr>
             @endif
         @php
-            $income += $m->nonCash();
-            $income_nocash += $m->nonCash();
-            $income += $m->cash();
-            $income_cash += $m->cash();
+            $refund += $current_total_refund_price;
             $pijet++;
             !in_array($needle, $stack) ? array_push($stack, $needle) : null;
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="6">Total</td>
-            <td rowspan="2"></td>
-            <td rowspan="2">{{ number_format($income_nocash) }}</td>
-            <td rowspan="2">{{ number_format($income_cash) }}</td>
-            <td>The Amount of Income Terminal 1</td>
+            <td rowspan="2" colspan="5">Total</td>
+            <td>Total Refund Fee</td>
         </tr>
         <tr>
-            <td>Rp. {{ number_format($income) }}</td>
+            <td>Rp. {{ number_format($refund) }}</td>
         </tr>
     </table>
 </body>
