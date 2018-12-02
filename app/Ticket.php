@@ -15,6 +15,7 @@ class Ticket extends Model
         'destination_id',
         'customer_id',
         'amount',
+        'refund',
         'work_time_id',
         'user_id'
     ];

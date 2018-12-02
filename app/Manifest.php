@@ -49,6 +49,26 @@ class Manifest extends Model
             ->get();
     }
 
+    public function refundSeat()
+    {
+        return Seat::where('created_at', 'like', Carbon::parse($this->created_at)->toDateString().'%')
+            ->where('departure_time_id', $this->departure_time_id)
+            ->where('assign_location_id', $this->assign_location_id)
+            ->where('destination_id', $this->destination_id)
+            ->where('refund', 1)
+            ->get();
+    }
+
+    public function refundPrice()
+    {
+        $total = 0;
+        foreach ($this->refundSeat()->groupBy('ticket_id') as $seat) {
+            $total += $seat->first()->first()->ticket->refund;
+        }
+
+        return $total;
+    }
+
     public function passenger($status)
     {
         return Seat::where('created_at', 'like', Carbon::parse($this->created_at)->toDateString().'%')
