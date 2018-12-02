@@ -129,7 +129,7 @@ class BoardingController extends Controller
                 $potongan = (25 * $amount) / 100 ;
                 $seat->ticket()->update([
                     'amount' => ($amount - $potongan),
-                    'refund' => $potongan,
+                    'refund' => $potongan
                 ]);
             }
         }
