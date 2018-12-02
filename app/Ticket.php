@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
-
+use Carbon\Carbon;
 
 class Ticket extends Model
 {
-use CrudTrait;
+    use CrudTrait;
     protected $fillable = [
         'code',
         'departure_time_id',
@@ -85,6 +85,11 @@ use CrudTrait;
         $time = now()->toDateString();
         return Ticket::where('user_id', $user_id)
                     ->where('created_at', 'like', $time . '%');
+    }
+
+    public function isToday()
+    {
+        return Carbon::parse($this->created_at)->isToday();
     }
 
 
