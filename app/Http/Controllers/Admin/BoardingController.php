@@ -125,6 +125,12 @@ class BoardingController extends Controller
                 $seat->update([
                     'refund' => 1
                 ]);
+                $amount = $seat->ticket->amount;
+                $potongan = (25 * $amount) / 100 ;
+                $seat->ticket()->update([
+                    'amount' => ($amount - $potongan),
+                    'refund' => $potongan,
+                ]);
             }
         }
 
@@ -189,8 +195,9 @@ class BoardingController extends Controller
         if ($ticket == null) {
             return response()->json(null);
         }
-        
-        return response()->json($ticket->load(['customer', 'baggages', 'departureTime', 'to', 'seats']));
+        $reponse = $ticket->load(['customer', 'baggages', 'departureTime', 'to', 'seats']);
+        $reponse = array_merge($reponse->toArray(), ['is_today' => $ticket->isToday()]);
+        return response()->json($reponse);
     }
 
     public function seats($to, $time)

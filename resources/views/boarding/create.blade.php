@@ -200,9 +200,7 @@
                             confirmButtonText: 'Oke'
                             });
                     } else {
-                        let today = new Date('{{ now() }}');
-                        console.log(data.created_at.substr(0, 10) + " " + today.toISOString().substr(0, 10));
-                        if (today.toISOString().substr(0, 10) == data.created_at.substr(0, 10)) {
+                        if (data.is_today) {
                             prependPatch(data);
                             showClearButton();
                             appendTabOneInfo(data);
