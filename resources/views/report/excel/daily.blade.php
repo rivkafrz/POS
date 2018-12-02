@@ -77,6 +77,8 @@
         @php
             $pijet = 1;
             $income = 0;
+            $income_cash = 0;
+            $income_nocash = 0;
             $stack = [];
         @endphp
         @foreach ($manifest as $m)
@@ -115,7 +117,9 @@
             @endif
         @php
             $income += $m->nonCash();
+            $income_nocash += $m->nonCash();
             $income += $m->cash();
+            $income_cash += $m->cash();
             $pijet++;
             !in_array($needle, $stack) ? array_push($stack, $needle) : null;
         @endphp
@@ -123,8 +127,8 @@
         <tr>
             <td rowspan="2" colspan="6">Total</td>
             <td rowspan="2"></td>
-            <td rowspan="2"></td>
-            <td rowspan="2"></td>
+            <td rowspan="2">{{ number_format($income_nocash) }}</td>
+            <td rowspan="2">{{ number_format($income_cash) }}</td>
             <td>The Amount of Income Terminal 1</td>
         </tr>
         <tr>
