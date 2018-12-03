@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use Carbon\Carbon;
+use App\Ticket;
 
 class Manifest extends Model
 {
@@ -62,8 +63,8 @@ class Manifest extends Model
     public function refundPrice()
     {
         $total = 0;
-        foreach ($this->refundSeat()->groupBy('ticket_id') as $seat) {
-            $total += $seat->first()->first()->ticket->refund;
+        foreach ($this->refundSeat()->groupBy('ticket_id') as $key => $val) {
+            $total += Ticket::find($key)->refund;
         }
 
         return $total;
