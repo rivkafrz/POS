@@ -125,11 +125,10 @@
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="6">Total</td>
-            <td rowspan="2"></td>
+            <td rowspan="2" colspan="{{ $assigns->count() + 5 }}">Total</td>
             <td rowspan="2">{{ number_format($income_nocash) }}</td>
             <td rowspan="2">{{ number_format($income_cash) }}</td>
-            <td>The Amount of Income Terminal 1</td>
+            <td>The Amount of Income</td>
         </tr>
         <tr>
             <td>Rp. {{ number_format($income) }}</td>
