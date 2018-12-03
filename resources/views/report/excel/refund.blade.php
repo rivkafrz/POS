@@ -83,7 +83,7 @@
             @endphp
             @if (!in_array($needle, $stack))
                 <tr>
-                    <td>{{ $pijet }}</td>
+                    <td>{{ $m->id }}</td>
                     @foreach ($assigns as $assign)
                         @php
                             $current_manifest = Manifest::where('created_at', 'like', Carbon::parse($m->created_at)->toDateString() . '%')
@@ -110,7 +110,7 @@
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="5">Total</td>
+            <td rowspan="2" colspan="{{ $assigns->count() +3 }}">Total</td>
             <td>Total Refund Fee</td>
         </tr>
         <tr>

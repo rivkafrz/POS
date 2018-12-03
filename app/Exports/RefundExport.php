@@ -25,9 +25,11 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
         $this->assign = $assign;
         $manifest_metadata = [];
         foreach ($manifest as $single) {
-            $needle = $single->departureTime->id . "-" . $single->destination->id;
-            if (!in_array($needle, $manifest_metadata)) {
-                array_push($manifest_metadata, $needle);
+            if ($single->refundSeat()->count() != 0) {
+                $needle = $single->departureTime->id . "-" . $single->destination->id;
+                if (!in_array($needle, $manifest_metadata)) {
+                    array_push($manifest_metadata, $needle);
+                }
             }
         }
         $this->manifest_metadata = $manifest_metadata;
@@ -37,10 +39,11 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
     {
         $manifest = $this->manifest;
         $metadata = [];
-
         foreach ($manifest as $man) {
-            foreach ($man->ticketings() as $ticketing) {
-                !in_array($ticketing->id, $metadata) ? array_push($metadata, $ticketing->id) : null ;
+            if ($man->refundSeat()->count() != 0) {
+                foreach ($man->ticketings() as $ticketing) {
+                    !in_array($ticketing->id, $metadata) ? array_push($metadata, $ticketing->id) : null ;
+                }
             }
         }
 
@@ -74,7 +77,7 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
                 );
 
                 for ($i=6; $i <= (6 + count($this->metadata)); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E'];
+                    $cel = ['A', 'B', 'C', 'D'];
                     for ($j=0; $j < count($cel); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
@@ -104,7 +107,7 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
                 // Table 2 head
                 for ($i=(8 + count($this->metadata)); $i <= (9 + count($this->metadata)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E'];
-                    for ($j=0; $j < count($cel); $j++) {
+                    for ($j=0; $j < (AssignLocation::all()->count() + 3); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [
@@ -129,7 +132,7 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
                 // Table 2 footer
                 for ($i=(10 + count($this->metadata) + count($this->manifest_metadata)); $i <= (11 + count($this->metadata) + count($this->manifest_metadata) ); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E', 'F'];
-                    for ($j=0; $j < count($cel); $j++) {
+                    for ($j=0; $j < (AssignLocation::all()->count() + 4); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [
@@ -154,7 +157,7 @@ class RefundExport implements FromView, ShouldAutoSize, WithEvents
                 // Table 2 body
                 for ($i=(10 + count($this->metadata)); $i <= (9 + count($this->metadata) + count($this->manifest_metadata)); $i++) {
                     $cel = ['A', 'B', 'C', 'D', 'E'];
-                    for ($j=0; $j < count($cel); $j++) {
+                    for ($j=0; $j < (AssignLocation::all()->count() + 3); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [
