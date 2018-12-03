@@ -33,11 +33,11 @@
                     <td class="text-center">{{ $ticket->customer->name }}</td>
                     <td class="text-center">{{ $ticket->seats(1)->count() }}</td>
                     <td class="text-center">{{ number_format($ticket->destination->price) }}</td>
-                    <td class="text-center">{{ $ticket->refund == 0 ? 0 : number_format($ticket->amount)}}</td>
-                    <td class="text-center">{{ number_format($ticket->refund) }}</td>
+                    <td class="text-center">{{ $ticket->refund == 0 ? 0 : number_format($ticket->refund())}}</td>
+                    <td class="text-center">{{ number_format($ticket->refundFee()) }}</td>
                 </tr>
                 @php
-                    $refund += $ticket->refund;
+                    $refund += $ticket->refundFee();
                 @endphp
             @endif
         @endforeach
