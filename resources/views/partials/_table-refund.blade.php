@@ -24,20 +24,22 @@
             $refund = 0;
         @endphp
         @foreach ($tickets as $ticket)
-            <tr>
-                <td class="text-center">{{ $pijet ++ }}</td>
-                <td class="text-center">{{ $ticket->departureTime->boarding_time }}</td>
-                <td class="text-center">{{ $ticket->code }}</td>
-                <td class="text-center">{{ substr($ticket->created_at, 11, 5) }}</td>
-                <td class="text-center">{{ $ticket->customer->name }}</td>
-                <td class="text-center">{{ $ticket->seats(1)->count() }}</td>
-                <td class="text-center">{{ number_format($ticket->destination->price) }}</td>
-                <td class="text-center">{{ $ticket->refund == 0 ? 0 : number_format($ticket->amount)}}</td>
-                <td class="text-center">{{ number_format($ticket->refund) }}</td>
-            </tr>
-            @php
-                $refund += $ticket->refund;
-            @endphp
+            @if ($ticket->seats(1)->count() != 0)
+                <tr>
+                    <td class="text-center">{{ $pijet ++ }}</td>
+                    <td class="text-center">{{ $ticket->departureTime->boarding_time }}</td>
+                    <td class="text-center">{{ $ticket->code }}</td>
+                    <td class="text-center">{{ substr($ticket->created_at, 11, 5) }}</td>
+                    <td class="text-center">{{ $ticket->customer->name }}</td>
+                    <td class="text-center">{{ $ticket->seats(1)->count() }}</td>
+                    <td class="text-center">{{ number_format($ticket->destination->price) }}</td>
+                    <td class="text-center">{{ $ticket->refund == 0 ? 0 : number_format($ticket->amount)}}</td>
+                    <td class="text-center">{{ number_format($ticket->refund) }}</td>
+                </tr>
+                @php
+                    $refund += $ticket->refund;
+                @endphp
+            @endif
         @endforeach
         <tr class="success">
             <td colspan="8" class="text-center">TOTAL</td>

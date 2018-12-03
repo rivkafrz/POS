@@ -25,6 +25,7 @@
             $nonCash = 0;
         @endphp
         @foreach ($tickets as $ticket)
+            @if ($ticket->seats->count() != 0)
             <tr>
                 <td class="text-center">{{ $pijet ++ }}</td>
                 <td class="text-center">{{ $ticket->departureTime->boarding_time }}</td>
@@ -38,13 +39,14 @@
                 <td class="text-center">{{ isset($ticket->cash) ? $ticket->amount : null }}</td>
             </tr>
             @if (is_null($ticket->cash))
-                @php
+            @php
                     $nonCash += $ticket->amount;
-                @endphp
+                    @endphp
                 @else
                 @php
                     $cash += $ticket->amount;
-                @endphp
+                    @endphp
+            @endif
             @endif
         @endforeach
         <tr class="warning">
