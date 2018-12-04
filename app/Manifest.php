@@ -64,7 +64,7 @@ class Manifest extends Model
     {
         $total = 0;
         foreach ($this->refundSeat()->groupBy('ticket_id') as $key => $val) {
-            $total += Ticket::find($key)->refund;
+            $total += Ticket::find($key)->refundFee();
         }
 
         return $total;
@@ -95,7 +95,7 @@ class Manifest extends Model
         $price = 0;
         foreach ($seat as $s) {
             if (is_null($s->first()->ticket->nonCash)) {
-                $price += $s->first()->ticket->amount;
+                $price += $s->first()->ticket->amount + $s->first()->ticket->refund();
             }
         }
 
@@ -115,7 +115,7 @@ class Manifest extends Model
         $price = 0;
         foreach ($seat as $s) {
             if (is_null($s->first()->ticket->cash)) {
-                $price += $s->first()->ticket->amount;
+                $price += $s->first()->ticket->amount + $s->first()->ticket->refund();
             }
         }
 

@@ -127,9 +127,12 @@
                         $cash += $ticket->amount;
                     @endphp
                 @endif
+                @php
+                    $refund += $ticket->refund();
+                @endphp
                 @else
                 @php
-                    $refund += $ticket->amount;
+                    $refund += $ticket->refund();
                 @endphp
             @endif
         @endforeach

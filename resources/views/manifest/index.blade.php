@@ -57,7 +57,6 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr class="active">
-                                                    <th>No</th>
                                                     <th>Seat Number</th>
                                                     <th>No Transaction</th>
                                                     <th>Name</th>
@@ -187,7 +186,7 @@
                         'btn-danger',
                         'btn-success'
                     ];
-                    tbody.append("<tr><td>"+iter+"</td><td>"+data.seat_number+"</td><td>"+data.ticket.code+"</td><td>"+ticket.customer.name+"</td><td><a id='passenger-"+ data.id +"' onClick='checkPassenger("+ data.id +")' class='btn " + style[data.checked] +" btn-xs'>Ok</a></tr>");
+                    tbody.append("<tr><td>"+data.seat_number+"</td><td>"+data.ticket.code+"</td><td>"+ticket.customer.name+"</td><td><a id='passenger-"+ data.id +"' onClick='checkPassenger("+ data.id +")' class='btn " + style[data.checked] +" btn-xs'>Ok</a></tr>");
                 }
             });
             if (data.checked) {

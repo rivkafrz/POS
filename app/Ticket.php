@@ -93,5 +93,19 @@ class Ticket extends Model
         return Carbon::parse($this->created_at)->isToday();
     }
 
-
+    public function refund()
+    {
+        if ($this->refund != 0) {
+            return $this->refund - $this->refundFee();
+        }
+        return 0;
+    }
+    
+    public function refundFee()
+    {
+        if ($this->refund != 0) {
+            return ($this->refund * 25) / 100;
+        }
+        return 0;
+    }
 }

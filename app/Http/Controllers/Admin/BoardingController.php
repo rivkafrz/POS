@@ -118,19 +118,19 @@ class BoardingController extends Controller
             ]);
         }
 
+        // Pengurangan Ticket.amount
+
+        $ticket->update([
+            'amount' => $form->seat_selected * $ticket->destination->price,
+            'refund' => ($ticket->seats->count() - $form->seat_selected) * $ticket->destination->price
+        ]);
+        
         // update Seat
         foreach($ticket->seats as $seat){
             // Seat yang tidak dipilih kembali status refund = true
             if (!in_array($seat->seat_number, (is_null($form->selectedSeat) ? [] : $form->selectedSeat))) {
                 $seat->update([
                     'refund' => 1
-                ]);
-                $amount = $seat->ticket->amount;
-                $refund = $seat->ticket->refund;
-                $potongan = (25 * $ticket->destination->price) / 100 ;
-                $seat->ticket()->update([
-                    'amount' => ($amount - $potongan),
-                    'refund' => ($refund + $potongan)
                 ]);
             }
         }
