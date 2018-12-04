@@ -170,6 +170,18 @@ class BoardingController extends Controller
             }
         }
 
+        if ($form->seat_selected == $ticket->seats->count()) {
+            foreach ($ticket->seats(1)->get() as $delete) {
+                $delete->delete();
+            }
+        }
+
+        if ($ticket->seats->count() < $form->selected) {
+            for ($i=0; $i < ($ticket->seats->count() - $form->selected); $i++) { 
+                $ticket->seats(1)->first()->delete();
+            }
+        }
+
         Alert::success('Ticket updated successfully')->flash();
         return redirect()->back();
     }
