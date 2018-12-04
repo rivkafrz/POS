@@ -129,7 +129,7 @@ class UsersTableSeeder extends Seeder
         $leader = new User();
         $leader->email = "leader@gmail.com";
         $leader->username = "leader";
-        $leader->password =bcrypt ('secretleader');
+        $leader->password =bcrypt ('leader');
         $leader->employee_id = $faris->id;
         $leader->save ();
         $leader->attachRole ($leaderRole);
@@ -139,7 +139,7 @@ class UsersTableSeeder extends Seeder
         $ticketing = new User();
         $ticketing->email = "ticketing@gmail.com";
         $ticketing->username = "ticketing";
-        $ticketing->password =bcrypt ('secretticketing');
+        $ticketing->password =bcrypt ('tiket');
         $ticketing->employee_id = $melan->id;
         $ticketing->save ();
         $ticketing->attachRole ($ticketingRole); 
