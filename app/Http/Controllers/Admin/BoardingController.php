@@ -110,7 +110,7 @@ class BoardingController extends Controller
     public function update($id, Request $form)
     {
         $ticket = Ticket::where('code', $form->find)->first();
-        
+        $before_seat = $ticket->seats->count();
         // Jika DepartureTime berubah
         if ($ticket->departure_time_id != $form->departureTime) {
             $ticket->update([
@@ -170,15 +170,17 @@ class BoardingController extends Controller
             }
         }
 
-        if ($form->seat_selected == $ticket->seats->count()) {
-            foreach ($ticket->seats(1)->get() as $delete) {
-                $delete->delete();
+        if (!is_null($form->selectedSeat)) {
+            if ($form->seat_selected == $ticket->seats->count()) {
+                foreach ($ticket->seats(1)->get() as $delete) {
+                    $delete->delete();
+                }
             }
-        }
 
-        if ($ticket->seats->count() < $form->selected) {
-            for ($i=0; $i < ($ticket->seats->count() - $form->selected); $i++) { 
-                $ticket->seats(1)->first()->delete();
+            if ($form->seat_selected < $before_seat) {
+                for ($i=0; $i < ($before_seat - $form->seat_selected); $i++) { 
+                    $ticket->seats(1)->first()->delete();
+                }
             }
         }
 
