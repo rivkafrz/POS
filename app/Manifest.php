@@ -64,7 +64,7 @@ class Manifest extends Model
     {
         $total = 0;
         foreach ($this->refundSeat()->groupBy('ticket_id') as $key => $val) {
-            $total += Ticket::find($key)->refundFee();
+            $total += Ticket::find($key)->refund();
         }
 
         return $total;
