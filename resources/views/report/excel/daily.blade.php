@@ -65,20 +65,27 @@
             <th rowspan="2">No Body</th>
             <th rowspan="2">Driver</th>
             <th rowspan="2">Total Passenger</th>
-            <th colspan="2">Payment Method</th>
+            <th rowspan="{{ $assigns->count() }}">Refund</th>
+            <th rowspan="2">Total Refund</th>
+            <th colspan="3">Payment Method</th>
         </tr>
         <tr>
             @foreach ($assigns as $assign)
                 <th>{{ $assign->assign_location }}</th>
             @endforeach
+            @foreach ($assigns as $assign)
+                <th>{{ $assign->assign_location }}</th>
+            @endforeach
             <th>Non Cash</th>
             <th>Cash</th>
+            <th>Refund</th>
         </tr>
         @php
             $pijet = 1;
             $income = 0;
             $income_cash = 0;
             $income_nocash = 0;
+            $refund_fee = 0;
             $stack = [];
         @endphp
         @foreach ($manifest as $m)
@@ -86,7 +93,10 @@
                 $current_total_passenger = 0;
                 $current_cash = 0;
                 $current_noncash = 0;
+                $current_refund = 0;
                 $needle = $m->departureTime->id . "-" . $m->destination->id;
+                $seat_refunded = 0;
+                $total_seat_refunded = 0;
             @endphp
             @if (!in_array($needle, $stack))
                 <tr>
@@ -99,20 +109,38 @@
                                     ->where('assign_location_id', $assign->id)
                                     ->first();
                             $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
+                            $seat_refunded = $current_manifest->refundSeat();
                         @endphp
                         <td>{{ $total }}</td>
                         @php
                             $current_total_passenger += $total;
                             $current_cash += $current_manifest->cash(); 
                             $current_noncash += $current_manifest->nonCash(); 
+                            $current_refund += $current_manifest->refundPrice(); 
                         @endphp
                     @endforeach
                     <td>{{ $m->departureTime->boarding_time }}</td>
                     <td>{{ $m->no_body }}</td>
                     <td>{{ $m->driver }}</td>
                     <td>{{ $current_total_passenger }}</td>
+                    @foreach ($assigns as $assign)
+                        @php
+                            $current_manifest = Manifest::where('created_at', 'like', Carbon::parse($m->created_at)->toDateString() . '%')
+                                    ->where('departure_time_id', $m->departureTime->id)
+                                    ->where('destination_id', $m->destination->id)
+                                    ->where('assign_location_id', $assign->id)
+                                    ->first();
+                            $seat_refunded = $current_manifest->refundSeat()->count();
+                        @endphp
+                        <td>{{ $seat_refunded }}</td>
+                        @php
+                            $total_seat_refunded += $seat_refunded;
+                        @endphp
+                    @endforeach
+                    <td>{{ $total_seat_refunded }}</td>
                     <td>{{ number_format($current_noncash) }}</td>
                     <td>{{ number_format($current_cash) }}</td>
+                    <td>{{ number_format($current_refund) }}</td>
                 </tr>
             @endif
         @php
@@ -120,18 +148,20 @@
             $income_nocash += $m->nonCash();
             $income += $m->cash();
             $income_cash += $m->cash();
+            $refund_fee += $current_refund;
             $pijet++;
             !in_array($needle, $stack) ? array_push($stack, $needle) : null;
         @endphp
         @endforeach
         <tr>
-            <td rowspan="2" colspan="{{ $assigns->count() + 5 }}">Total</td>
+            <td rowspan="2" colspan="{{ ($assigns->count() * 2) + 6 }}">Total</td>
             <td rowspan="2">{{ number_format($income_nocash) }}</td>
             <td rowspan="2">{{ number_format($income_cash) }}</td>
+            <td rowspan="2">{{ number_format($refund_fee) }}</td>
             <td>The Amount of Income</td>
         </tr>
         <tr>
-            <td>Rp. {{ number_format($income) }}</td>
+            <td>Rp. {{ number_format($income + $refund_fee) }}</td>
         </tr>
     </table>
 </body>

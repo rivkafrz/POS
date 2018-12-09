@@ -95,7 +95,7 @@ class Manifest extends Model
         $price = 0;
         foreach ($seat as $s) {
             if (is_null($s->first()->ticket->nonCash)) {
-                $price += $s->first()->ticket->amount + $s->first()->ticket->refund();
+                $price += $s->first()->ticket->amount;
             }
         }
 
@@ -115,7 +115,7 @@ class Manifest extends Model
         $price = 0;
         foreach ($seat as $s) {
             if (is_null($s->first()->ticket->cash)) {
-                $price += $s->first()->ticket->amount + $s->first()->ticket->refund();
+                $price += $s->first()->ticket->amount;
             }
         }
 
