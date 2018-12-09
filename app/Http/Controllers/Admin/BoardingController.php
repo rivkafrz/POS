@@ -117,37 +117,74 @@ class BoardingController extends Controller
                 'departure_time_id' => $form->departureTime
             ]);
         }
+        if (is_null($form->selectedSeat)) {
+            // dd('Refund Semua');
+            // Pengurangan Ticket.amount
+            $ticket->update([
+                'amount' => 0,
+                'refund' => $ticket->seats->count() * $ticket->destination->price
+            ]);
 
-        // Pengurangan Ticket.amount
-
-        $ticket->update([
-            'amount' => $form->seat_selected * $ticket->destination->price,
-            'refund' => ($ticket->seats->count() - $form->seat_selected) * $ticket->destination->price
-        ]);
-        
-        // update Seat
-        foreach($ticket->seats as $seat){
-            // Seat yang tidak dipilih kembali status refund = true
-            if (!in_array($seat->seat_number, (is_null($form->selectedSeat) ? [] : $form->selectedSeat))) {
-                $seat->update([
-                    'refund' => 1
-                ]);
+            foreach($ticket->seats as $seat){
+                $seat->update(['refund' => 1]);
             }
-        }
 
-        // Seat baru yang dipilih tidak sama dengan Seat sebelumnya di masuk database
-        foreach ((is_null($form->selectedSeat) ? [] : $form->selectedSeat) as $newSeat) {
-            if (Seat::seats(Dest::find($ticket->destination->id), DepartureTime::find($form->departureTime), true)->where('seat_number', $newSeat)->first() == null) {
+        } elseif ($ticket->seats->count() > count($form->selectedSeat)) {
+            // dd('Refund Sebagian / Change Sebagian');
+            $before_seat = $ticket->seats->count();
+            $ticket->update([
+                'amount' => count($form->selectedSeat) * $ticket->destination->price,
+                'refund' => ($ticket->seats->count() - count($form->selectedSeat)) * $ticket->destination->price
+            ]);
+
+            foreach($ticket->seats as $seat){
+                // Seat yang tidak dipilih kembali status refund = true
+                if (!in_array($seat->seat_number, $form->selectedSeat)) {
+                    $seat->update([
+                        'refund' => 1
+                    ]);
+                }
+            }
+
+            // Seat baru yang dipilih tidak sama dengan Seat sebelumnya di masuk database
+            foreach ($form->selectedSeat as $newSeat) {
+                if (Seat::seats(Dest::find($ticket->destination->id), DepartureTime::find($form->departureTime), true)->where('seat_number', $newSeat)->first() == null) {
+                    Seat::create([
+                        'seat_number'       => $newSeat,
+                        'departure_time_id' => $form->departureTime,
+                        'destination_id'    => $ticket->destination->id,
+                        'assign_location_id'    => $ticket->destination->id,
+                        'ticket_id'         => $ticket->id
+                    ]);
+                }
+            }
+
+            // Hapus Redudant reund seat
+            $ticket = Ticket::where('code', $form->find)->first();
+            for ($i=0; $i < ($before_seat - count($form->selectedSeat)); $i++) { 
+                $ticket->seats(1)->first()->delete();
+            }
+
+        } elseif ($ticket->seats->count() ==  count($form->selectedSeat)) {
+            // dd('Change Semua');
+            // Remove Semua Seat
+            foreach ($ticket->seats as $seat) {
+                $seat->delete();
+            }
+
+            // Tambah Seat yang dipilih
+
+            foreach ($form->selectedSeat as $new) {
                 Seat::create([
-                    'seat_number'       => $newSeat,
+                    'seat_number'       => $new,
                     'departure_time_id' => $form->departureTime,
                     'destination_id'    => $ticket->destination->id,
                     'assign_location_id'    => $ticket->destination->id,
                     'ticket_id'         => $ticket->id
-                 ]);
+                ]);
             }
         }
-
+        
         // Update Baggage
         foreach ($ticket->baggages as $baggage) {
             $baggage->delete();
@@ -158,28 +195,6 @@ class BoardingController extends Controller
                     $ticket->baggages()->create([
                         'amount' => $baggage
                     ]);
-                }
-            }
-        }
-
-        // hapus semua baggage jika semua kursi refund
-        if (is_null($form->selectedSeat)) {
-            $ticket = Ticket::where('code', $form->find)->first();
-            foreach ($ticket->baggages as $baggage) {
-                $baggage->delete();
-            }
-        }
-
-        if (!is_null($form->selectedSeat)) {
-            if ($form->seat_selected == $ticket->seats->count()) {
-                foreach ($ticket->seats(1)->get() as $delete) {
-                    $delete->delete();
-                }
-            }
-
-            if ($form->seat_selected < $before_seat) {
-                for ($i=0; $i < ($before_seat - $form->seat_selected); $i++) { 
-                    $ticket->seats(1)->first()->delete();
                 }
             }
         }
