@@ -111,6 +111,7 @@ class BoardingController extends Controller
     {
         $ticket = Ticket::where('code', $form->find)->first();
         $before_seat = $ticket->seats->count();
+
         // Jika DepartureTime berubah
         if ($ticket->departure_time_id != $form->departureTime) {
             $ticket->update([

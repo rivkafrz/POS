@@ -128,11 +128,11 @@
                     @endphp
                 @endif
                 @php
-                    $refund += $ticket->refund();
+                    $refund += $ticket->refundFee();
                 @endphp
                 @else
                 @php
-                    $refund += $ticket->refund();
+                    $refund += $ticket->refundFee();
                 @endphp
             @endif
         @endforeach
