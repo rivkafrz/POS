@@ -18,7 +18,6 @@
                                             <option value="daily">Daily Report</option>
                                             <option value="manifest">Manifest Report</option>
                                             <option value="summary">Summary Report</option>
-                                            <option value="refund">Refund Report</option>
                                         </select>
                                     </div>
                                 </div>
