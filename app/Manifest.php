@@ -16,7 +16,8 @@ class Manifest extends Model
             'departure_time_id',
             'destination_id',
             'user_id',
-            'assign_location_id'
+            'assign_location_id',
+            'work_time_id'
         ];
 
     public function user()
@@ -37,6 +38,11 @@ class Manifest extends Model
     public function destination()
     {
         return $this->belongsTo(Destination::class);
+    }
+
+    public function work_time()
+    {
+        return $this->belongsTo(WorkTime::class);
     }
 
     public function ticket()
