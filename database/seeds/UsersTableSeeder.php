@@ -122,10 +122,18 @@ class UsersTableSeeder extends Seeder
             'code'=> '01'
            
         ]);
-           $jurusan = Destination:: create([
+        $jurusan = Destination:: create([
             'to' => 'Dipenogoro(BDG)',
             'price' => '115000',
             'code'=> '02'
+           
+
+        ]);
+
+        $jurusan = Destination:: create([
+            'to' => 'Cimahi(BDG)',
+            'price' => '120000',
+            'code'=> '03'
            
 
         ]);
