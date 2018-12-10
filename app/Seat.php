@@ -8,29 +8,7 @@ use Backpack\CRUD\CrudTrait;
 
 class Seat extends Model
 {
- use CrudTrait;
-    /*
-
-    Step step test relasi
-
-    Pastiin udah ada datanya dulu minimal satu
-    Ini kan modelnya Seat, seenngaknya Seat harus ada satu di database.
-    Seat kan butuh Customer, DepartureTime, sama Destination. Nah ini harus jadi sebelum Seat.
-
-    Kalo udah data Seat udah ada di database read dulu pake kodingan
-
-    $variable = Seat::first()
-    ini artinya cari data pertama di model Model (Seat), bukan seat aja berlaku semua model dan ingat sebagai $variable
-
-    nah trus test relasinya
-
-    $variable->relasinya
-
-    contoh :
-
-    $variable->customer
-
-    */
+    use CrudTrait;
     protected $fillable = [
         'seat_number',
         'ticket_id',

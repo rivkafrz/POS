@@ -12,6 +12,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::post('update-info', 'UserController@updateInfo')->name('user.updateInfo');
 	Route::get('report/daily/{AssignLocation}/{from}', 'Admin\ReportController@excelDaily')->name('report.excel.daily');
 	Route::get('report/refund/{AssignLocation}/{from}', 'Admin\ReportController@excelRefund')->name('report.excel.refund');
+	Route::get('report/manifest/{Destination}/{date}', 'Admin\ReportController@pdfManifest')->name('report.pdf.manifest');
 	Route::get('report/create', 'Admin\ReportController@create')->name('report.create');
 	Route::resource('manifest', 'Admin\ManifestController')->only(['index', 'store']);
 	Route::resource('boarding', 'Admin\BoardingController');

@@ -43,14 +43,9 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="assign_location" class="col-md-3 control-label">Assign Location</label>
-                                    <div class="col-md-9">
+                                    <label for="assign_location" class="col-md-4 control-label" id="assign_location_label">Assign Location</label>
+                                    <div class="col-md-8">
                                         <select name="assign_location" id="assign_location" class="form-control">
-                                            <option value="">-- Select --</option>
-                                            <option value="0">All Counter</option>
-                                            @foreach ($al as $assign)
-                                                <option value="{{ $assign->id }}">{{ $assign->assign_location }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -100,9 +95,30 @@
         let tbody = $('#tbody');
         let tplaceholder = $('#tplaceholder');
         let assign_location = $('#assign_location');
+        let assign_location_label = $('#assign_location_label');
 
         type.on('change', function () {
             console.log('Type touched');
+            if (type.val() == 'manifest') {
+                assign_location_label.html('Destination');
+                assign_location.html('');
+                assign_location.append(`
+                    <option value="">-- Select --</option>
+                    @foreach ($dt as $destination)
+                        <option value="{{ $destination->id }}">{{ $destination->to }}</option>
+                    @endforeach
+                `);
+            } else {
+                assign_location_label.html('Assign Location');
+                assign_location.html('');
+                assign_location.append(`
+                    <option value="">-- Select --</option>
+                    <option value="0">All Counter</option>
+                    @foreach ($al as $assign)
+                        <option value="{{ $assign->id }}">{{ $assign->assign_location }}</option>
+                    @endforeach
+                `);
+            }
             runQuerry();
         });
 

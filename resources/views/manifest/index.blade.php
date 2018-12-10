@@ -15,6 +15,7 @@
                                         <input name="date" type="date" class="form-control" id="date">
                                         <input name="assign_location_id" type="hidden" value="{{ Auth::user()->workTime->assignLocation->id }}">
                                         <input name="user_id" type="hidden" value="{{ Auth::user()->id }}">
+                                        <input name="work_time_id" type="hidden" value="{{ Auth::user()->workTime->id }}">
                                     </div>
                                 </div>
                             </div>

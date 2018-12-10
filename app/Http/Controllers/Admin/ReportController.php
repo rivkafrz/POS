@@ -8,6 +8,7 @@ use PDF;
 use App\EOD;
 use App\AssignLocation;
 use App\Manifest;
+use App\Destination;
 use Carbon\Carbon;
 use App\Exports\DailyManifestExport;
 use App\Exports\RefundExport;
@@ -22,7 +23,8 @@ class ReportController extends Controller
     public function create()
     {
         $al = AssignLocation::all();
-        return view('report.create', compact('al'));
+        $dt = Destination::all();
+        return view('report.create', compact('al', 'dt'));
     }
 
     public function pdfEOD(Request $request)
@@ -68,6 +70,17 @@ class ReportController extends Controller
     {
         $this->fetchingManifest($assign, $from);
         return Excel::download(new RefundExport($this->manifest, $assign), 'refund-report-' . $from . '.xlsx');
+    }
+
+    public function pdfManifest($destination, $date)
+    {
+        $data['date']        = Carbon::parse($date);
+        $data['manifest']    = Manifest::where('created_at', 'like', $data['date']->toDateString().'%')
+                                ->where('destination_id', $destination)
+                                ->get();
+        $data['destination'] = Destination::find($destination);
+        $pdf = PDF::loadView('report.pdf.manifest', $data);
+        return $pdf->stream('manifest.pdf');
     }
 
     private function fetchingManifest($assign, $from)
