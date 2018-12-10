@@ -95,8 +95,18 @@ class UsersTableSeeder extends Seeder
 
         $jam = DepartureTime:: create([
             'boarding_time' => '2018-10-31 07:00:00',
-           
-
+        ]);
+        $jam = DepartureTime:: create([
+            'boarding_time' => '2018-10-31 08:00:00',
+        ]);
+        $jam = DepartureTime:: create([
+            'boarding_time' => '2018-10-31 09:00:00',
+        ]);
+        $jam = DepartureTime:: create([
+            'boarding_time' => '2018-10-31 10:00:00',
+        ]);
+        $jam = DepartureTime:: create([
+            'boarding_time' => '2018-10-31 11:00:00',
         ]);
         
         $customer = Customer:: create([
@@ -110,6 +120,12 @@ class UsersTableSeeder extends Seeder
             'to' => 'Batununggal(BDG)',
             'price' => '115000',
             'code'=> '01'
+           
+        ]);
+           $jurusan = Destination:: create([
+            'to' => 'Dipenogoro(BDG)',
+            'price' => '115000',
+            'code'=> '02'
            
 
         ]);
