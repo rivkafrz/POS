@@ -97,13 +97,14 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
                 }
                 $thead2 = 'A12:G13';
                 $table2 = 'A12:G13';
-                $tbody2 = "A14:G" . (12 + count($this->manifest));
+                $tbody2 = "A14:G" . (12 + (count($this->manifest) * 2));
                 $tfoot2 = 'A' . (10 + count($this->manifest) + count($this->metadata)) . ':H' . (11 + count($this->metadata) + count($this->manifest));
 
                 // Table 2 head
                 for ($i=(8 + count($this->metadata)); $i <= (9 + count($this->metadata)); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
-                    for ($j=0; $j < (AssignLocation::all()->count() + 10); $j++) {
+                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                            'Q', 'S', 'T'];
+                    for ($j=0; $j < ((AssignLocation::all()->count() * 2) + 9); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [
@@ -127,8 +128,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
 
                 // Table 2 footer
                 for ($i=(10 + count($this->metadata) + count($this->manifest_metadata)); $i <= (11 + count($this->metadata) + count($this->manifest_metadata) ); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
-                    for ($j=0; $j < (AssignLocation::all()->count() + 11); $j++) {
+                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                            'Q', 'S', 'T'];
+                    for ($j=0; $j < ((AssignLocation::all()->count() * 2) + 10); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [
@@ -152,8 +154,9 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
 
                 // Table 2 body
                 for ($i=(10 + count($this->metadata)); $i <= (9 + count($this->metadata) + count($this->manifest_metadata)); $i++) {
-                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'];
-                    for ($j=0; $j < (AssignLocation::all()->count() + 10); $j++) {
+                    $cel = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                            'Q', 'S', 'T'];
+                    for ($j=0; $j < ((AssignLocation::all()->count() * 2) + 9); $j++) {
                         $event->sheet->styleCells(
                             "$cel[$j]$i",
                             [

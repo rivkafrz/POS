@@ -65,7 +65,7 @@
             <th rowspan="2">No Body</th>
             <th rowspan="2">Driver</th>
             <th rowspan="2">Total Passenger</th>
-            <th rowspan="{{ $assigns->count() }}">Refund</th>
+            <th colspan="{{ $assigns->count() }}">Refund</th>
             <th rowspan="2">Total Refund</th>
             <th colspan="3">Payment Method</th>
         </tr>
@@ -73,8 +73,8 @@
             @foreach ($assigns as $assign)
                 <th>{{ $assign->assign_location }}</th>
             @endforeach
-            @foreach ($assigns as $assign)
-                <th>{{ $assign->assign_location }}</th>
+            @foreach ($assigns as $as)
+                <th>{{ $as->assign_location }}</th>
             @endforeach
             <th>Non Cash</th>
             <th>Cash</th>
@@ -108,15 +108,19 @@
                                     ->where('destination_id', $m->destination->id)
                                     ->where('assign_location_id', $assign->id)
                                     ->first();
-                            $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
-                            $seat_refunded = $current_manifest->refundSeat();
+                            if (!is_null($current_manifest)) {
+                                $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
+                                $seat_refunded = $current_manifest->refundSeat();
+                            }
                         @endphp
                         <td>{{ $total }}</td>
                         @php
                             $current_total_passenger += $total;
-                            $current_cash += $current_manifest->cash(); 
-                            $current_noncash += $current_manifest->nonCash(); 
-                            $current_refund += $current_manifest->refundPrice(); 
+                            if (!is_null($current_manifest)) {
+                                $current_cash += $current_manifest->cash(); 
+                                $current_noncash += $current_manifest->nonCash(); 
+                                $current_refund += $current_manifest->refundPrice(); 
+                            }
                         @endphp
                     @endforeach
                     <td>{{ $m->departureTime->boarding_time }}</td>
@@ -130,9 +134,11 @@
                                     ->where('destination_id', $m->destination->id)
                                     ->where('assign_location_id', $assign->id)
                                     ->first();
-                            $seat_refunded = $current_manifest->refundSeat()->count();
+                            if (!is_null($current_manifest)) {
+                                $seat_refunded = $current_manifest->refundSeat()->count();
+                            }
                         @endphp
-                        <td>{{ $seat_refunded }}</td>
+                        <td>{{ $seat_refunded == 0 ? '-' : $seat_refunded }}</td>
                         @php
                             $total_seat_refunded += $seat_refunded;
                         @endphp
@@ -149,7 +155,6 @@
             $income += $m->cash();
             $income_cash += $m->cash();
             $refund_fee += $current_refund;
-            $pijet++;
             !in_array($needle, $stack) ? array_push($stack, $needle) : null;
         @endphp
         @endforeach
