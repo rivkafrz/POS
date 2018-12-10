@@ -156,14 +156,12 @@ class BoardingController extends Controller
                         'assign_location_id'    => $ticket->destination->id,
                         'ticket_id'         => $ticket->id
                     ]);
+                    // Hapus Redudant reund seat
+                    $ticket = Ticket::where('code', $form->find)->first();
+                    $ticket->seats(1)->first()->delete();
                 }
             }
 
-            // Hapus Redudant reund seat
-            $ticket = Ticket::where('code', $form->find)->first();
-            for ($i=0; $i < ($before_seat - count($form->selectedSeat)); $i++) { 
-                $ticket->seats(1)->first()->delete();
-            }
 
         } elseif ($ticket->seats->count() ==  count($form->selectedSeat)) {
             // dd('Change Semua');
