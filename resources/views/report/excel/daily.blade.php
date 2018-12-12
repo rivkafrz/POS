@@ -64,7 +64,7 @@
             <th rowspan="2">Departure Time</th>
             <th rowspan="2">No Body</th>
             <th rowspan="2">Driver</th>
-            <th rowspan="2">Total Passenger</th>
+            <th rowspan="2">Total Customer</th>
             <th colspan="{{ $assigns->count() }}">Refund</th>
             <th rowspan="2">Total Refund</th>
             <th colspan="3">Payment Method</th>
@@ -101,6 +101,9 @@
             @if (!in_array($needle, $stack))
                 <tr>
                     <td>{{ $pijet }}</td>
+                    @php
+                        $pijet++;
+                    @endphp
                     @foreach ($assigns as $assign)
                         @php
                             $current_manifest = Manifest::where('created_at', 'like', Carbon::parse($m->created_at)->toDateString() . '%')
