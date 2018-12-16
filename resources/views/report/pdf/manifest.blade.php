@@ -108,24 +108,37 @@
             $total_passenger = 0;
             $cell = [];
         @endphp
-        @foreach ($manifest as $m)
+        @foreach ($assigns as $als)
+            @php
+            $cell = array_merge($cell, [$als->assign_location => ['in' => 0, 'out' => 0]]);
+            @endphp
+        @endforeach
+        @foreach ($manifest->groupBy('departure_time_id') as $m)
             <tr class="center border-bottom">
                 <td class="border-right">{{ $iter }}</td>
-                <td class="border-right">{{ $m->departureTime->boarding_time }}</td>
-                <td class="border-right">{{ $m->no_body }}</td>
-                <td class="border-right">{{ $m->driver }}</td>
+                <td class="border-right">{{ $m->first()->departureTime->boarding_time }}</td>
+                <td class="border-right">{{ $m->first()->no_body }}</td>
+                <td class="border-right">{{ $m->first()->driver }}</td>
                 @foreach ($assigns as $assign)
                     @php
                         $current_manifest = App\Manifest::where('created_at', 'like', $date->toDateString() . '%')
-                                ->where('departure_time_id', $m->departureTime->id)
-                                ->where('destination_id', $m->destination->id)
+                                ->where('departure_time_id', $m->first()->departureTime->id)
+                                ->where('destination_id', $m->first()->destination->id)
                                 ->where('assign_location_id', $assign->id)
                                 ->first();
-                        $cell_passenger += ($current_manifest->passenger(1) + $current_manifest->passenger(0));
-                        array_push($cell, ['in' => $current_manifest->passenger(1), 'out' => $current_manifest->passenger(0)]);
+                        if (!is_null($current_manifest)) {
+                            $cell_passenger += ($current_manifest->passenger(1) + $current_manifest->passenger(0));
+                            $cell[$assign->assign_location]['in'] += $current_manifest->passenger(1);
+                            $cell[$assign->assign_location]['out'] += $current_manifest->passenger(0);
+                        }
                     @endphp
-                    <td class="border-right">{{ $current_manifest->passenger(1) }}</td>
-                    <td class="border-right">{{ $current_manifest->passenger(0) }}</td>
+                    @if (!is_null($current_manifest))
+                        <td class="border-right">{{ $current_manifest->passenger(1) }}</td>
+                        <td class="border-right">{{ $current_manifest->passenger(0) }}</td>
+                    @else
+                        <td class="border-right">-</td>
+                        <td class="border-right">-</td>
+                    @endif
                 @endforeach
                 <td>{{ $cell_passenger }}</td>
                 @php

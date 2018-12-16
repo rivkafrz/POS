@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request as Req;
 
 class EmployeeRequest extends FormRequest
 {
@@ -23,10 +24,10 @@ class EmployeeRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Req $request)
     {
         return [
-            'nip' => 'required|numeric|regex:/^[0-9]{3,7}$/|unique:employees,nip',
+            'nip' => "required|numeric|regex:/^[0-9]{3,7}$/|unique:employees,nip,$request->id",
             'employee_name' => 'required|alpha',
             'gender'=> 'required',
             'job_section'=>'required|max:50|alpha',
