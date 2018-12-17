@@ -13,7 +13,7 @@
                                 <div class="form-group">
                                     <label for="type" class="col-md-3 control-label">Type</label>
                                     <div class="col-md-9">
-                                        <select name="type" id="type" class="form-control">
+                                        <select name="type" id="type" class="form-control" onchange="typeOnChange()">
                                             <option value="">-- Select --</option>
                                             <option value="daily">Daily Report</option>
                                             <option value="manifest">Manifest Report</option>
@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label for="date" class="col-md-3 control-label">From</label>
                                     <div class="col-md-9">
-                                        <input type="date" id="from" class="form-control" name="from">
+                                        <input type="date" id="from" class="form-control" name="from" onchange="fromOnChange()">
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                 <div class="form-group">
                                     <label for="to" class="col-md-3 control-label">To</label>
                                     <div class="col-md-9">
-                                        <input type="date" id="to" class="form-control" name="from" max="{{ now()->toDateString() }}">
+                                        <input type="date" id="to" class="form-control" name="from" max="{{ now()->toDateString() }}" onchange="toOnChange()">
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <label for="assign_location" class="col-md-4 control-label" id="assign_location_label">Assign Location</label>
                                     <div class="col-md-8">
-                                        <select name="assign_location" id="assign_location" class="form-control">
+                                        <select name="assign_location" id="assign_location" class="form-control" onchange="assignLocationOnChange()">
                                         </select>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
         let assign_location = $('#assign_location');
         let assign_location_label = $('#assign_location_label');
 
-        type.on('change', function () {
+        function typeOnChange() {
             console.log('Type touched');
             if (type.val() == 'manifest') {
                 assign_location_label.html('Destination');
@@ -108,7 +108,7 @@
                         <option value="{{ $destination->id }}">{{ $destination->to }}</option>
                     @endforeach
                 `);
-            } else {
+            } else if(type.val() == 'manifest') {
                 assign_location_label.html('Assign Location');
                 assign_location.html('');
                 assign_location.append(`
@@ -118,24 +118,38 @@
                         <option value="{{ $assign->id }}">{{ $assign->assign_location }}</option>
                     @endforeach
                 `);
+            } else if(type.val() == 'summary') {
+                assign_location_label.html('Assign Location');
+                assign_location.html('');
+                assign_location.append(`
+                    <option value="">-- Select --</option>
+                    <option value="0">All Counter</option>
+                `);
+                swal({
+                    title: 'Alert',
+                    text: 'Summary Report will only take months from query',
+                    type: 'info',
+                    confirmButtonText: 'Oke'
+                    });
             }
-            runQuerry();
-        });
 
-        from.on('change', function () {
+            runQuerry();
+        }
+
+        function fromOnChange() {
             console.log('From touched');
             runQuerry();
-        });
+        }
 
-        to.on('change', function () {
+        function toOnChange() {
             console.log('To touched');
             runQuerry();
-        });
+        }
 
-        assign_location.on('change', function () {
+        function assignLocationOnChange() {
             console.log('AssignLocation touched');
             runQuerry();
-        }); 
+        }
 
         function runQuerry() {
             if (paramsValid()) {
@@ -146,6 +160,7 @@
                         + to.val() + "/"
                         + assign_location.val() + "/",
                     success: function (data) {
+                        console.log(data);
                         clearTable();
                         data.forEach(el => {
                             appendTable(el);
@@ -182,3 +197,7 @@
         }
     </script>
 @endpush
+@section('after_styles')
+    <link rel="stylesheet" href="{{ url('css/custom.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
+@endsection 
