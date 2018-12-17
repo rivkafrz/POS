@@ -36,7 +36,29 @@ class ReportController extends Controller
 
     public function apiReport($type, $from, $to, $assign)
     {
-        return $this->fetchingReport($from, $to, $type);
+        if ($type == 'summary') {
+            return $this->fetchingSummary($from, $to);
+        } else {
+            return $this->fetchingReport($from, $to, $type);
+        }
+        
+    }
+
+    public function fetchingSummary($from, $to)
+    {
+        $from = Carbon::parse($from);
+        $to = Carbon::parse($to);
+
+        $months = [];
+        $range = $to->format('m') - $from->format('m');
+
+        $from->subMonth();
+
+        for ($i=0; $i <= $range; $i++) { 
+            array_push($months, $from->addMonth()->format('F'));
+        }
+
+        return response()->json($months);
     }
 
 
@@ -58,6 +80,14 @@ class ReportController extends Controller
         }
         
         return response()->json($response);
+    }
+
+    public function pdfSummary($al, $month)
+    {
+        $data['month'] = $month;
+        $data['als'] = AssignLocation::all();
+        $pdf = PDF::loadView('report.pdf.summary', $data);
+        return $pdf->stream("summary-$month.pdf");
     }
 
     public function excelDaily($assign, $from)
