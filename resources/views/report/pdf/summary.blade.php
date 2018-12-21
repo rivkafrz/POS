@@ -57,7 +57,7 @@
 <body>
     <table width="100%">
         <tr>
-            <td class="center"><span>LAPORAN JUMLAH BARANG DAN PENDAPATAN</span></td>
+            <td class="center"><span>LAPORAN JUMLAH PENUMPANG DAN PENDAPATAN</span></td>
         </tr>
         <tr>
             <td class="center"><span style="color: red;">PRIMAJASA MODA (BANDARA SOEKARNO-HATTA)</span></td>
