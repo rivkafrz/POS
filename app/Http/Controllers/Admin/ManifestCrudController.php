@@ -54,6 +54,8 @@ class ManifestCrudController extends CrudController
             'attribute' => 'assign_location',
             'model' => "App\AssignLocation",
         ]);
+         
+
         $this->crud->addColumn([
             'label' => 'Passengers Canceled',
             'type' => 'canceled'
@@ -65,6 +67,9 @@ class ManifestCrudController extends CrudController
 
         $this->crud->removeColumn('user_id'); 
 
+        $this->crud->removeColumn('work_time_id'); 
+ 
+ 
          $this->crud->addFilter([
             'type' => 'date',
             'name' => 'date',

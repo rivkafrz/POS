@@ -60,7 +60,7 @@
             <td class="center"><span>LAPORAN JUMLAH PENUMPANG DAN PENDAPATAN</span></td>
         </tr>
         <tr>
-            <td class="center"><span style="color: red;">PRIMAJASA MODA (BANDARA SOEKARNO-HATTA)</span></td>
+            <td class="center"><span style="color: red;">PT PRIMAJASA MODA (BANDARA SOEKARNO-HATTA)</span></td>
         </tr>
         <tr>
             <td class="center"><span style="color: red;">{{ strtoupper($month) . " " . date('Y') }}</span></td>
@@ -73,7 +73,7 @@
                 <td class="border-right" rowspan="2">DATE</td>
                 <td class="border-right" rowspan="2">DP</td>
                 <td class="border-right border-bottom" colspan="{{ $als->count() }}">TOTAL PASSSENGER/ASSIGN LOC</td>
-                <td class="border-right" rowspan="2">TOTAL INCOME</td>
+                <td class="border-right" rowspan="2">TOTAL PASSENGER</td>
                 <td class="border-right border-bottom" colspan="{{ $als->count() }}">REFUND</td>
                 <td class="border-right" rowspan="2">TOTAL REFUND</td>
                 <td class="border-bottom" colspan="3">INCOME</td>
