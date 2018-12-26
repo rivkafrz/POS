@@ -109,6 +109,7 @@ class ReportController extends Controller
                                 ->where('destination_id', $destination)
                                 ->get();
         $data['destination'] = Destination::find($destination);
+        $data['als'] = AssignLocation::all();
         $pdf = PDF::loadView('report.pdf.manifest', $data);
         return $pdf->stream('manifest.pdf');
     }
