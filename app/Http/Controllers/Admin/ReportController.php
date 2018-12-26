@@ -87,7 +87,7 @@ class ReportController extends Controller
         $data['month'] = $month;
         $data['als'] = AssignLocation::all();
         $pdf = PDF::loadView('report.pdf.summary', $data);
-        return $pdf->stream("summary-$month.pdf");
+        return $pdf->setPaper('a4', 'portrait')->stream("summary-$month.pdf");
     }
 
     public function excelDaily($assign, $from)
