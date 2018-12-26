@@ -9,6 +9,7 @@
         "backpack/base": "^0.8.9",
         "backpack/crud": "^3.3",
         "barryvdh/laravel-dompdf": "^0.8.3",
+        "consoletvs/charts": "6.*",
         "fideloper/proxy": "~4.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",

@@ -60,6 +60,10 @@
                     <div class="box box-success">
                         <div class="box-body">
                             <div class="row">
+                                <div class="col-md-12" id="chart">
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-striped">
                                         <thead>
@@ -95,6 +99,7 @@
         let tplaceholder = $('#tplaceholder');
         let assign_location = $('#assign_location');
         let assign_location_label = $('#assign_location_label');
+        let chart = $('#chart');
 
         function typeOnChange() {
             console.log('Type touched');
@@ -161,9 +166,11 @@
                     success: function (data) {
                         console.log(data);
                         clearTable();
+                        chart.html('');
                         data.forEach(el => {
                             appendTable(el);
                         });
+                        chart.append('<iframe src="http://localhost:8000/app/chart/' + from.val() + '/' + to.val() + '" frameborder="0" class="col-md-12" height="450px"></iframe>');
                     }
                 });
             }
@@ -199,4 +206,4 @@
 @section('after_styles')
     <link rel="stylesheet" href="{{ url('css/custom.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.1/dist/sweetalert2.all.min.js"></script>
-@endsection 
+@endsection
