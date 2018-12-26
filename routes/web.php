@@ -9,6 +9,7 @@ Route::group(['middleware' => 'web', 'prefix' => config('backpack.base.route_pre
 
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 'admin'], function()
 {
+	Route::get('chart/{from}/{to}', 'ChartController@summary')->name('chart.summary');
 	Route::post('update-info', 'UserController@updateInfo')->name('user.updateInfo');
 	Route::get('report/summary/{AssignLocation}/{month}', 'Admin\ReportController@pdfSummary')->name('report.pdf.summary');
 	Route::get('report/daily/{AssignLocation}/{from}', 'Admin\ReportController@excelDaily')->name('report.excel.daily');
