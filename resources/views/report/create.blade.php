@@ -69,7 +69,6 @@
                                         <thead>
                                             <tr class="info">
                                                 <th class="text-center">Date</th>
-                                                <th class="text-center">View</th>
                                                 <th class="text-center">Export</th>
                                             </tr>
                                         </thead>
@@ -171,8 +170,12 @@
                         data.forEach(el => {
                             appendTable(el);
                         });
-                        chart.append('<iframe src="http://localhost:8000/app/chart/' + from.val() + '/' + to.val() + '" frameborder="0" class="col-md-12" height="450px"></iframe>');
+                        if (type.val() == 'summary') {
+                            chart.append('<iframe src="http://localhost:8000/app/chart/' + from.val() + '/' + to.val() + '" frameborder="0" class="col-md-12" height="450px"></iframe>');
+                            chart.prepend('<p class="lead text-center"> INCOME</p>');
+                        }
                     }
+
                 });
             }
         }
@@ -197,7 +200,7 @@
             tbody.append(`
             <tr>
                 <td class="text-center">` + el + `</td>
-                <td class="text-center"><a href="` + "{{ url('/') }}" + `/app/report/` + type.val() + `/` + assign_location.val() + "/" + el + `" class="btn ` + btn[type.val()] + `"><span class="fa fa-eye"></span></a></td>
+               
                 <td class="text-center"><a href="` + "{{ url('/') }}" + `/app/report/` + type.val() + `/` + assign_location.val() + "/" + el + `" class="btn btn-success"><span class="fa fa-file"></span></a></td>
             </tr>
             `);

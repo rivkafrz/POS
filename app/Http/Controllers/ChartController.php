@@ -21,7 +21,7 @@ class ChartController extends Controller
         $this->constructLabel();
         $chart = new SummaryChart;
         $chart->labels($this->months);
-        $chart->dataset('Total ', 'bar', $this->dataset);
+        $chart->dataset('Total ', 'pie', $this->dataset);
         
         return view('charts.summary', compact('chart'));
     }

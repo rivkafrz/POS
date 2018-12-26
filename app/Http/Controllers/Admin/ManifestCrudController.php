@@ -64,11 +64,15 @@ class ManifestCrudController extends CrudController
             'label' => 'Total Passengers',
             'type' => 'passenger'
         ]);
-
         $this->crud->removeColumn('user_id'); 
-
-        $this->crud->removeColumn('work_time_id'); 
- 
+        $this->crud->addColumn([
+            'label' => "Work Time",
+            'type' => 'select',
+            'name' => 'work_time_id',
+            'entity' => 'work_time',
+            'attribute' => 'work_time',
+            'model' => "App\WorkTime",
+        ]);
  
          $this->crud->addFilter([
             'type' => 'date',

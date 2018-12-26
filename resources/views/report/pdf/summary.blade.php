@@ -175,21 +175,22 @@
                         <td class="border-right">{{ $total == 0 ? '-' : $total }}</td>
                     @endforeach
                     <td class="border-right">{{ $current_row_passenger == 0 ? '-' : $current_row_passenger }}</td>
+                    @php
+                        $current_row_refund = 0;
+                    @endphp
                     @foreach ($als as $al)
                         @php
                             $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
                             $total = 0;
-                            $current_row_refund = 0;
                             if ($current_manifest->count() != 0) {
                                 foreach ($current_manifest as $manifest) {
                                     $total += $manifest->refundSeat()->count();
-                                    if ($i <= 15) {
-                                        $yrefund[$al->code_location] += $total;
-                                    } else {
-                                        $yyrefund[$al->code_location] += $total;
-                                    }
                                 }
-
+                                if ($i <= 15) {
+                                    $yrefund[$al->code_location] += $total;
+                                } else {
+                                    $yyrefund[$al->code_location] += $total;
+                                }
                                 $current_row_refund += $total;
                                 if ($i <= 15) {
                                     $yrefund['all'] += $total;
