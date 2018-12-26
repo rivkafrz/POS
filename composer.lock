@@ -183,8 +183,6 @@
                 "update"
             ],
             "time": "2018-03-21T17:06:28+00:00"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "balping/json-raw-encoder",
@@ -228,7 +226,6 @@
                 "json"
             ],
             "time": "2018-05-04T15:38:02+00:00"
->>>>>>> e9ba0b66eb848b103bfcd0dfe886d2540690c583
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -634,17 +631,10 @@
                 "phpunit/phpunit": "^7.4",
                 "symfony/console": "^2.0.5|^3.0|^4.0",
                 "symfony/phpunit-bridge": "^3.4.5|^4.0.5"
-<<<<<<< HEAD
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
             },
-=======
-            },
-            "suggest": {
-                "symfony/console": "For helpful console commands such as SQL execution and import of files."
-            },
->>>>>>> e9ba0b66eb848b103bfcd0dfe886d2540690c583
             "bin": [
                 "bin/doctrine-dbal"
             ],
