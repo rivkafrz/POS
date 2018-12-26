@@ -137,7 +137,7 @@
                     }
                 @endphp
                 <tr class="center border-top">
-                    <td class="border-right">{{ $i }}</td>
+                    <td class="border-right">{{ $c->format('j') }}</td>
                     <td class="border-right">{{ $dps == 0 ? '-' : $dps }}</td>
                     @php
                         if ($i <= 15) {
@@ -146,21 +146,22 @@
                             $yy['dp'] += $dps;
                         }
                     @endphp
+                    @php
+                        $current_row_passenger = 0;
+                    @endphp
                     @foreach ($als as $al)
                         @php
-                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->get();
+                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
                             $total = 0;
-                            $current_row_passenger = 0;
                             if ($current_manifest->count() != 0) {
                                 foreach ($current_manifest as $manifest) {
                                     $total += ($manifest->passenger(1) + $manifest->passenger(0));
                                 }
-
                                 $current_row_passenger += $total;
                                 if ($i <= 15) {
-                                    $y[$al->code_location] += $current_row_passenger;
+                                    $y[$al->code_location] += $total;
                                 } else {
-                                    $yy[$al->code_location] += $current_row_passenger;
+                                    $yy[$al->code_location] += $total;
                                 }
                             }
                         @endphp
@@ -176,7 +177,7 @@
                     <td class="border-right">{{ $current_row_passenger == 0 ? '-' : $current_row_passenger }}</td>
                     @foreach ($als as $al)
                         @php
-                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->get();
+                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
                             $total = 0;
                             $current_row_refund = 0;
                             if ($current_manifest->count() != 0) {
@@ -213,11 +214,10 @@
                                     $refund += $manifest->refundPrice();
                                 }
                             }
-                            $c->addDay();
-                            @endphp
+                    @endphp
                     @endforeach
-                    <td class="border-right">{{ $cash == 0 ? '-' : 'Rp. '. number_format($cash) }}</td>
-                    <td class="border-right">{{ $noncash == 0 ? '-' : 'Rp. '. number_format($noncash) }}</td>
+                    <td class="border-right">{{ $cash == 0 ? '-' : number_format($cash) }}</td>
+                    <td class="border-right">{{ $noncash == 0 ? '-' : number_format($noncash) }}</td>
                     <td>{{ $refund == 0 ? '-' : 'Rp. '. number_format($refund) }}</td>
                     @php
                     if ($i <= 15) {
@@ -294,6 +294,9 @@
                         <td colspan="3">Rp . {{ number_format($yy['cash'] + $yy['noncash'] + $yy['refund'] + $y['cash'] + $y['noncash'] + $y['refund']) }}</td>
                     </tr>
                 @endif
+                @php
+                    $c->addDay();
+                @endphp
             @endfor
         </tbody>
     </table>
