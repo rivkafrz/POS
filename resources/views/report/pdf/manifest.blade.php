@@ -91,7 +91,7 @@
             <td rowspan="2" class="border-right"><strong>Departure Time</strong></td>
             <td rowspan="2" class="border-right"><strong>No Body</strong></td>
             <td rowspan="2" class="border-right"><strong>Driver</strong></td>
-            <td colspan="{{ count($manifest->groupBy('assign_location_id')) * 2 }}" class="border-right"><strong>Passenger</strong></td>
+            <td colspan="{{ $als->count() * 2 }}" class="border-right"><strong>Passenger</strong></td>
             <td rowspan="2"><strong>Total</strong></td>
         </tr>
         @php

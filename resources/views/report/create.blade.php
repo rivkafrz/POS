@@ -112,7 +112,7 @@
                         <option value="{{ $destination->id }}">{{ $destination->to }}</option>
                     @endforeach
                 `);
-            } else if(type.val() == 'manifest') {
+            } else if(type.val() == 'daily') {
                 assign_location_label.html('Assign Location');
                 assign_location.html('');
                 assign_location.append(`

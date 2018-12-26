@@ -17,11 +17,20 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
     protected $assign;
     protected $metadata;
     protected $manifest_metadata;
+    protected $exceptions;
     
     public function __construct($manifest, $assign)
     {
+        $this->exceptions = [];
         $this->manifest = $manifest;
         $this->assign = $assign;
+        if ($assign != 0) {
+            foreach (AssignLocation::all() as $al) {
+                if ($assign != $al->id) {
+                    $this->exceptions = array_merge($this->exceptions, [$al->id]);
+                }
+            }
+        }
         $manifest_metadata = [];
         foreach ($manifest as $single) {
             $needle = $single->departureTime->id . "-" . $single->destination->id;
@@ -36,7 +45,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
     {
         $manifest = $this->manifest;
         $metadata = [];
-
+        $exceptions = $this->exceptions;
         foreach ($manifest as $man) {
             foreach ($man->ticketings() as $ticketing) {
                 !in_array($ticketing->id, $metadata) ? array_push($metadata, $ticketing->id) : null ;
@@ -50,8 +59,7 @@ class DailyManifestExport implements FromView, ShouldAutoSize, WithEvents
         } else {
             $assign = AssignLocation::find($this->assign);
         }
-
-        return view('report.excel.daily', compact('manifest', 'assign'));
+        return view('report.excel.daily', compact('manifest', 'assign', 'exceptions'));
     }
 
     public function registerEvents(): array

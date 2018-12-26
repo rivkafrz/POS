@@ -37,7 +37,11 @@
             use App\Manifest;
             use Carbon\Carbon;
 
-            $assigns = AssignLocation::all();
+            if ($assign == 'All Counter') {
+                $assigns = AssignLocation::all();
+            } else {
+                $assigns = AssignLocation::where('id', $assign->id)->get();
+            }
             $metadata = [];
         @endphp
         @foreach ($manifest as $man)
@@ -103,6 +107,7 @@
                     <td>{{ $pijet }}</td>
                     @php
                         $pijet++;
+                        $total = 0;
                     @endphp
                     @foreach ($assigns as $assign)
                         @php
@@ -112,11 +117,13 @@
                                     ->where('assign_location_id', $assign->id)
                                     ->first();
                             if (!is_null($current_manifest)) {
-                                $total = $current_manifest->passenger(1) + $current_manifest->passenger(0);
+                                $total += $current_manifest->passenger(1) + $current_manifest->passenger(0);
                                 $seat_refunded = $current_manifest->refundSeat();
+                            } else {
+                                $total = 0;
                             }
                         @endphp
-                        <td>{{ $total }}</td>
+                        <td>{{ $total == 0 ? '-' : $total }}</td>
                         @php
                             $current_total_passenger += $total;
                             if (!is_null($current_manifest)) {
