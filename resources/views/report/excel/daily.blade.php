@@ -131,6 +131,7 @@
                                 $current_noncash += $current_manifest->nonCash(); 
                                 $current_refund += $current_manifest->refundPrice(); 
                             }
+                            $total= 0;
                         @endphp
                     @endforeach
                     <td>{{ $m->departureTime->boarding_time }}</td>
