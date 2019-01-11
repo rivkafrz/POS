@@ -63,7 +63,7 @@
             <td class="center"><span style="color: red;">PT PRIMAJASA MODA (BANDARA SOEKARNO-HATTA)</span></td>
         </tr>
         <tr>
-            <td class="center"><span style="color: red;">{{ strtoupper($month) . " " . date('Y') }}</span></td>
+            <td class="center"><span style="color: red;">{{ strtoupper($month) . " " . $year }}</span></td>
         </tr>
     </table>
 
@@ -95,8 +95,8 @@
                 use Carbon\Carbon;
                 use App\Manifest;
 
-                $l = Carbon::parse("last day of $month")->format('d');
-                $c = Carbon::parse("first day of $month");
+                $l = Carbon::parse("last day of $month $year")->format('d');
+                $c = Carbon::parse("first day of $month $year");
                 $y = [
                     'income' => 0,
                     'cash' => 0,
@@ -128,7 +128,7 @@
             @endforeach
             @for ($i = 1; $i <= $l; $i++)
                 @php
-                    $dp = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->get()->groupBy(['departure_time_id', 'destination_id']);
+                    $dp = Manifest::where('created_at', 'like', $year . '-' . $c->format('m-d') . '%')->get()->groupBy(['departure_time_id', 'destination_id']);
                     $dps = 0;
                     if ($dp->count() != 0) {
                         foreach ($dp as $key) {
@@ -151,7 +151,7 @@
                     @endphp
                     @foreach ($als as $al)
                         @php
-                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
+                            $current_manifest = Manifest::where('created_at', 'like', $year . '-' . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
                             $total = 0;
                             if ($current_manifest->count() != 0) {
                                 foreach ($current_manifest as $manifest) {
@@ -180,7 +180,7 @@
                     @endphp
                     @foreach ($als as $al)
                         @php
-                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
+                            $current_manifest = Manifest::where('created_at', 'like', $year . '-' . $c->format('m-d') . '%')->where('assign_location_id', $al->id)->get();
                             $total = 0;
                             if ($current_manifest->count() != 0) {
                                 foreach ($current_manifest as $manifest) {
@@ -204,7 +204,7 @@
                     <td class="border-right">{{ $current_row_refund == 0 ? '-' : $current_row_refund }}</td>
                     @foreach ($als as $al)
                     @php
-                            $current_manifest = Manifest::where('created_at', 'like', date('Y-') . $c->format('m-d') . '%')->get();
+                            $current_manifest = Manifest::where('created_at', 'like', $year . '-' . $c->format('m-d') . '%')->get();
                             $cash = 0;
                             $noncash = 0;
                             $refund = 0;

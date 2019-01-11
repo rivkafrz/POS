@@ -48,14 +48,16 @@ class ReportController extends Controller
     {
         $from = Carbon::parse($from);
         $to = Carbon::parse($to);
-
         $months = [];
-        $range = $to->format('m') - $from->format('m');
-
+        if ($from->format('Y') == $to->format('Y')) {
+            $range = $to->format('m') - $from->format('m');
+        } else {
+            $range = (12 - $from->format('m')) + ($to->format('m'));
+        }
         $from->subMonth();
 
         for ($i=0; $i <= $range; $i++) { 
-            array_push($months, $from->addMonth()->format('F'));
+            array_push($months, $from->addMonth()->format('F/Y'));
         }
 
         return response()->json($months);
@@ -66,7 +68,6 @@ class ReportController extends Controller
     {
         $from = Carbon::parse($from);
         $to = Carbon::parse($to);
-
         if ($from > $to) {
             $temp = $to;
             $to   = $from;
@@ -82,8 +83,13 @@ class ReportController extends Controller
         return response()->json($response);
     }
 
-    public function pdfSummary($al, $month)
+    public function pdfSummary($al, $month, $year = null)
     {
+        if ($year == null) {
+            $data['year'] = date('Y');
+        } else {
+            $data['year'] = $year;
+        }
         $data['month'] = $month;
         $data['als'] = AssignLocation::all();
         $pdf = PDF::loadView('report.pdf.summary', $data);

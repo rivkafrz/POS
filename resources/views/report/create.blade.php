@@ -164,7 +164,7 @@
                         + to.val() + "/"
                         + assign_location.val() + "/",
                     success: function (data) {
-                        console.log(data);
+                        console.log("{{ url('/') }}" + "/api/report/"+ type.val() + "/"+ from.val() + "/"+ to.val() + "/"+ assign_location.val() + "/");
                         clearTable();
                         chart.html('');
                         data.forEach(el => {
@@ -199,7 +199,7 @@
             };
             tbody.append(`
             <tr>
-                <td class="text-center">` + el + `</td>
+                <td class="text-center">` + el.replace('/', ' ')  + `</td>
                
                 <td class="text-center"><a href="` + "{{ url('/') }}" + `/app/report/` + type.val() + `/` + assign_location.val() + "/" + el + `" class="btn btn-success"><span class="fa fa-file"></span></a></td>
             </tr>
