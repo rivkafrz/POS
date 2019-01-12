@@ -28,7 +28,11 @@ class ChartController extends Controller
 
     public function constructLabel()
     {
-        $this->range = $this->end->format('n') - $this->start->format('n');
+        if ($this->end->format('Y') == $this->start->format('Y')) {
+            $this->range = $this->end->format('n') - $this->start->format('n');
+        } else {
+            $this->range = (12 - $this->start->format('n')) + $this->end->format('n');
+        }
         $this->months = [];
         $this->dataset = [];
         for ($i=0; $i <= $this->range; $i++) { 
