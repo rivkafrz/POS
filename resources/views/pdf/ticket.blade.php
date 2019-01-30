@@ -86,6 +86,7 @@
             <td>
                 <p class="justify">TERIMA KASIH</p>
                 <p class="justify">INFORMASI</p>
+                 <p class="justify">SOETA : 021-5591-5555</p>
                 <p class="justify">BNI : 022-8752-6886</p>
             </td>
         </tr>
