@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <p class="lead">EOD successfully created</p>
-                        <small>You can only create single EOD per day</small>
+                        <small>Sorry you can't order again because you have done EOD today</small>
                         <hr>
                     </div>
                     <div class="col-md-4">
