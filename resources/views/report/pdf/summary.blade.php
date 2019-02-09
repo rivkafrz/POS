@@ -60,7 +60,10 @@
             <td class="center"><span>LAPORAN JUMLAH PENUMPANG DAN PENDAPATAN</span></td>
         </tr>
         <tr>
-            <td class="center"><span style="color: red;">PT PRIMAJASA MODA (BANDARA SOEKARNO-HATTA)</span></td>
+            <td class="center"><span>PT PRIMAJASA PERDANARAYAUTAMA (BANDARA SOEKARNO-HATTA)</span></td>
+        </tr>
+        <tr>
+            <td class="center"><span>BUS MODA</span></td>
         </tr>
         <tr>
             <td class="center"><span style="color: red;">{{ strtoupper($month) . " " . $year }}</span></td>
