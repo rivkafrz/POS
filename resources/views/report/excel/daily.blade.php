@@ -137,12 +137,12 @@
                     <td>{{ $m->no_body }}</td>
                     <td>{{ $m->driver }}</td>
                     <td>{{ $current_total_passenger }}</td>
-                    @foreach ($assigns as $assign)
+                    @foreach ($assigns as $assig)
                         @php
                             $current_manifest = Manifest::where('created_at', 'like', Carbon::parse($m->created_at)->toDateString() . '%')
                                     ->where('departure_time_id', $m->departureTime->id)
                                     ->where('destination_id', $m->destination->id)
-                                    ->where('assign_location_id', $assign->id)
+                                    ->where('assign_location_id', $assig->id)
                                     ->first();
                             if (!is_null($current_manifest)) {
                                 $seat_refunded = $current_manifest->refundSeat()->count();
@@ -151,6 +151,7 @@
                         <td>{{ $seat_refunded == 0 ? '-' : $seat_refunded }}</td>
                         @php
                             $total_seat_refunded += $seat_refunded;
+                            $seat_refunded = 0;
                         @endphp
                     @endforeach
                     <td>{{ $total_seat_refunded }}</td>
