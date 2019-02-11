@@ -122,9 +122,9 @@
 
         function addBaggage(value = null) {
             if (value == null) {
-                $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control">')
+                $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control" maxlength="3">')
             } else {
-                $('#baggages').prepend('<input name="baggages[]" type="text" class="form-control" value="' + value + '">')
+                $('#baggages').prepend('<input name="baggages[]" type="text" maxlength="3" class="form-control" value="' + value + '">')
             }
             console.log('Add Baggage');
         }

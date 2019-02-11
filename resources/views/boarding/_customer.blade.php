@@ -28,7 +28,7 @@
     <div class="form-group row">
         <label for="name" class="col-sm-2 control-label">Code Baggage</label>
         <div class="col-sm-10" id="baggages">
-            <input name="baggages[]" type="text" class="form-control">
+            <input name="baggages[]" type="text" class="form-control" maxlength="3">
             <a onclick="addBaggage()" class="btn btn-primary pull-right" style="border-radius: 100px; margin-top: 10pt"><i class="fa fa-plus"></i></a>
         </div>
     </div>
