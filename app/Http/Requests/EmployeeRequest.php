@@ -30,7 +30,7 @@ class EmployeeRequest extends FormRequest
             'nip' => "required|numeric|regex:/^[0-9]{3,7}$/|unique:employees,nip,$request->id",
             'employee_name' => 'required|alpha',
             'gender'=> 'required',
-            'job_section'=>'required|max:50|alpha',
+            'job_section'=>'required|max:50',
             'phone'=>'required|regex:/^(08)[0-9]{8,11}$/|numeric',
             'address'=>'required|max:100',
 
