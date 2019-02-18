@@ -171,7 +171,7 @@
                             appendTable(el);
                         });
                         if (type.val() == 'summary') {
-                            chart.append('<iframe src="http://pos.pribadirhj.net/app/chart/' + from.val() + '/' + to.val() + '" frameborder="0" class="col-md-12" height="450px"></iframe>');
+                            chart.append('<iframe src="http://localhost:8000/app/chart/' + from.val() + '/' + to.val() + '" frameborder="0" class="col-md-12" height="450px"></iframe>');
                             chart.prepend('<p class="lead text-center"> INCOME</p>');
                         }
                     }

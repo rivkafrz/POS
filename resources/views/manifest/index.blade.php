@@ -169,6 +169,11 @@
                             appendTbody(iter, seat);
                             iter ++;
                         });
+                        if (data.length == 0) {
+                            showSubmit(false);
+                        } else {
+                            showSubmit(true);
+                        }
                     }
                 });
             }
@@ -220,26 +225,28 @@
         }
 
         function checkPassenger(seat){
-            if (!manifest) {
-                $.ajax({
-                    url: "{{ url('/') }}" + '/api/passenger/' + seat + "/check",
-                    success: function (data) {
-                        console.log(data.checked);
-                        if (data.checked == 1) {
-                            $('#passenger-' + data.id).removeClass('btn-danger').addClass('btn-success');
-                            total.html(parseInt(total.html()) + 1);
-                            cancel.html(parseInt(cancel.html()) - 1);
-                        } else {
-                            alert('Please re-click the button');
+            if (!($('#passenger-'+seat).attr('class')).includes('btn-success')) {
+                if (!manifest) {
+                    $.ajax({
+                        url: "{{ url('/') }}" + '/api/passenger/' + seat + "/check",
+                        success: function (data) {
+                            console.log(data.checked);
+                            if (data.checked == 1) {
+                                $('#passenger-' + data.id).removeClass('btn-danger').addClass('btn-success');
+                                total.html(parseInt(total.html()) + 1);
+                                cancel.html(parseInt(cancel.html()) - 1);
+                            } else {
+                                alert('Please re-click the button');
+                            }
                         }
-                    }
-                });
-            } else {
-                swal({
-                    type: 'error',
-                    title: 'Error',
-                    text: 'Manifest already created',
                     });
+                } else {
+                    swal({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'Manifest already created',
+                        });
+                }
             }
         }
     </script>

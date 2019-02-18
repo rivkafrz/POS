@@ -27,6 +27,11 @@ class Work_timeCrudController extends CrudController
             'model' => "App\Models\Assign_location"
         ]);
 
+        $this->crud->addColumn([
+            'label' => "Work Time",
+            'name' => 'work_time'
+        ]);
+        
         $this->crud->addColumn(
         [
             'label' => "Assign Location",
@@ -36,6 +41,10 @@ class Work_timeCrudController extends CrudController
             'attribute' => 'assign_location',
             'model' => "App\Models\Assign_location"
         ]);
+
+
+        $this->crud->orderBy ('assign_location_id','asc');
+        $this->crud->orderBy('work_time', 'asc');
     }
 
     public function store(StoreRequest $request)

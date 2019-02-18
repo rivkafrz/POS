@@ -34,7 +34,8 @@ class BoardingController extends Controller
             return redirect()->back();
         }
     	$destinations = Destination::all();
-        $departures = Departure_time::all();
+        $departures = Departure_time::orderBy('boarding_time', 'asc')->get();
+        // $departures = Model::orderBy('field', 'asc/desc')->get();
         $banks = Bank::all();
         return view('boarding.create', compact('destinations', 'departures', 'banks'));
     }

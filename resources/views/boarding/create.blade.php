@@ -69,55 +69,65 @@
         })
         
         function selectSeat(seat_id) {
-            var current = '#' + seat_id;
-            if ($(current).hasClass('seat-occupied')) {
+            if ($('#destination_to').val() == '') {
                 swal({
-                        title: 'Error!',
-                        text: 'Cannot select occupied seat',
-                        type: 'error',
-                        confirmButtonText: 'Oke'
+                    title: 'Error!',
+                    text: 'please select destination',
+                    type: 'error',
+                    confirmButtonText: 'Oke'
                     });
             } else {
-                if ($(current).hasClass('seat-selected')) {
-                    $(current).removeClass('seat-selected');
-                    $(current).removeClass('seat-last');
-                    $('#' + seat_id.substr(4)).remove();
-                    console.log($('#seats_commit').val());
-                    console.log("Un-Selected " + seat_id);
-
-                    var init = parseInt($('#price_init').val());
-                    $('#charge').val(parseInt($('#charge').val()) - init);
-                    $('#charge_modal').val(parseInt($('#charge_modal').val()) - init);
-                    $('#price').val(parseInt($('#price').val()) - init);
-                    $('#seat_selected').val($('#seat_selected').val() - 1);
-                    $('#refunded_seat').html(parseInt($('#refunded_seat').html()) + 1);
-                } else {
-                    if (parseInt($('#seat_limit').val()) > parseInt($('#seat_selected').val())) {
-                        $(current).addClass('seat-selected');
-                        $(current).removeClass('seat-last');
-                        console.log("Selected " + seat_id);
-                        $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
-                        console.log($('#seats_commit').val());
-                        if ($('#price_comparator').val() == 0) {
-                            console.log($('#price_comparator').val(parseInt($('#price_comparator').val()) + 1));
-                        } else {
-                            var init = parseInt($('#price_init').val());
-                            $('#charge').val(parseInt($('#charge').val()) + init);
-                            $('#charge_modal').val(parseInt($('#charge_modal').val()) + init);
-                            $('#price').val(parseInt($('#price').val()) + init);
-                            $('#seat_selected').val(parseInt($('#seat_selected').val()) + 1);
-                            $('#refunded_seat').html(parseInt($('#refunded_seat').html()) - 1);
-                        }
-                    } else {
-                        swal({
+                var current = '#' + seat_id;
+                if ($(current).hasClass('seat-occupied')) {
+                    swal({
                             title: 'Error!',
-                            text: 'Cannot add more seats',
+                            text: 'Cannot select occupied seat',
                             type: 'error',
                             confirmButtonText: 'Oke'
-                            });
+                        });
+                } else {
+                    if ($(current).hasClass('seat-selected')) {
+                        $(current).removeClass('seat-selected');
+                        $(current).removeClass('seat-last');
+                        $('#' + seat_id.substr(4)).remove();
+                        console.log($('#seats_commit').val());
+                        console.log("Un-Selected " + seat_id);
+
+                        var init = parseInt($('#price_init').val());
+                        $('#charge').val(parseInt($('#charge').val()) - init);
+                        $('#charge_modal').val(parseInt($('#charge_modal').val()) - init);
+                        $('#price').val(parseInt($('#price').val()) - init);
+                        $('#seat_selected').val($('#seat_selected').val() - 1);
+                        $('#refunded_seat').html(parseInt($('#refunded_seat').html()) + 1);
+                    } else {
+                        if (parseInt($('#seat_limit').val()) > parseInt($('#seat_selected').val())) {
+                            $(current).addClass('seat-selected');
+                            $(current).removeClass('seat-last');
+                            console.log("Selected " + seat_id);
+                            $('#seats').append('<input type="hidden" name="selectedSeat[]" value="' + seat_id.substr(12) + '" id="' + seat_id.substr(4) + '">');
+                            console.log($('#seats_commit').val());
+                            if ($('#price_comparator').val() == 0) {
+                                console.log($('#price_comparator').val(parseInt($('#price_comparator').val()) + 1));
+                            } else {
+                                var init = parseInt($('#price_init').val());
+                                $('#charge').val(parseInt($('#charge').val()) + init);
+                                $('#charge_modal').val(parseInt($('#charge_modal').val()) + init);
+                                $('#price').val(parseInt($('#price').val()) + init);
+                                $('#seat_selected').val(parseInt($('#seat_selected').val()) + 1);
+                                $('#refunded_seat').html(parseInt($('#refunded_seat').html()) - 1);
+                            }
+                        } else {
+                            swal({
+                                title: 'Error!',
+                                text: 'Cannot add more seats',
+                                type: 'error',
+                                confirmButtonText: 'Oke'
+                                });
+                        }
                     }
                 }
             }
+            
         }
 
         function addBaggage(value = null) {
