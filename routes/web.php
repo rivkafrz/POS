@@ -33,3 +33,5 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::post('end-of-day/pdf', 'Admin\ReportController@pdfEOD')->name('eod.pdf');
 });
 Route::get('/','pagesController@welcome');
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
