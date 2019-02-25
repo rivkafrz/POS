@@ -35,7 +35,6 @@ class BoardingController extends Controller
         }
     	$destinations = Destination::all();
         $departures = Departure_time::orderBy('boarding_time', 'asc')->get();
-        // $departures = Model::orderBy('field', 'asc/desc')->get();
         $banks = Bank::all();
         return view('boarding.create', compact('destinations', 'departures', 'banks'));
     }
@@ -200,7 +199,12 @@ class BoardingController extends Controller
         }
 
         Alert::success('Ticket updated successfully')->flash();
-        return redirect()->back();
+        if (Ticket::find($id)->seats->count() == 0) {
+            return redirect()->back();
+        } else {
+            $pdf = PDF::loadView('pdf.ticket', compact('ticket'))->setPaper([0,0, 226.78, 340.16]);
+            return $pdf->stream('ticket.pdf');
+        }
     }
 
     public function tickets($phone)

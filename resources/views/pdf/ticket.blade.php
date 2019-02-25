@@ -48,7 +48,7 @@
             <td>: {{ $ticket->code }}</td>
         </tr>
         <tr width="30%">
-            <td>Jam / Tanggal</td>
+            <td>Tanggal / Jam</td>
             <td>: {{ $ticket->created_at }}</td>
         </tr>
         <tr width="30%">
@@ -95,7 +95,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <p class="justify">Jagalah barang bawaan anda!! Periksa dan cocokkan saat turun,segala jeni kehilangan dan kerusakan atau tertukar bukan merupakan tanggung jawab manajemen Primajasa</p>
+                <p class="justify">Jagalah barang bawaan anda!! Periksa dan cocokkan saat turun,segala jenis kehilangan dan kerusakan atau tertukar bukan merupakan tanggung jawab manajemen Primajasa </p>
             </td>
         </tr>
         <tr>
